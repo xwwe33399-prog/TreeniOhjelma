@@ -10,7 +10,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- Dynaaminen PWA Manifest Injektio tehdään JS:llä -->
+    <!-- PWA Linkit (Manifest ja App Icon) -->
+    <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="icon.png">
     
     <style>
@@ -90,7 +91,7 @@
             100% { opacity: 1; transform: scale(1); }
         }
 
-        /* UUSI SMOOTH TERVEHDYS ANIMAATIO (Blur + Zoom) */
+        /* Smooth Tervehdys Animaatio (Blur + Zoom) */
         @keyframes smoothGreeting {
             0% { opacity: 0; transform: scale(0.95) translateY(10px); filter: blur(10px); }
             100% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
@@ -104,6 +105,13 @@
         svg {
             width: 22px; height: 22px; stroke-width: 2; stroke: currentColor;
             fill: none; stroke-linecap: round; stroke-linejoin: round;
+        }
+
+        /* === KOKONÄYTTÖNAPIN PIILOTUS PWA:SSA === */
+        @media (display-mode: standalone) {
+            .fs-btn {
+                display: none !important;
+            }
         }
 
         /* === PWA ASENNUSPALKKI & OHJEET === */
@@ -210,7 +218,6 @@
             padding: 6rem 2rem 5rem; text-align: center; border-bottom: 1px solid var(--border-color);
             transition: background-color var(--transition-smooth);
         }
-        /* Uusi Smooth Animaatio asetettu tähän */
         .greeting-banner h1 { font-size: 3.5rem; font-weight: 800; margin: 0; letter-spacing: -0.04em; animation: smoothGreeting 1s var(--ease-out-expo) forwards; opacity: 0; }
         .greeting-banner p { font-size: 1.2rem; color: #a1a1aa; margin-top: 1rem; animation: smoothGreeting 1.2s var(--ease-out-expo) forwards; opacity: 0; }
 
@@ -337,7 +344,7 @@
             <button class="icon-btn" onclick="toggleTheme()" title="Vaihda teemaa">
                 <svg id="login-theme-icon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
             </button>
-            <button class="icon-btn" onclick="toggleFullScreen()" title="Kokonäyttötila">
+            <button class="icon-btn fs-btn" onclick="toggleFullScreen()" title="Kokonäyttötila">
                 <svg id="login-fs-icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
             </button>
         </div>
@@ -374,7 +381,7 @@
                 <button class="icon-btn" onclick="toggleTheme()" title="Vaihda teemaa">
                     <svg id="app-theme-icon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
                 </button>
-                <button class="icon-btn" onclick="toggleFullScreen()" title="Kokonäyttötila">
+                <button class="icon-btn fs-btn" onclick="toggleFullScreen()" title="Kokonäyttötila">
                     <svg id="app-fs-icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
                 </button>
             </div>
@@ -396,7 +403,6 @@
         <!-- PÄÄSISÄLTÖ -->
         <main class="main-wrapper" id="main-wrapper">
             <div class="greeting-banner">
-                <!-- Näillä on nyt blur/zoom -animaatio CSS:ssä -->
                 <h1 id="greeting-text">Hei.</h1>
                 <p id="greeting-sub">Tervetuloa takaisin.</p>
             </div>
@@ -507,36 +513,12 @@
     </div>
 
     <script>
-        // === DYNAAMINEN PWA MANIFEST (Luodaan suoraan JS:llä) ===
-        const manifestData = {
-            "name": "Asko Treenisovellus Beta",
-            "short_name": "Asko Beta",
-            "start_url": ".",
-            "display": "standalone",
-            "background_color": "#020617",
-            "theme_color": "#020617",
-            "icons": [
-                {
-                    "src": "icon.png",
-                    "sizes": "192x192 512x512",
-                    "type": "image/png",
-                    "purpose": "any maskable"
-                }
-            ]
-        };
-        const manifestBlob = new Blob([JSON.stringify(manifestData)], {type: 'application/json'});
-        const manifestUrl = URL.createObjectURL(manifestBlob);
-        const manifestLink = document.createElement('link');
-        manifestLink.rel = 'manifest';
-        manifestLink.href = manifestUrl;
-        document.head.appendChild(manifestLink);
-
-        // PWA Asennuslogiikka
+        // === PWA Asennuslogiikka ===
         let deferredPrompt;
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
-            // Näytä palkki jos sovellusta ei ole asennettu
+            // Näytä palkki jos sovellusta ei ole asennettu (ja ei olla PWA ikkunassa)
             if (!window.matchMedia('(display-mode: standalone)').matches) {
                 document.getElementById('pwa-banner').classList.add('show');
             }
@@ -559,7 +541,6 @@
                 }
                 deferredPrompt = null;
             } else {
-                // Jos natiivi prompt puuttuu (esim iOS), näytä ohjeet suoraan
                 showPwaInstructions();
             }
         }
@@ -571,7 +552,6 @@
         function closePwaModal() {
             document.getElementById('pwa-instructions-modal').classList.remove('active');
         }
-
 
         // === TEEMA ===
         let isDarkMode = localStorage.getItem('theme') === 'dark';
@@ -597,8 +577,8 @@
             { id: 0, name: "Asko Vepsäläinen", email: "admin@askovalmennus.fi", role: "omistaja" },
             { 
                 id: 1, 
-                name: "Eeli Noronen", // Päivitetty nimi
-                email: "eeli.noronen@testi.fi", // Uusi email
+                name: "Eeli Noronen",
+                email: "eeli.noronen@testi.fi",
                 role: "jasen",
                 workouts: [
                     {
@@ -655,7 +635,6 @@
             document.getElementById('login-view').style.display = 'none';
             document.getElementById('app-container').style.display = 'block';
             
-            // Aseta profiilikuvan nimikirjaimet ja sähköposti
             const initials = currentUser.name.split(' ').map(n => n[0]).join('').substring(0,2).toUpperCase();
             document.getElementById('user-avatar').innerText = initials;
             document.getElementById('setting-email-input').value = currentUser.email;
@@ -665,7 +644,6 @@
             greeting.innerText = role === 'omistaja' ? `Hei, Asko.` : `Hei, ${currentUser.name.split(' ')[0]}.`;
             sub.innerText = role === 'omistaja' ? 'Tässä on katsaus valmennettaviisi tänään.' : 'Tervetuloa takaisin. Tässä ohjelmasi.';
             
-            // Uudelleenkäynnistä uusi smooth blur animaatio
             greeting.style.animation = 'none';
             sub.style.animation = 'none';
             void greeting.offsetWidth;
