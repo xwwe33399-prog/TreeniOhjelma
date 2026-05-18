@@ -1,11 +1,11 @@
 {
   "name": "Asko Treenisovellus Beta",
-  "short_name": "Asko Beta",
+  "short_name": "Suorituskykykuntoon Beta",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#020617",
   "theme_color": "#020617",
-  "description": "Ammattitason valmennusportaali prototyyppi.",
+  "description": "Ammattitason treeniovellus betaversio.",
   "icons": [
     {
       "src": "icon.png",
