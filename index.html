@@ -1,13 +1,894 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fi" data-theme="light">
 <head>
     <meta charset="UTF-8">
-    <title>My Web Page</title>
-    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Asko Treenisovellus Beta</title>
+    
+    <!-- Ammattimainen Fontti: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Dynaaminen PWA Manifest Injektio tehdään JS:llä -->
+    <link rel="apple-touch-icon" href="icon.png">
+    
+    <style>
+        /* === VAKIOT JA TEEMAT === */
+        :root, [data-theme="light"] {
+            --bg-base: #f8fafc;
+            --bg-surface: #ffffff;
+            --text-primary: #0f172a;
+            --text-secondary: #64748b;
+            --border-color: #e2e8f0;
+            --accent-main: #020617;
+            --accent-hover: #1e293b;
+            --btn-text: #ffffff;
+            --hover-bg: #f1f5f9;
+            --banner-bg: #020617;
+            --banner-text: #ffffff;
+            --success: #059669;
+            --success-bg: #ecfdf5;
+            --danger: #dc2626;
+            --danger-bg: #fef2f2;
+            --input-bg: #f8fafc;
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+            --shadow-subtle: 0 4px 12px rgba(0,0,0,0.05);
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            --transition-fast: 0.2s ease;
+            --transition-smooth: 0.4s var(--ease-out-expo);
+        }
+
+        [data-theme="dark"] {
+            --bg-base: #09090b;
+            --bg-surface: #18181b;
+            --text-primary: #f8fafc;
+            --text-secondary: #a1a1aa;
+            --border-color: #27272a;
+            --accent-main: #ffffff;
+            --accent-hover: #e4e4e7;
+            --btn-text: #000000;
+            --hover-bg: #27272a;
+            --banner-bg: #18181b;
+            --banner-text: #ffffff;
+            --success: #10b981;
+            --success-bg: rgba(16, 185, 129, 0.1);
+            --danger: #ef4444;
+            --danger-bg: rgba(239, 68, 68, 0.1);
+            --input-bg: #09090b;
+            --shadow-subtle: 0 4px 12px rgba(0,0,0,0.4);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-primary);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            transition: background-color var(--transition-smooth), color var(--transition-smooth);
+        }
+
+        /* === ANIMAATIOT === */
+        @keyframes slideUpFade {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.9); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        /* UUSI SMOOTH TERVEHDYS ANIMAATIO (Blur + Zoom) */
+        @keyframes smoothGreeting {
+            0% { opacity: 0; transform: scale(0.95) translateY(10px); filter: blur(10px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
+        }
+
+        .animate-enter {
+            opacity: 0;
+            animation: slideUpFade 0.6s var(--ease-out-expo) forwards;
+        }
+
+        svg {
+            width: 22px; height: 22px; stroke-width: 2; stroke: currentColor;
+            fill: none; stroke-linecap: round; stroke-linejoin: round;
+        }
+
+        /* === PWA ASENNUSPALKKI & OHJEET === */
+        #pwa-banner {
+            position: fixed; bottom: 0; left: 0; right: 0; background: var(--bg-surface);
+            padding: 1.5rem; border-top: 1px solid var(--border-color); box-shadow: 0 -10px 30px rgba(0,0,0,0.1);
+            display: none; justify-content: space-between; align-items: center; z-index: 5000;
+            transform: translateY(100%); transition: transform 0.5s var(--ease-out-expo);
+        }
+        #pwa-banner.show { transform: translateY(0); display: flex; }
+        
+        .pwa-text h4 { margin-bottom: 0.2rem; font-size: 1.1rem; }
+        .pwa-text p { font-size: 0.85rem; color: var(--text-secondary); }
+        
+        #pwa-instructions-modal {
+            position: fixed; inset: 0; background: var(--banner-bg); color: var(--banner-text);
+            z-index: 6000; display: none; flex-direction: column; align-items: center; justify-content: center;
+            text-align: center; padding: 2rem; opacity: 0; transition: opacity 0.4s;
+        }
+        #pwa-instructions-modal.active { display: flex; opacity: 1; }
+
+        /* === ALOITUSNÄKYMÄ === */
+        #login-view {
+            position: fixed; inset: 0; background-color: var(--bg-surface);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            z-index: 1000; padding: 2rem; text-align: center;
+            transition: background-color var(--transition-smooth);
+        }
+
+        .brand-logo {
+            width: 72px; height: 72px; background: var(--accent-main); color: var(--btn-text);
+            border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center;
+            font-size: 1.8rem; font-weight: 800; margin-bottom: 1.5rem;
+            animation: popIn 0.6s var(--ease-out-expo) forwards;
+        }
+
+        #login-view h1 { font-size: 2.5rem; font-weight: 800; letter-spacing: -0.04em; margin-bottom: 0.5rem; }
+        #login-view p { color: var(--text-secondary); margin-bottom: 3rem; font-size: 1.1rem; }
+        .login-grid { display: flex; flex-direction: column; gap: 1.2rem; width: 100%; max-width: 360px; }
+
+        /* === PAINIKKEET === */
+        .btn {
+            background-color: var(--accent-main); color: var(--btn-text);
+            border: 1px solid var(--accent-main); padding: 14px 24px;
+            font-size: 1.05rem; font-weight: 600; cursor: pointer;
+            border-radius: var(--radius-md); transition: all 0.2s ease;
+            width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px;
+        }
+        .btn:hover { background-color: var(--accent-hover); transform: translateY(-2px); box-shadow: var(--shadow-subtle); }
+        .btn:active { transform: translateY(1px); }
+
+        .btn-outline { background-color: transparent; color: var(--text-primary); border: 1px solid var(--border-color); }
+        .btn-outline:hover { border-color: var(--text-primary); background-color: var(--hover-bg); }
+
+        /* === APP LAYOUT === */
+        #app-container { display: none; height: 100vh; width: 100%; }
+
+        .top-bar {
+            height: 70px; background-color: var(--bg-surface); border-bottom: 1px solid var(--border-color);
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 1.5rem; position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+            transition: background-color var(--transition-smooth), border-color var(--transition-smooth);
+        }
+
+        .top-bar-left { display: flex; align-items: center; gap: 1rem; }
+        .top-bar-title { font-weight: 700; font-size: 1.2rem; }
+        .top-bar-right { display: flex; gap: 0.5rem; }
+
+        .icon-btn {
+            background: transparent; border: none; width: 44px; height: 44px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; cursor: pointer;
+            color: var(--text-primary); transition: var(--transition-fast);
+        }
+        .icon-btn:hover { background-color: var(--hover-bg); transform: scale(1.05); }
+        .menu-toggle { display: none; }
+
+        .sidebar {
+            position: fixed; top: 0; left: 0; bottom: 0; width: 280px;
+            background-color: var(--bg-surface); border-right: 1px solid var(--border-color);
+            display: flex; flex-direction: column; padding: 1.5rem 0; z-index: 40;
+            transition: transform var(--transition-smooth), background-color var(--transition-smooth);
+        }
+        .sidebar-header { padding: 0 1.5rem; margin-bottom: 2rem; margin-top: 70px; }
+        .sidebar-header h2 { font-size: 0.8rem; text-transform: uppercase; font-weight: 700; color: var(--text-secondary); }
+
+        .nav-items { display: flex; flex-direction: column; gap: 0.4rem; padding: 0 1rem; }
+        .nav-item {
+            padding: 14px 16px; border-radius: var(--radius-sm); cursor: pointer; font-weight: 500;
+            color: var(--text-secondary); transition: var(--transition-fast);
+            display: flex; align-items: center; gap: 14px; font-size: 1rem;
+        }
+        .nav-item:hover { background-color: var(--hover-bg); color: var(--text-primary); transform: translateX(4px); }
+        .nav-item.active { background-color: var(--hover-bg); color: var(--text-primary); font-weight: 700; }
+        .logout-wrapper { margin-top: auto; padding: 0 1rem; }
+
+        .main-wrapper {
+            margin-left: 280px; margin-top: 70px; height: calc(100vh - 70px);
+            overflow-y: auto; background-color: var(--bg-base); scroll-behavior: smooth;
+            transition: margin-left var(--transition-smooth), background-color var(--transition-smooth);
+        }
+
+        .greeting-banner {
+            background-color: var(--banner-bg); color: var(--banner-text);
+            padding: 6rem 2rem 5rem; text-align: center; border-bottom: 1px solid var(--border-color);
+            transition: background-color var(--transition-smooth);
+        }
+        /* Uusi Smooth Animaatio asetettu tähän */
+        .greeting-banner h1 { font-size: 3.5rem; font-weight: 800; margin: 0; letter-spacing: -0.04em; animation: smoothGreeting 1s var(--ease-out-expo) forwards; opacity: 0; }
+        .greeting-banner p { font-size: 1.2rem; color: #a1a1aa; margin-top: 1rem; animation: smoothGreeting 1.2s var(--ease-out-expo) forwards; opacity: 0; }
+
+        .content-container { padding: 2rem; max-width: 900px; margin: 0 auto; position: relative; top: -40px; }
+        .view-section { display: none; }
+        .view-section.active { display: block; }
+        .section-title { font-size: 1.6rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--text-primary); }
+
+        /* === KORTIT & TREENIT === */
+        .card {
+            background-color: var(--bg-surface); border: 1px solid var(--border-color);
+            border-radius: var(--radius-md); padding: 2rem; margin-bottom: 2rem;
+            transition: var(--transition-smooth), background-color var(--transition-smooth);
+        }
+        .card:hover { border-color: var(--text-secondary); box-shadow: var(--shadow-subtle); }
+
+        .workout-header { border-bottom: 1px solid var(--border-color); padding-bottom: 1.5rem; margin-bottom: 1.5rem; }
+        .workout-table { width: 100%; border-collapse: collapse; }
+        .workout-table th { text-align: left; padding-bottom: 1rem; color: var(--text-secondary); font-size: 0.85rem; text-transform: uppercase; }
+        .workout-table td { padding: 1.5rem 0; border-top: 1px solid var(--border-color); color: var(--text-secondary); }
+        .exercise-name { font-weight: 700; color: var(--text-primary); font-size: 1.1rem; display: block; margin-bottom: 0.4rem; }
+
+        .feedback-section { margin-top: 2.5rem; padding-top: 2rem; border-top: 2px dashed var(--border-color); }
+        textarea, input[type="text"], input[type="password"] {
+            width: 100%; padding: 14px 16px; border: 1px solid var(--border-color); border-radius: var(--radius-sm);
+            font-size: 1rem; margin-bottom: 1rem; background-color: var(--input-bg); color: var(--text-primary);
+            transition: var(--transition-fast); resize: vertical;
+        }
+        textarea:focus, input:focus { outline: none; border-color: var(--text-primary); }
+
+        .member-row { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 0; border-bottom: 1px solid var(--border-color); }
+        .member-row:last-child { border-bottom: none; }
+        .status-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 0.8rem; font-weight: 700; padding: 6px 12px; border-radius: 20px; margin-top: 8px; text-transform: uppercase; }
+        .status-active { background: var(--success-bg); color: var(--success); }
+        .status-empty { background: var(--danger-bg); color: var(--danger); }
+
+        /* Tilastot */
+        .stat-bar-container { margin-bottom: 1.5rem; }
+        .stat-bar-header { display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.95rem; }
+        .stat-bar-bg { width: 100%; height: 12px; background: var(--hover-bg); border-radius: 10px; overflow: hidden; }
+        .stat-bar-fill { height: 100%; background: var(--text-primary); border-radius: 10px; transition: width 1.5s var(--ease-out-expo); width: 0; }
+
+        /* Asetukset Toggle */
+        .setting-row { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 0; border-bottom: 1px solid var(--border-color); }
+        .toggle-switch {
+            position: relative; width: 50px; height: 28px; background: var(--border-color); border-radius: 30px;
+            cursor: pointer; transition: background 0.3s;
+        }
+        .toggle-switch.active { background: var(--success); }
+        .toggle-circle {
+            position: absolute; top: 3px; left: 3px; width: 22px; height: 22px; background: #fff;
+            border-radius: 50%; transition: transform 0.3s var(--ease-out-expo);
+        }
+        .toggle-switch.active .toggle-circle { transform: translateX(22px); }
+
+        /* === MODAL / NOTIFICATION === */
+        .modal-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 2000;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; pointer-events: none; transition: opacity 0.3s; backdrop-filter: blur(4px);
+        }
+        .modal-overlay.active { opacity: 1; pointer-events: auto; }
+        .modal-content {
+            background: var(--bg-surface); padding: 3rem 2rem; border-radius: var(--radius-md);
+            text-align: center; transform: scale(0.9); transition: transform 0.3s var(--ease-out-expo);
+            border: 1px solid var(--border-color); max-width: 400px; width: 90%; box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        .modal-overlay.active .modal-content { transform: scale(1); }
+        .success-icon {
+            width: 64px; height: 64px; color: var(--success); margin: 0 auto 1.5rem;
+            background: var(--success-bg); border-radius: 50%; padding: 15px;
+        }
+
+        /* === RESPONSIVISUUS === */
+        @media (max-width: 768px) {
+            .menu-toggle { display: flex; }
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.mobile-open { transform: translateX(0); box-shadow: 10px 0 30px rgba(0,0,0,0.2); }
+            .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 35; }
+            .sidebar-overlay.mobile-open { display: block; }
+            .sidebar-header { margin-top: 1rem; }
+            .main-wrapper { margin-left: 0; }
+            .greeting-banner { padding: 5rem 1.5rem 4rem; }
+            .greeting-banner h1 { font-size: 2.5rem; }
+            .content-container { padding: 1.5rem; }
+            #pwa-banner { flex-direction: column; gap: 1rem; text-align: center; padding: 1.5rem 1rem 2rem; }
+            #pwa-banner .btn { width: 100%; }
+        }
+    </style>
 </head>
 <body>
-    <h1 id="hello-world">Hello, World!</h1>
-    <p>Edit this code and click Run.</p>
-    <script src="script.js"></script>
+
+    <!-- NOTIFIKAATIO MODAL -->
+    <div class="modal-overlay" id="feedback-modal">
+        <div class="modal-content">
+            <svg class="success-icon" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <h2 style="font-size: 1.6rem; margin-bottom: 0.5rem; font-weight: 800;">Palaute lähetetty!</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 2rem; font-size: 1rem;">Asko on saanut palautteesi ja vastaa siihen pian.</p>
+            <button class="btn" onclick="closeNotification()">OK, Ymmärretty</button>
+        </div>
+    </div>
+
+    <!-- PWA INSTALL BANNER & OHJEET -->
+    <div id="pwa-banner">
+        <div class="pwa-text">
+            <h4>Beta sovellus</h4>
+            <p>Asenna sovellus puhelimeesi saadaksesi parhaan kokemuksen.</p>
+        </div>
+        <button class="btn" style="width: auto; white-space: nowrap;" onclick="installPWA()">Lataa sovellus</button>
+    </div>
+
+    <div id="pwa-instructions-modal">
+        <svg style="width: 80px; height: 80px; margin-bottom: 1rem; color: #10b981;" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+        <h2 style="font-size: 2rem; margin-bottom: 1rem;">Lataus aloitettu!</h2>
+        <p style="font-size: 1.2rem; max-width: 400px; line-height: 1.6; opacity: 0.9;">
+            Kun lataus on valmis, mene puhelimesi kotivalikkoon ja etsi sovellus nimeltä <strong>Asko Treenisovellus Beta</strong>.
+        </p>
+        <button class="btn btn-outline" style="margin-top: 3rem; border-color: rgba(255,255,255,0.3); color: white;" onclick="closePwaModal()">Sulje tämä ohje</button>
+    </div>
+
+    <!-- KIRJAUTUMISNÄKYMÄ -->
+    <div id="login-view">
+        <div style="position: absolute; top: 20px; right: 20px; display: flex; gap: 10px;">
+            <button class="icon-btn" onclick="toggleTheme()" title="Vaihda teemaa">
+                <svg id="login-theme-icon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+            </button>
+            <button class="icon-btn" onclick="toggleFullScreen()" title="Kokonäyttötila">
+                <svg id="login-fs-icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+            </button>
+        </div>
+
+        <div class="brand-logo">AV</div>
+        <h1>Asko Vepsäläinen</h1>
+        <p>Ammattitason Valmennusportaali</p>
+        
+        <div class="login-grid">
+            <button class="btn" onclick="login('omistaja', 0)">
+                <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                Kirjaudu Omistajana (Asko)
+            </button>
+            <button class="btn btn-outline" onclick="login('jasen', 1)">Eeli Noronen (Aktiiviset treenit)</button>
+            <button class="btn btn-outline" onclick="login('jasen', 4)">Sofia (Ei ohjelmaa)</button>
+        </div>
+    </div>
+
+    <!-- SOVELLUS -->
+    <div id="app-container">
+        
+        <!-- YLÄPALKKI -->
+        <header class="top-bar">
+            <div class="top-bar-left">
+                <button class="icon-btn menu-toggle" onclick="toggleSidebar()">
+                    <svg viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                </button>
+                <div class="top-bar-title" style="display: flex; align-items: center; gap: 10px;">
+                    <div id="user-avatar" style="width: 32px; height: 32px; background: var(--accent-main); color: var(--btn-text); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 700;">AV</div>
+                    Asko Vepsäläinen
+                </div>
+            </div>
+            <div class="top-bar-right">
+                <button class="icon-btn" onclick="toggleTheme()" title="Vaihda teemaa">
+                    <svg id="app-theme-icon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                </button>
+                <button class="icon-btn" onclick="toggleFullScreen()" title="Kokonäyttötila">
+                    <svg id="app-fs-icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- SIVUPALKKI & OVERLAY -->
+        <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-header"><h2>Valikko</h2></div>
+            <div class="nav-items" id="nav-items"></div>
+            <div class="logout-wrapper">
+                <button class="btn btn-outline" style="border: none; justify-content: flex-start; padding-left: 16px;" onclick="logout()">
+                    <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                    Kirjaudu ulos
+                </button>
+            </div>
+        </nav>
+
+        <!-- PÄÄSISÄLTÖ -->
+        <main class="main-wrapper" id="main-wrapper">
+            <div class="greeting-banner">
+                <!-- Näillä on nyt blur/zoom -animaatio CSS:ssä -->
+                <h1 id="greeting-text">Hei.</h1>
+                <p id="greeting-sub">Tervetuloa takaisin.</p>
+            </div>
+
+            <div class="content-container">
+
+                <!-- JÄSEN: TREENIT -->
+                <div id="view-jasen-treeni" class="view-section">
+                    <h2 class="section-title animate-enter" id="jasen-treeni-otsikko">Treeniohjelmat</h2>
+                    <div id="jasen-treeni-container"></div>
+                </div>
+
+                <!-- OMISTAJA: JÄSENET -->
+                <div id="view-omistaja-jasenet" class="view-section">
+                    <h2 class="section-title animate-enter">Asiakasluettelo</h2>
+                    <div class="card animate-enter" id="omistaja-jasen-lista" style="padding: 1rem 2rem;"></div>
+                </div>
+
+                <!-- OMISTAJA: TILASTOT -->
+                <div id="view-omistaja-tilastot" class="view-section">
+                    <h2 class="section-title animate-enter">Liiketoiminnan Tilastot</h2>
+                    <div class="card animate-enter" style="animation-delay: 0.1s;">
+                        <h3 style="margin-bottom: 1.5rem; font-size: 1.2rem;">Viikon aktiivisuus</h3>
+                        
+                        <div class="stat-bar-container">
+                            <div class="stat-bar-header"><span>Tehdyt treenit (Asiakkaat)</span> <span>85%</span></div>
+                            <div class="stat-bar-bg"><div class="stat-bar-fill stat-animate" style="width: 85%;"></div></div>
+                        </div>
+
+                        <div class="stat-bar-container">
+                            <div class="stat-bar-header"><span>Luodut ohjelmat</span> <span>60%</span></div>
+                            <div class="stat-bar-bg"><div class="stat-bar-fill stat-animate" style="width: 60%; background: var(--success);"></div></div>
+                        </div>
+
+                        <div class="stat-bar-container">
+                            <div class="stat-bar-header"><span>Vastatut palautteet</span> <span>100%</span></div>
+                            <div class="stat-bar-bg"><div class="stat-bar-fill stat-animate" style="width: 100%; background: #3b82f6;"></div></div>
+                        </div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;" class="animate-enter" style="animation-delay: 0.2s;">
+                        <div class="card" style="text-align: center; padding: 2rem;">
+                            <div style="font-size: 3rem; font-weight: 800;">7</div>
+                            <div style="color: var(--text-secondary); font-size: 0.9rem; text-transform: uppercase;">Aktiivista Asiakasta</div>
+                        </div>
+                        <div class="card" style="text-align: center; padding: 2rem;">
+                            <div style="font-size: 3rem; font-weight: 800;">14</div>
+                            <div style="color: var(--text-secondary); font-size: 0.9rem; text-transform: uppercase;">Aktiivista Ohjelmaa</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- OMISTAJA: ASIAKAS NÄKYMÄ -->
+                <div id="view-omistaja-asiakas" class="view-section">
+                    <button class="btn-outline animate-enter" style="width: auto; padding: 10px 20px; margin-bottom: 2rem; border-radius: 30px;" onclick="switchView('view-omistaja-jasenet', 'nav-omistaja-jasenet')">
+                        ← Takaisin listaan
+                    </button>
+                    <h2 class="section-title animate-enter" id="omistaja-asiakas-nimi" style="font-size: 2.2rem;">Asiakas</h2>
+                    <h3 class="section-title animate-enter" style="margin-top: 2rem; font-size: 1.2rem;">Asiakkaan Ohjelmat</h3>
+                    <div id="omistaja-asiakas-treenit" class="animate-enter"></div>
+                </div>
+
+                <!-- YHTEISET: ASETUKSET -->
+                <div id="view-asetukset" class="view-section">
+                    <h2 class="section-title animate-enter">Asetukset</h2>
+                    <div class="card animate-enter" style="animation-delay: 0.1s;">
+                        <h3 style="margin-bottom: 1.5rem;">Profiili</h3>
+                        <label style="font-size: 0.9rem; color: var(--text-secondary); font-weight: 600;">Sähköposti</label>
+                        <!-- Tämä kenttä päivittyy dynaamisesti JS:llä -->
+                        <input type="text" id="setting-email-input" value="ladataan..." disabled style="opacity: 0.6; cursor: not-allowed;">
+                        
+                        <label style="font-size: 0.9rem; color: var(--text-secondary); font-weight: 600; margin-top: 1rem; display: block;">Vaihda Salasana</label>
+                        <input type="password" placeholder="Uusi salasana...">
+                        <button class="btn" style="width: auto; margin-top: 0.5rem;" onclick="alert('Salasana tallennettu')">Tallenna Salasana</button>
+                    </div>
+
+                    <div class="card animate-enter" style="animation-delay: 0.2s;">
+                        <h3 style="margin-bottom: 1.5rem;">Ilmoitukset</h3>
+                        <div class="setting-row">
+                            <div>
+                                <div style="font-weight: 600;">Sähköposti-ilmoitukset</div>
+                                <div style="font-size: 0.85rem; color: var(--text-secondary);">Saat sähköpostia uusista tapahtumista.</div>
+                            </div>
+                            <div class="toggle-switch active" onclick="this.classList.toggle('active')"><div class="toggle-circle"></div></div>
+                        </div>
+                        <div class="setting-row" style="border-bottom: none;">
+                            <div>
+                                <div style="font-weight: 600;">Selainilmoitukset</div>
+                                <div style="font-size: 0.85rem; color: var(--text-secondary);">Salli ilmoitukset selaimessa.</div>
+                            </div>
+                            <div class="toggle-switch" onclick="this.classList.toggle('active')"><div class="toggle-circle"></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- UUSI OMINAISUUS: BETATESTI VÄLILEHTI -->
+                <div id="view-betatesti" class="view-section">
+                    <h2 class="section-title animate-enter">README.JSON</h2>
+                    <div class="card animate-enter" style="background: var(--banner-bg); color: var(--banner-text); border-color: var(--accent-main);">
+                        <p style="font-family: monospace; font-size: 1.2rem; margin-bottom: 1rem;">{</p>
+                        <p style="font-family: monospace; font-size: 1.1rem; padding-left: 2rem;">"viesti": "Tein tämän vain huvikseen",</p>
+                        <p style="font-family: monospace; font-size: 1.1rem; padding-left: 2rem;">"status": "Beta"</p>
+                        <p style="font-family: monospace; font-size: 1.2rem; margin-top: 1rem;">}</p>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // === DYNAAMINEN PWA MANIFEST (Luodaan suoraan JS:llä) ===
+        const manifestData = {
+            "name": "Asko Treenisovellus Beta",
+            "short_name": "Asko Beta",
+            "start_url": ".",
+            "display": "standalone",
+            "background_color": "#020617",
+            "theme_color": "#020617",
+            "icons": [
+                {
+                    "src": "icon.png",
+                    "sizes": "192x192 512x512",
+                    "type": "image/png",
+                    "purpose": "any maskable"
+                }
+            ]
+        };
+        const manifestBlob = new Blob([JSON.stringify(manifestData)], {type: 'application/json'});
+        const manifestUrl = URL.createObjectURL(manifestBlob);
+        const manifestLink = document.createElement('link');
+        manifestLink.rel = 'manifest';
+        manifestLink.href = manifestUrl;
+        document.head.appendChild(manifestLink);
+
+        // PWA Asennuslogiikka
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            // Näytä palkki jos sovellusta ei ole asennettu
+            if (!window.matchMedia('(display-mode: standalone)').matches) {
+                document.getElementById('pwa-banner').classList.add('show');
+            }
+        });
+
+        // Fallback jos ollaan mobiilissa, mutta prompt ei tule heti
+        setTimeout(() => {
+            if(!window.matchMedia('(display-mode: standalone)').matches && window.innerWidth < 768) {
+                document.getElementById('pwa-banner').classList.add('show');
+            }
+        }, 3000);
+
+        async function installPWA() {
+            document.getElementById('pwa-banner').classList.remove('show');
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                if (outcome === 'accepted') {
+                    showPwaInstructions();
+                }
+                deferredPrompt = null;
+            } else {
+                // Jos natiivi prompt puuttuu (esim iOS), näytä ohjeet suoraan
+                showPwaInstructions();
+            }
+        }
+
+        function showPwaInstructions() {
+            document.getElementById('pwa-instructions-modal').classList.add('active');
+        }
+
+        function closePwaModal() {
+            document.getElementById('pwa-instructions-modal').classList.remove('active');
+        }
+
+
+        // === TEEMA ===
+        let isDarkMode = localStorage.getItem('theme') === 'dark';
+
+        function applyTheme() {
+            document.documentElement.setAttribute('data-theme', isDarkMode ? 'dark' : 'light');
+            const icon = isDarkMode 
+                ? '<circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>'
+                : '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>';
+            document.getElementById('login-theme-icon').innerHTML = icon;
+            document.getElementById('app-theme-icon').innerHTML = icon;
+        }
+
+        function toggleTheme() {
+            isDarkMode = !isDarkMode;
+            localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+            applyTheme();
+        }
+        applyTheme();
+
+        // === TIETOKANTA (Hauskat nimet, oikeat sähköpostit ja Eelin historia) ===
+        const clientsData = [
+            { id: 0, name: "Asko Vepsäläinen", email: "admin@askovalmennus.fi", role: "omistaja" },
+            { 
+                id: 1, 
+                name: "Eeli Noronen", // Päivitetty nimi
+                email: "eeli.noronen@testi.fi", // Uusi email
+                role: "jasen",
+                workouts: [
+                    {
+                        title: "Voima & Hypertrofia: Vetävät lihakset",
+                        date: "Viimeksi päivitetty: Tänään",
+                        exercises: [
+                            { name: "Maastaveto", sets: "4", reps: "5-8", note: "Raskas paino. Pidä selkä suorana." },
+                            { name: "Leuanveto", sets: "3", reps: "Max", note: "Lisäpainot käyttöön jos menee 10." },
+                            { name: "Hauiskääntö", sets: "4", reps: "10", note: "Hallittu negatiivinen vaihe." }
+                        ]
+                    },
+                    {
+                        title: "Kevyt Viikko: Palauttava treeni",
+                        date: "11.05.2026",
+                        exercises: [
+                            { name: "Kuntopyörä", sets: "1", reps: "20 min", note: "Matala syke." },
+                            { name: "Keskivartalo kierto", sets: "3", reps: "15", note: "Ei lisäpainoja." }
+                        ]
+                    },
+                    {
+                        title: "Maksimivoima: Testipäivä",
+                        date: "04.05.2026",
+                        exercises: [
+                            { name: "Penkkipunnerrus", sets: "5", reps: "1-3", note: "Maksimiyritykset varmistajan kanssa." },
+                            { name: "Jalkakyykky", sets: "5", reps: "1-3", note: "Maksimiyritykset." }
+                        ]
+                    }
+                ]
+            },
+            { id: 2, name: "Jorma Teräs", email: "jorma.teras@gmail.com", role: "jasen", workouts: [{title: "Penkkiä ja habaa", date: "Eilen", exercises: [{name: "Penkki", sets:"3", reps:"10", note:""}]}] },
+            { id: 3, name: "Pasi 'Pumppi' Viheraho", email: "pasi.v@hotmail.com", role: "jasen", workouts: [{title: "Kuntoutus", date: "Viime viikko", exercises: []}] },
+            { id: 4, name: "Sofia Laine", email: "sofia.laine@icloud.com", role: "jasen", workouts: [] },
+            { id: 5, name: "Sirkka-Liisa Kyykky", email: "sirkka@luukku.com", role: "jasen", workouts: [] },
+            { id: 6, name: "Markku 'Hauis' Rautiainen", email: "markku.r@yritys.fi", role: "jasen", workouts: [] }
+        ];
+
+        let currentUser = null;
+
+        // === FULLSCREEN ===
+        function toggleFullScreen() {
+            if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+            else if (document.exitFullscreen) document.exitFullscreen();
+        }
+        document.addEventListener('fullscreenchange', () => {
+            const isFs = !!document.fullscreenElement;
+            const path = isFs ? "M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" : "M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3";
+            document.getElementById('login-fs-icon').innerHTML = `<path d="${path}"></path>`;
+            document.getElementById('app-fs-icon').innerHTML = `<path d="${path}"></path>`;
+        });
+
+        // === SOVELLUKSEN LOGIIKKA ===
+        function login(role, userId) {
+            currentUser = clientsData.find(c => c.id === userId);
+            document.getElementById('login-view').style.display = 'none';
+            document.getElementById('app-container').style.display = 'block';
+            
+            // Aseta profiilikuvan nimikirjaimet ja sähköposti
+            const initials = currentUser.name.split(' ').map(n => n[0]).join('').substring(0,2).toUpperCase();
+            document.getElementById('user-avatar').innerText = initials;
+            document.getElementById('setting-email-input').value = currentUser.email;
+            
+            const greeting = document.getElementById('greeting-text');
+            const sub = document.getElementById('greeting-sub');
+            greeting.innerText = role === 'omistaja' ? `Hei, Asko.` : `Hei, ${currentUser.name.split(' ')[0]}.`;
+            sub.innerText = role === 'omistaja' ? 'Tässä on katsaus valmennettaviisi tänään.' : 'Tervetuloa takaisin. Tässä ohjelmasi.';
+            
+            // Uudelleenkäynnistä uusi smooth blur animaatio
+            greeting.style.animation = 'none';
+            sub.style.animation = 'none';
+            void greeting.offsetWidth;
+            greeting.style.animation = 'smoothGreeting 1s var(--ease-out-expo) forwards';
+            sub.style.animation = 'smoothGreeting 1.2s var(--ease-out-expo) forwards';
+
+            setupNavigation();
+
+            if(role === 'omistaja') {
+                renderOwnerMembers();
+                switchView('view-omistaja-jasenet', 'nav-omistaja-jasenet');
+            } else {
+                renderMemberWorkouts();
+                switchView('view-jasen-treeni', 'nav-jasen-treeni');
+            }
+        }
+
+        function logout() {
+            document.getElementById('app-container').style.display = 'none';
+            document.getElementById('login-view').style.display = 'flex';
+            currentUser = null; closeSidebar();
+        }
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('mobile-open');
+            document.getElementById('sidebar-overlay').classList.toggle('mobile-open');
+        }
+        function closeSidebar() {
+            document.getElementById('sidebar').classList.remove('mobile-open');
+            document.getElementById('sidebar-overlay').classList.remove('mobile-open');
+        }
+
+        function setupNavigation() {
+            const navContainer = document.getElementById('nav-items');
+            if (currentUser.role === 'omistaja') {
+                navContainer.innerHTML = `
+                    <div class="nav-item active" id="nav-omistaja-jasenet" onclick="switchView('view-omistaja-jasenet', this.id); closeSidebar();">
+                        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg> Kaikki Asiakkaat
+                    </div>
+                    <div class="nav-item" id="nav-omistaja-tilastot" onclick="switchView('view-omistaja-tilastot', this.id); animateStats(); closeSidebar();">
+                        <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg> Tilastot
+                    </div>
+                    <div class="nav-item" id="nav-asetukset" onclick="switchView('view-asetukset', this.id); closeSidebar();">
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg> Asetukset
+                    </div>
+                    <div class="nav-item" id="nav-betatesti" onclick="switchView('view-betatesti', this.id); closeSidebar();">
+                        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg> Betatesti
+                    </div>
+                `;
+            } else {
+                navContainer.innerHTML = `
+                    <div class="nav-item active" id="nav-jasen-treeni" onclick="switchView('view-jasen-treeni', this.id); closeSidebar();">
+                        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg> Treenit & Palaute
+                    </div>
+                    <div class="nav-item" id="nav-asetukset" onclick="switchView('view-asetukset', this.id); closeSidebar();">
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15..."></path></svg> Asetukset
+                    </div>
+                    <div class="nav-item" id="nav-betatesti" onclick="switchView('view-betatesti', this.id); closeSidebar();">
+                        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg> Betatesti
+                    </div>
+                `;
+            }
+        }
+
+        function switchView(viewId, navId) {
+            if(navId) {
+                document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+                const navEl = document.getElementById(navId);
+                if(navEl) navEl.classList.add('active');
+            }
+            document.querySelectorAll('.view-section').forEach(view => view.classList.remove('active'));
+
+            const targetView = document.getElementById(viewId);
+            if(targetView) {
+                targetView.classList.add('active');
+                const animatedElements = targetView.querySelectorAll('.animate-enter');
+                animatedElements.forEach((el) => {
+                    el.style.animation = 'none'; void el.offsetWidth; el.style.animation = ''; 
+                });
+            }
+            window.scrollTo(0,0);
+        }
+
+        // === JÄSEN: RENDERÖI KAIKKI TREENIT JA PALAUTE ===
+        function renderMemberWorkouts() {
+            const container = document.getElementById('jasen-treeni-container');
+            const titleEl = document.getElementById('jasen-treeni-otsikko');
+            container.innerHTML = '';
+            
+            if (currentUser.workouts.length === 0) {
+                titleEl.innerText = "Ohjelmat";
+                container.innerHTML = `
+                    <div class="card animate-enter" style="text-align: center; padding: 4rem 2rem;">
+                        <svg viewBox="0 0 24 24" style="width: 56px; height: 56px; color: var(--text-secondary); margin-bottom: 1rem;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line></svg>
+                        <h3 style="font-size: 1.4rem; font-weight: 700;">Ei aktiivista ohjelmaa</h3>
+                        <p style="margin-top: 0.5rem; color: var(--text-secondary);">Asko päivittää ohjelmasi pian.</p>
+                    </div>`;
+                return;
+            }
+
+            titleEl.innerText = "Aktiivinen ja Aiemmat Treenit";
+
+            currentUser.workouts.forEach((workout, wIndex) => {
+                let exercisesHtml = '';
+                workout.exercises.forEach(ex => {
+                    exercisesHtml += `
+                        <tr>
+                            <td style="width: 65%;">
+                                <span class="exercise-name">${ex.name}</span>
+                                <span style="font-size: 0.95rem; line-height: 1.5;">${ex.note}</span>
+                            </td>
+                            <td style="text-align: center; font-weight: 800; color: var(--text-primary); font-size: 1.2rem;">${ex.sets}</td>
+                            <td style="text-align: center; font-weight: 800; color: var(--text-primary); font-size: 1.2rem;">${ex.reps}</td>
+                        </tr>
+                    `;
+                });
+
+                const badge = wIndex === 0 
+                    ? `<span class="status-badge status-active">UUSIN OHJELMA</span>` 
+                    : `<span class="status-badge" style="background: var(--hover-bg); color: var(--text-secondary);">AIEMPI OHJELMA</span>`;
+
+                container.innerHTML += `
+                    <div class="card animate-enter" style="animation-delay: ${wIndex * 0.15}s;">
+                        <div class="workout-header">
+                            <div>
+                                ${badge}
+                                <h3 style="font-size: 1.5rem; font-weight: 800; margin-top: 0.5rem;">${workout.title}</h3>
+                                <span style="font-size: 0.95rem; color: var(--text-secondary);">${workout.date}</span>
+                            </div>
+                        </div>
+                        <div style="overflow-x: auto;">
+                            <table class="workout-table">
+                                <thead><tr><th>Liike & Ohje</th><th style="text-align: center; width: 15%;">Sarjat</th><th style="text-align: center; width: 15%;">Toistot</th></tr></thead>
+                                <tbody>${exercisesHtml}</tbody>
+                            </table>
+                        </div>
+                        
+                        <div class="feedback-section">
+                            <h4 style="margin-bottom: 0.5rem; font-size: 1.1rem; color: var(--text-primary);">Anna palautetta tästä treenistä</h4>
+                            <p style="color: var(--text-secondary); margin-bottom: 1rem; font-size: 0.95rem;">Miten treeni kulki? Tarvitsetko muutoksia painoihin?</p>
+                            <textarea rows="3" placeholder="Kirjoita palautteesi tähän..."></textarea>
+                            <button class="btn" style="width: auto;" onclick="sendFeedback(this)">
+                                <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                                Lähetä palaute Askolle
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // === NOTIFIKAATIO LOGIIKKA ===
+        function sendFeedback(btnElement) {
+            const textarea = btnElement.previousElementSibling;
+            if(textarea.value.trim() === '') {
+                alert("Kirjoita palaute ensin!"); return;
+            }
+            textarea.value = '';
+            document.getElementById('feedback-modal').classList.add('active');
+        }
+
+        function closeNotification() {
+            document.getElementById('feedback-modal').classList.remove('active');
+        }
+
+        // === OMISTAJA: JÄSENET JA TILASTOT ===
+        function renderOwnerMembers() {
+            const container = document.getElementById('omistaja-jasen-lista');
+            container.innerHTML = '';
+            const members = clientsData.filter(c => c.role === 'jasen');
+            
+            members.forEach((member, index) => {
+                const isActive = member.workouts.length > 0;
+                const statusBadge = isActive 
+                    ? `<span class="status-badge status-active">Ohjelma laadittu</span>` 
+                    : `<span class="status-badge status-empty">Vaatii ohjelman</span>`;
+
+                container.innerHTML += `
+                    <div class="member-row animate-enter" style="animation-delay: ${index * 0.05}s;">
+                        <div>
+                            <div style="font-weight: 800; font-size: 1.15rem;">${member.name}</div>
+                            <div style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.2rem;">${member.email}</div>
+                            ${statusBadge}
+                        </div>
+                        <button class="btn-outline" style="padding: 10px 20px; border-radius: var(--radius-sm); font-weight: 600;" onclick="openOwnerClient(${member.id})">Hallitse</button>
+                    </div>
+                `;
+            });
+        }
+
+        function openOwnerClient(clientId) {
+            const client = clientsData.find(c => c.id === clientId);
+            document.getElementById('omistaja-asiakas-nimi').innerText = client.name;
+            const container = document.getElementById('omistaja-asiakas-treenit');
+            
+            if(client.workouts.length === 0) {
+                container.innerHTML = `<div class="card"><p style="font-weight: 600; color: var(--text-secondary);">Ei aktiivisia treeniohjelmia.</p></div>`;
+            } else {
+                let html = '';
+                client.workouts.forEach(w => {
+                    html += `
+                        <div class="card" style="cursor: pointer;" onclick="alert('Avaa ohjelman muokkaustilan')">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                <strong style="font-size: 1.3rem; font-weight: 800;">${w.title}</strong>
+                                <span style="font-size: 0.95rem; color: var(--text-secondary);">${w.date}</span>
+                            </div>
+                            <p style="color: var(--text-secondary);">Sisältää ${w.exercises.length} liikettä.</p>
+                        </div>
+                    `;
+                });
+                container.innerHTML = html;
+            }
+            switchView('view-omistaja-asiakas');
+        }
+
+        function animateStats() {
+            const bars = document.querySelectorAll('.stat-animate');
+            bars.forEach(bar => {
+                const w = bar.style.width;
+                bar.style.width = '0%';
+                setTimeout(() => { bar.style.width = w; }, 100);
+            });
+        }
+    </script>
 </body>
 </html>
