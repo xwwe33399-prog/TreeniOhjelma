@@ -15,7 +15,7 @@
     <link rel="icon" href="icon.png" type="image/png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
         :root,[data-theme="light"]{
@@ -57,7 +57,7 @@
         }
 
         *{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif;-webkit-tap-highlight-color:transparent}
-        body{background-color:var(--bg-base);color:var(--text-primary);overflow:hidden;display:flex;flex-direction:column;height:100vh;width:100vw;transition:background-color var(--transition-smooth);position:relative;}
+        body{background-color:var(--bg-base);color:var(--text-primary);overflow:hidden;display:flex;flex-direction:column;height:100vh;width:100vw;transition:background-color var(--transition-smooth)}
 
         @keyframes slideUpFade{0%{opacity:0;transform:translateY(30px)}100%{opacity:1;transform:translateY(0)}}
         @keyframes popIn{0%{opacity:0;transform:scale(0.9)}100%{opacity:1;transform:scale(1)}}
@@ -89,7 +89,6 @@
         }
         .install-btn.active{display:flex}
         .install-btn:hover{transform:translateY(-3px);box-shadow:0 10px 25px rgba(255,255,255,0.3)}
-        .install-btn:active{transform:scale(0.96)}
 
         .ios-instruction{
             background:rgba(255,255,255,0.1);padding:20px;border-radius:16px;
@@ -101,24 +100,22 @@
         /* Login View */
         #login-view{
             position:fixed;inset:0;background-color:var(--bg-surface);display:none;
-            flex-direction:column;z-index:1000;padding:2rem;text-align:center;
+            flex-direction:column;z-index:1000;padding:2rem;align-items:center;justify-content:center;
+            overflow-y:auto;
         }
-        .login-content {
-            flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+        .login-card {
+            width:100%;max-width:400px;background:var(--bg-base);padding:2.5rem 2rem;border-radius:24px;
+            box-shadow:0 10px 30px rgba(0,0,0,0.05);animation:popIn 0.5s var(--ease-out-expo) forwards;
+            margin:auto;
         }
-        .login-footer {
-            padding-bottom:2rem;display:flex;justify-content:center;width:100%;
-        }
-        
-        .login-logo{width:72px;height:72px;background:var(--accent-main);color:var(--btn-text);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:2rem;font-weight:800;margin-bottom:1.5rem;animation:popIn .6s var(--ease-out-expo) forwards}
-        #login-view h1{font-size:2.2rem;font-weight:800;letter-spacing:-.03em;margin-bottom:.5rem}
-        #login-view p{color:var(--text-secondary);margin-bottom:3rem;font-size:1.05rem}
-        .error-message{display:none;background:var(--danger-bg);color:var(--danger);padding:14px 20px;border-radius:12px;font-weight:600;margin-bottom:1.5rem;border:1px solid var(--danger);max-width:360px}
-        
-        .google-btn{background-color:#ffffff;color:#000000;border:1px solid #e2e8f0;padding:16px 24px;font-size:1.1rem;font-weight:700;cursor:pointer;border-radius:30px;width:100%;max-width:340px;display:flex;align-items:center;justify-content:center;gap:12px;transition:all .2s;box-shadow:0 4px 15px rgba(0,0,0,0.05)}
-        .google-btn:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(0,0,0,0.15)}
+        .login-logo{width:64px;height:64px;background:var(--accent-main);color:var(--btn-text);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:1.8rem;font-weight:800;margin:0 auto 1.5rem}
+        #login-view h1{font-size:1.8rem;font-weight:800;letter-spacing:-.03em;margin-bottom:.5rem;text-align:center}
+        #login-view p{color:var(--text-secondary);margin-bottom:2rem;font-size:0.95rem;text-align:center}
 
-        .btn{background-color:var(--accent-main);color:var(--btn-text);border:1px solid var(--accent-main);padding:14px 24px;font-size:1rem;font-weight:600;cursor:pointer;border-radius:12px;transition:all .2s}
+        .error-message{display:none;background:var(--danger-bg);color:var(--danger);padding:12px 16px;border-radius:12px;font-weight:600;margin-bottom:1.5rem;border:1px solid var(--danger);font-size:0.85rem;text-align:left}
+        .success-message{display:none;background:var(--success-bg);color:var(--success);padding:12px 16px;border-radius:12px;font-weight:600;margin-bottom:1.5rem;border:1px solid var(--success);font-size:0.85rem;text-align:left}
+
+        .btn{background-color:var(--accent-main);color:var(--btn-text);border:1px solid var(--accent-main);padding:14px 24px;font-size:1rem;font-weight:600;cursor:pointer;border-radius:12px;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px;}
         .btn:hover{background-color:var(--accent-hover);transform:translateY(-2px)}
         .btn-outline{background-color:transparent;color:var(--text-primary);border:1px solid var(--border-color)}
         .btn-outline:hover{background-color:var(--hover-bg)}
@@ -128,7 +125,7 @@
         /* Main App */
         #app-container{display:none;height:100vh;width:100%}
 
-        /* Sidebar - Desktop */
+        /* Sidebar / Bottom Nav */
         .sidebar{position:fixed;top:0;left:0;bottom:0;width:280px;background-color:var(--bg-surface);border-right:1px solid var(--border-color);display:flex;flex-direction:column;padding:1.5rem 0;z-index:40}
         .sidebar-header{padding:0 1.5rem;margin-bottom:2rem;margin-top:20px}
         .nav-items{display:flex;flex-direction:column;gap:.4rem;padding:0 1rem}
@@ -146,8 +143,8 @@
         .section-title{font-size:1.4rem;font-weight:700;margin-bottom:1.5rem}
         .card{background-color:var(--bg-surface);border:1px solid var(--border-color);border-radius:16px;padding:2rem;margin-bottom:1.5rem;box-shadow:0 4px 6px rgba(0,0,0,0.02)}
 
-        input[type="text"],select,textarea{width:100%;padding:14px 16px;border:1px solid var(--border-color);border-radius:12px;font-size:1rem;margin-bottom:1.2rem;background-color:var(--input-bg);color:var(--text-primary)}
-        input[type="text"]:focus,select:focus,textarea:focus{outline:none;border-color:var(--accent-main);box-shadow:0 0 0 3px rgba(2,6,23,0.1)}
+        input[type="text"],input[type="email"],input[type="password"],select,textarea{width:100%;padding:14px 16px;border:1px solid var(--border-color);border-radius:12px;font-size:1rem;margin-bottom:1.2rem;background-color:var(--input-bg);color:var(--text-primary)}
+        input[type="text"]:focus,input[type="email"]:focus,input[type="password"]:focus,select:focus,textarea:focus{outline:none;border-color:var(--accent-main);box-shadow:0 0 0 3px rgba(2,6,23,0.1)}
         label{font-size:.85rem;font-weight:700;color:var(--text-secondary);display:block;margin-bottom:.5rem;text-transform:uppercase}
 
         .member-row{display:flex;justify-content:space-between;align-items:center;padding:1.25rem 0;border-bottom:1px solid var(--border-color)}
@@ -163,47 +160,16 @@
         .toggle-circle{position:absolute;top:3px;left:3px;width:22px;height:22px;background:#fff;border-radius:50%;transition:transform .3s var(--ease-out-expo)}
         .toggle-switch.active .toggle-circle{transform:translateX(22px)}
 
-        /* Mobile Layout Adjustments - Bottom Nav */
         @media(max-width:768px){
-            .sidebar{
-                transform:none;
-                display:flex;
-                flex-direction:row;
-                top:auto;
-                bottom:0;
-                left:0;
-                right:0;
-                width:100%;
-                height:75px;
-                padding:0;
-                border-right:none;
-                border-top:1px solid var(--border-color);
-                z-index:100;
-                background-color:var(--bg-surface);
-            }
+            .sidebar{transform:none;display:flex;flex-direction:row;top:auto;bottom:0;left:0;right:0;width:100%;height:75px;padding:0;border-right:none;border-top:1px solid var(--border-color);z-index:100;background-color:var(--bg-surface)}
             .sidebar-header{display:none}
-            .nav-items{
-                flex-direction:row;
-                width:100%;
-                padding:0;
-                gap:0;
-                justify-content:space-around;
-                align-items:center;
-            }
-            .nav-item{
-                flex-direction:column;
-                gap:6px;
-                padding:10px 0;
-                font-size:.75rem;
-                border-radius:8px;
-                width:100%;
-                justify-content:center;
-            }
+            .nav-items{flex-direction:row;width:100%;padding:0;gap:0;justify-content:space-around;align-items:center}
+            .nav-item{flex-direction:column;gap:6px;padding:10px 0;font-size:.75rem;border-radius:8px;width:100%;justify-content:center}
             .nav-item svg{width:24px;height:24px}
-            .main-wrapper{margin-left:0;height:calc(100vh - 75px);padding-bottom:1rem;}
+            .main-wrapper{margin-left:0;height:calc(100vh - 75px);padding-bottom:1rem}
             .greeting-banner{padding:3rem 1.5rem 4rem}
             .content-container{padding:0 1rem 1rem}
-            .card {padding:1.5rem;}
+            .card {padding:1.5rem}
         }
     </style>
 </head>
@@ -219,7 +185,6 @@
                 <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                 Lataa Sovellus
             </button>
-
             <button class="install-btn" id="install-btn-ios" onclick="showIOSInstructions()">
                 <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                 Asenna iPhonelle
@@ -230,7 +195,7 @@
             <h3 style="margin-bottom:10px;font-size:1.1rem;">📱 Näin asennat iPhonella:</h3>
             <ol style="margin-left:20px;line-height:1.8;color:#cbd5e1;">
                 <li>Paina Safari-selaimen <b>alareunasta Jaa-kuvaketta</b></li>
-                <li>Selaa alas ja valitse <b>"Lisää kotivalikkoon"</b> (Add to Home Screen)</li>
+                <li>Selaa alas ja valitse <b>"Lisää kotivalikkoon"</b></li>
                 <li>Napsauta <b>"Lisää"</b> oikeassa yläkulmassa</li>
                 <li>Avaa SK-sovellus kotivalikosta!</li>
             </ol>
@@ -245,28 +210,27 @@
     </div>
 
     <div id="login-view">
-        <div class="login-content">
+        <div class="login-card">
             <div class="login-logo">SK</div>
             <h1>Kirjaudu sisään</h1>
-            <p>Tervetuloa valmennusportaaliin.</p>
-            <div class="error-message" id="login-error">Väärä käyttäjätili. Valmentaja ei ole luonut tiliä tälle sähköpostille.</div>
-        </div>
-        
-        <div class="login-footer">
-            <button class="google-btn" onclick="startLogin()">
-                <svg viewBox="0 0 24 24" style="width:28px;height:28px;">
-                    <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-                    <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-                    <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
-                    <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-                </svg>
-                Jatka Googlella
-            </button>
+            <p>Valmennusportaalin turvallinen kirjautuminen</p>
+            
+            <div class="error-message" id="login-error"></div>
+            <div class="success-message" id="login-success"></div>
+            
+            <label>Sähköpostiosoite</label>
+            <input type="email" id="login-email" placeholder="esimerkki@gmail.com" required>
+            
+            <label>Salasana (Tasan 8 merkkiä)</label>
+            <input type="password" id="login-password" placeholder="••••••••" maxlength="8" required>
+            
+            <button class="btn" style="width:100%; padding:16px; margin-bottom:1rem;" onclick="handleLogin()">Kirjaudu sisään</button>
+            
+            <button class="btn btn-outline" style="width:100%; padding:16px;" onclick="handleRegister()">Rekisteröidy (Vain Admin)</button>
         </div>
     </div>
 
     <div id="app-container">
-
         <nav class="sidebar">
             <div class="sidebar-header"><h2>SK Portaali</h2></div>
             <div class="nav-items" id="nav-items"></div>
@@ -290,17 +254,12 @@
                     <h2 class="section-title">Valmennuksen Hallinta</h2>
                     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;">
                         <div class="card animate-enter">
-                            <h3 style="margin-bottom:1.5rem;">+ Uusi Käyttäjä</h3>
-                            <label>Google Sähköpostiosoite</label>
-                            <input type="text" id="new-user-email" placeholder="asiakas@gmail.com">
+                            <h3 style="margin-bottom:1.5rem;">+ Uusi Asiakas</h3>
+                            <label>Sähköpostiosoite</label>
+                            <input type="email" id="new-user-email" placeholder="asiakas@gmail.com">
                             <label>Koko Nimi</label>
                             <input type="text" id="new-user-name" placeholder="Esim. Matti">
-                            <label>Rooli</label>
-                            <select id="new-user-role">
-                                <option value="jasen">Jäsen (Asiakas)</option>
-                                <option value="omistaja">Omistaja (Admin)</option>
-                            </select>
-                            <button class="btn" onclick="addUser()">Luo / Päivitä Käyttäjä</button>
+                            <button class="btn" onclick="addClientUser()">Luo Asiakas & Generoi Salasana</button>
                         </div>
                         <div class="card animate-enter" style="animation-delay:.1s;">
                             <h3 style="margin-bottom:1.5rem;">+ Uusi Treeniohjelma</h3>
@@ -360,20 +319,23 @@
 
 <script type="module">
 import{initializeApp as _iA}from"https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-// PALAUTETTU: signInWithRedirect, koska mobiilisovelluksissa pop-up on estetty.
-import{getAuth as _gAu,GoogleAuthProvider as _gP,signInWithRedirect as _sIWR,onAuthStateChanged as _oASC,signOut as _sO}from"https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+import{getAuth as _gAu, signInWithEmailAndPassword as _sIEP, createUserWithEmailAndPassword as _cUEP, onAuthStateChanged as _oASC, signOut as _sO}from"https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 import{getFirestore as _gF,collection as _c,doc as _d,getDoc as _gD,getDocs as _gDs,setDoc as _sD,addDoc as _aD,query as _q,where as _w,orderBy as _oB,onSnapshot as _oS,serverTimestamp as _sT,limit as _l}from"https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
+// Pää-applikaatio
 const _fc = {
     apiKey:"AIzaSyC6nhZbUx_Eg226Bzm5NSqNS926XpRf9zE",
     authDomain:"suorituskykykuntoon-1.firebaseapp.com",
     projectId:"suorituskykykuntoon-1",
     storageBucket:"suorituskykykuntoon-1.firebasestorage.app"
 };
-
 const _a = _iA(_fc);
 const _au = _gAu(_a);
 const _db = _gF(_a);
+
+// Toissijainen applikaatio (käytetään asiakkaiden luomiseen ilman että admin kirjautuu ulos)
+const _a2 = _iA(_fc, "SecondaryApp");
+const _au2 = _gAu(_a2);
 
 let _dm = false, _cUE = "", _cUR = "", _cUN = "", _snd = localStorage.getItem('ui_snd')==='1';
 let deferredPrompt = null;
@@ -382,18 +344,16 @@ let initialLoadNotification = true;
 const _$ = (i) => document.getElementById(i);
 const _admins = ['vepiasko@gmail.com', 'eelukka12@gmail.com'];
 
-// === PWA LOGIIKKA (Strict Standalone) ===
+// === PWA CHECK (Strict Standalone) ===
 const _isIOS = /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase());
 const _isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
 
 if (!_isStandalone) {
-    // Jos avattu selaimessa, pakota asennus.
     _$('pwa-install-view').style.display = 'flex';
     _$('login-view').style.display = 'none';
     _$('app-container').style.display = 'none';
     if (_isIOS) _$('install-btn-ios').classList.add('active');
 } else {
-    // Jos jo asennettu PWA, ohitetaan asennusnäkymä.
     _$('pwa-install-view').style.display = 'none';
 }
 
@@ -406,10 +366,6 @@ window.addEventListener('beforeinstallprompt', (e) => {
 window.installAndroid = async function() {
     if (deferredPrompt) {
         deferredPrompt.prompt();
-        const { outcome } = await deferredPrompt.userChoice;
-        if(outcome === 'accepted') {
-            console.log("Asennus hyväksytty.");
-        }
         deferredPrompt = null;
     }
 }
@@ -418,58 +374,116 @@ window.showIOSInstructions = function() {
     _$('install-instruction-ios').classList.toggle('visible');
 }
 
-// === AUTH & TILI LOGIIKKA ===
+// === AUTH LOGIIKKA (Email / Password) ===
+
+// Kirjautumistilan kuuntelu
 _oASC(_au, async (user) => {
-    // Varmistetaan ettei selain vahingossa ohita pakotettua asennusnäkymää.
     if (!_isStandalone) return;
 
     if (user) {
         _$('login-view').style.display = 'none';
-        
         _cUE = user.email;
-        _cUN = user.displayName || "Käyttäjä";
-
-        // TARKISTETAAN ONKO KOVAKOODATTU ADMIN
-        if (_admins.includes(_cUE)) {
-            _cUR = 'omistaja';
-            
-            const docRef = _d(_db, "kayttajat", _cUE);
-            const docSnap = await _gD(docRef);
-            if (!docSnap.exists()) {
-                await _sD(docRef, { email: _cUE, name: _cUN, role: 'omistaja', createdAt: _sT() });
-            }
+        
+        // Haetaan käyttäjän tiedot (Rooli yms) Firestoresta
+        const docRef = _d(_db, "kayttajat", _cUE);
+        const docSnap = await _gD(docRef);
+        
+        if (docSnap.exists()) {
+            const data = docSnap.data();
+            _cUR = data.role;
+            _cUN = data.name;
             initApp();
-        } 
-        else {
-            // TARKISTETAAN ONKO LISÄTTY TIETOKANTAAN
-            const docRef = _d(_db, "kayttajat", _cUE);
-            const docSnap = await _gD(docRef);
-            
-            if (docSnap.exists()) {
-                const docData = docSnap.data();
-                _cUR = docData.role || 'jasen';
+        } else {
+            // Hätävarareitti: Jos on admin mutta dokumentti puuttuu (esim uusi rekisteröinti)
+            if (_admins.includes(_cUE)) {
+                _cUR = 'omistaja';
+                _cUN = _cUE === 'eelukka12@gmail.com' ? "Eeli" : "Asko";
+                await _sD(docRef, { email: _cUE, name: _cUN, role: 'omistaja', createdAt: _sT() });
                 initApp();
             } else {
-                // Käyttäjällä ei ole oikeuksia, kirjataan ulos
                 _sO(_au);
-                _$('login-view').style.display = 'flex';
-                _$('login-error').style.display = 'block';
+                showLoginError("Tiliäsi ei ole konfiguroitu oikein. Ota yhteys ylläpitoon.");
             }
         }
     } else {
-        // Ei kirjautunut
         _$('login-view').style.display = 'flex';
     }
 });
 
+// Rekisteröinti napin logiikka (Vain adminit)
+window.handleRegister = async function() {
+    const email = _$('login-email').value.trim().toLowerCase();
+    const pwd = _$('login-password').value.trim();
+    
+    _$('login-error').style.display = 'none';
+    _$('login-success').style.display = 'none';
+
+    if (!_admins.includes(email)) {
+        showLoginError("Vain järjestelmän ylläpitäjät voivat rekisteröityä suoraan.");
+        return;
+    }
+    if (pwd.length !== 8) {
+        showLoginError("Salasanan täytyy olla tarkalleen 8 merkkiä pitkä.");
+        return;
+    }
+
+    try {
+        await _cUEP(_au, email, pwd);
+        // Onnistui, Firebase kirjaa automaattisesti sisään ja oASC hoitaa loput
+    } catch (e) {
+        if(e.code === 'auth/email-already-in-use') {
+            showLoginError("Tämä sähköposti on jo rekisteröity. Kirjaudu sisään.");
+        } else {
+            showLoginError("Rekisteröinti epäonnistui: " + e.message);
+        }
+    }
+}
+
+// Kirjautumis napin logiikka
+window.handleLogin = async function() {
+    const email = _$('login-email').value.trim().toLowerCase();
+    const pwd = _$('login-password').value.trim();
+
+    _$('login-error').style.display = 'none';
+    _$('login-success').style.display = 'none';
+
+    if (!email || !pwd) {
+        showLoginError("Syötä sähköposti ja salasana.");
+        return;
+    }
+
+    try {
+        await _sIEP(_au, email, pwd);
+        // Onnistui, oASC hoitaa loput
+    } catch (e) {
+        showLoginError("Väärä sähköposti tai salasana.");
+    }
+}
+
+function showLoginError(msg) {
+    const err = _$('login-error');
+    err.innerText = msg;
+    err.style.display = 'block';
+}
+
+function showLoginSuccess(msg) {
+    const suc = _$('login-success');
+    suc.innerText = msg;
+    suc.style.display = 'block';
+}
+
+// === APP INITIATION ===
+
 function initApp() {
     _$('app-container').style.display = 'block';
+    
     _$('greeting-text').innerText = `Hei, ${_cUN.split(' ')[0]}.`;
     _$('settings-name').innerText = _cUN;
     _$('settings-email').innerText = _cUE;
     
-    let roleBadge = _cUR === 'omistaja' ? '<span class="status-badge status-admin">Omistaja</span>' : '<span class="status-badge status-active">Jäsen</span>';
+    let roleBadge = _cUR === 'omistaja' ? '<span class="status-badge status-admin">Valmentaja</span>' : '<span class="status-badge status-active">Jäsen</span>';
     _$('settings-role-badge').innerHTML = roleBadge;
+    
     if(_snd) _$('snd-tog').classList.add('active');
     if(_dm) _$('theme-tog').classList.add('active');
 
@@ -495,7 +509,6 @@ function buildMenu() {
         </div>`;
     }
 
-    // VAIN EELI NÄKEE GLOBAL PUSH -VÄLILEHDEN
     if (_cUE === 'eelukka12@gmail.com') {
         nav.innerHTML += `<div class="nav-item" id="nav-eeli-global" onclick="switchView('view-eeli-global', 'nav-eeli-global')">
             <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
@@ -517,26 +530,45 @@ function buildMenu() {
 
 // === TIETOKANTAOPERAATIOT SÄÄNTÖJEN MUKAAN ===
 
-window.addUser = async function() {
+window.addClientUser = async function() {
     if (_cUR !== 'omistaja') return;
-    const email = _$('new-user-email').value.trim();
+    const email = _$('new-user-email').value.trim().toLowerCase();
     const name = _$('new-user-name').value.trim();
-    const role = _$('new-user-role').value;
     
-    if(!email || !name) return; 
+    if(!email || !name) return showNotification("Virhe", "Täytä asiakkaan sähköposti ja nimi.");
+
+    // Generoidaan satunnainen 8-merkkinen salasana (kirjaimia ja numeroita)
+    const generatedPassword = Math.random().toString(36).slice(-8);
 
     try {
+        // 1. Luodaan käyttäjä toissijaisella Firebase instanssilla, ettei Admin kirjaudu vahingossa ulos
+        await _cUEP(_au2, email, generatedPassword);
+        
+        // Kirjataan toissijainen ulos heti varmuuden vuoksi
+        await _sO(_au2);
+
+        // 2. Lisätään käyttäjä Firestoreen sääntöjen mukaisesti
         await _sD(_d(_db, "kayttajat", email), {
             email: email,
             name: name,
-            role: role,
+            role: 'jasen',
             createdAt: _sT()
         });
+
         _$('new-user-email').value = '';
         _$('new-user-name').value = '';
+        
+        // 3. Ilmoitetaan luotu salasana valmentajalle
+        showNotification("Asiakas Luotu!", `Asiakas tallennettu. Generoitu salasana on: ${generatedPassword} (Kopioi tämä ylös!)`);
+        
         loadUsersIfAdmin(); 
     } catch(e) {
-        console.error(e);
+        if(e.code === 'auth/email-already-in-use') {
+            showNotification("Virhe", "Tämä sähköposti on jo olemassa järjestelmässä.");
+        } else {
+            showNotification("Virhe", "Käyttäjän luominen epäonnistui: " + e.message);
+            console.error(e);
+        }
     }
 }
 
@@ -549,7 +581,7 @@ async function loadUsersIfAdmin() {
     
     qSnap.forEach(doc => {
         const d = doc.data();
-        let badge = d.role === 'omistaja' ? '<span class="status-badge status-admin">Omistaja</span>' : '<span class="status-badge status-active">Jäsen</span>';
+        let badge = d.role === 'omistaja' ? '<span class="status-badge status-admin">Valmentaja</span>' : '<span class="status-badge status-active">Jäsen</span>';
         html += `<div class="member-row">
             <div>
                 <div style="font-weight:700;">${d.name}</div>
@@ -582,12 +614,14 @@ window.addWorkout = async function() {
         });
         _$('workout-title').value = '';
         _$('workout-exercises').value = '';
+        showNotification("Onnistui", "Ohjelma tallennettu asiakkaalle.");
     } catch (e) {
         console.error("Ohjelman lisäys epäonnistui", e);
     }
 }
 
 async function loadUserWorkouts() {
+    if(_cUR === 'omistaja') return;
     const q = _q(_c(_db, "treenit"), _w("omistajaEmail", "==", _cUE));
     const qSnap = await _gDs(q);
     
@@ -619,6 +653,7 @@ window.sendGlobalMessage = async function() {
         });
         _$('global-msg-title').value = '';
         _$('global-msg-body').value = '';
+        showNotification("Onnistui", "Hälytys lähetetty!");
     } catch(e) {
         console.error(e);
     }
@@ -641,13 +676,6 @@ function listenToGlobalNotifications() {
 }
 
 // === KÄYTTÖLIITTYMÄ FUNKTIOT ===
-
-// PALAUTETTU TÄMÄ METODI: PWA sovelluksissa Redirect on ainoa toimiva keino!
-window.startLogin = function() {
-    _$('login-error').style.display = 'none';
-    _sIWR(_au, new _gP());
-}
-
 window.logout = function() {
     _sO(_au).then(() => {
         window.location.reload();
@@ -659,7 +687,9 @@ window.showNotification = function(title, body) {
     _$('popup-body').innerText = body;
     _$('global-popup').classList.add('active');
     if(_snd) playBeep();
-    setTimeout(() => { closeNotification(); }, 8000);
+    
+    // Suuri timeout (15s) jotta admin ehtii varmasti lukea generoidun salasanan!
+    setTimeout(() => { closeNotification(); }, 15000);
 }
 
 window.closeNotification = function() {
