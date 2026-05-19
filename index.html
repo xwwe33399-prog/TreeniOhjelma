@@ -61,6 +61,7 @@
 
         svg{width:24px;height:24px;stroke-width:2;stroke:currentColor;fill:none;stroke-linecap:round;stroke-linejoin:round}
 
+        /* PWA View */
         #pwa-install-view{
             position:fixed;inset:0;background:linear-gradient(135deg,var(--banner-bg) 0%,#1e293b 100%);
             color:var(--banner-text);display:flex;flex-direction:column;align-items:center;justify-content:center;
@@ -75,9 +76,7 @@
         #pwa-install-view h1{font-size:2.4rem;font-weight:800;margin-bottom:1rem;letter-spacing:-0.03em}
         #pwa-install-view p{font-size:1.1rem;color:#cbd5e1;margin-bottom:2.5rem;line-height:1.6;max-width:420px}
 
-        .install-options{
-            display:flex;flex-direction:column;gap:1rem;width:100%;max-width:360px;
-        }
+        .install-options{display:flex;flex-direction:column;gap:1rem;width:100%;max-width:360px;}
         .install-btn{
             background:#ffffff;color:#000000;padding:16px 24px;font-size:1.1rem;font-weight:700;
             border-radius:30px;border:none;cursor:pointer;display:none;align-items:center;justify-content:center;
@@ -86,29 +85,46 @@
         .install-btn.active{display:flex}
         .install-btn:hover{transform:translateY(-3px);box-shadow:0 10px 25px rgba(255,255,255,0.3)}
         .install-btn:active{transform:scale(0.96)}
+        .skip-btn{
+            background:transparent;color:#cbd5e1;border:1px solid rgba(255,255,255,0.2);
+            padding:14px 24px;font-size:1rem;font-weight:600;border-radius:30px;cursor:pointer;
+            margin-top:10px;transition:all .2s;
+        }
+        .skip-btn:hover{background:rgba(255,255,255,0.1);color:#ffffff;}
 
         .ios-instruction{
             background:rgba(255,255,255,0.1);padding:20px;border-radius:16px;
             border:1px solid rgba(255,255,255,0.2);max-width:350px;text-align:left;margin-top:1.5rem;
             display:none;
         }
-        .ios-instruction.visible{display:block}
+        .ios-instruction.visible{display:block;animation:slideUpFade .4s var(--ease-out-expo) forwards;}
 
-        #login-view{position:fixed;inset:0;background-color:var(--bg-surface);display:none;flex-direction:column;align-items:center;justify-content:center;z-index:1000;padding:2rem;text-align:center}
+        /* Login View */
+        #login-view{
+            position:fixed;inset:0;background-color:var(--bg-surface);display:none;
+            flex-direction:column;z-index:1000;padding:2rem;text-align:center;
+        }
+        .login-content {
+            flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+        }
+        .login-footer {
+            padding-bottom:2rem;display:flex;justify-content:center;width:100%;
+        }
+        
         .login-logo{width:72px;height:72px;background:var(--accent-main);color:var(--btn-text);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:2rem;font-weight:800;margin-bottom:1.5rem;animation:popIn .6s var(--ease-out-expo) forwards}
         #login-view h1{font-size:2.2rem;font-weight:800;letter-spacing:-.03em;margin-bottom:.5rem}
         #login-view p{color:var(--text-secondary);margin-bottom:3rem;font-size:1.05rem}
         .error-message{display:none;background:var(--danger-bg);color:var(--danger);padding:14px 20px;border-radius:12px;font-weight:600;margin-bottom:1.5rem;border:1px solid var(--danger);max-width:360px}
-        .google-btn{background-color:#ffffff;color:#000000;border:1px solid #e2e8f0;padding:14px 24px;font-size:1.05rem;font-weight:600;cursor:pointer;border-radius:30px;width:100%;max-width:320px;display:flex;align-items:center;justify-content:center;gap:10px;transition:all .2s}
+        
+        .google-btn{background-color:#ffffff;color:#000000;border:1px solid #e2e8f0;padding:16px 24px;font-size:1.1rem;font-weight:700;cursor:pointer;border-radius:30px;width:100%;max-width:340px;display:flex;align-items:center;justify-content:center;gap:12px;transition:all .2s;box-shadow:0 4px 15px rgba(0,0,0,0.05)}
         .google-btn:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(0,0,0,0.15)}
 
         .btn{background-color:var(--accent-main);color:var(--btn-text);border:1px solid var(--accent-main);padding:14px 24px;font-size:1rem;font-weight:600;cursor:pointer;border-radius:12px;transition:all .2s}
         .btn:hover{background-color:var(--accent-hover);transform:translateY(-2px)}
         .btn-outline{background-color:transparent;color:var(--text-primary);border:1px solid var(--border-color)}
         .btn-outline:hover{background-color:var(--hover-bg)}
-        .btn-danger{background-color:transparent;color:var(--danger);border:1px solid var(--danger)}
-        .btn-danger:hover{background-color:var(--danger-bg)}
 
+        /* Main App */
         #app-container{display:none;height:100vh;width:100%}
         .top-bar{height:70px;background-color:var(--bg-surface);border-bottom:1px solid var(--border-color);display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;position:fixed;top:0;left:0;right:0;z-index:50}
         .top-bar-left{display:flex;align-items:center;gap:12px}
@@ -136,20 +152,10 @@
         input[type="text"]:focus,select:focus,textarea:focus{outline:none;border-color:var(--accent-main);box-shadow:0 0 0 3px rgba(2,6,23,0.1)}
         label{font-size:.85rem;font-weight:700;color:var(--text-secondary);display:block;margin-bottom:.5rem;text-transform:uppercase}
 
-        .workout-table{width:100%;border-collapse:collapse}
-        .workout-table td{padding:1.25rem 0;border-top:1px solid var(--border-color);color:var(--text-secondary)}
         .member-row{display:flex;justify-content:space-between;align-items:center;padding:1.25rem 0;border-bottom:1px solid var(--border-color)}
         .status-badge{display:inline-flex;align-items:center;gap:6px;font-size:.75rem;font-weight:800;padding:6px 12px;border-radius:20px;text-transform:uppercase}
         .status-active{background:var(--success-bg);color:var(--success)}
         .status-admin{background:#eff6ff;color:#3b82f6}
-
-        .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-top:1.5rem}
-        .stat-box{background:var(--input-bg);padding:1.5rem;border-radius:12px;border:1px solid var(--border-color);text-align:center}
-        .stat-number{font-size:2.5rem;font-weight:800;color:var(--text-primary);margin-bottom:.5rem}
-        .stat-label{font-size:.85rem;color:var(--text-secondary);text-transform:uppercase;font-weight:600}
-
-        .progress-bar{width:100%;height:12px;background:var(--border-color);border-radius:10px;overflow:hidden;margin-top:1rem}
-        .progress-fill{height:100%;background:var(--success);border-radius:10px;width:0%;transition:width 1s ease-out}
 
         .android-notification{position:fixed;top:-150px;left:50%;transform:translateX(-50%);width:90%;max-width:400px;background:#2f2f2f;color:#ffffff;padding:20px;border-radius:24px;z-index:3000;box-shadow:0 8px 25px rgba(0,0,0,0.3);transition:top .3s ease}
         .android-notification.active{top:20px}
@@ -172,21 +178,21 @@
     <!-- PWA Install View -->
     <div id="pwa-install-view">
         <div class="install-icon">SK</div>
-        <h1>Asenna Suorituskyky Kuntoon</h1>
-        <p>Valmennusportaali toimii parhaimmillaan asennettuna sovelluksena.</p>
+        <h1>Suorituskyky Kuntoon</h1>
+        <p>Valmennusportaali toimii parhaiten suoraan puhelimeen asennettuna sovelluksena.</p>
         
         <div class="install-options">
-            <!-- Android Install Button -->
             <button class="install-btn" id="install-btn-android" onclick="installAndroid()">
                 <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                 Asenna Androidille
             </button>
 
-            <!-- iOS Install Button -->
             <button class="install-btn" id="install-btn-ios" onclick="showIOSInstructions()">
                 <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                 Asenna iPhonelle
             </button>
+
+            <button class="skip-btn" onclick="skipInstall()">Jatka selaimessa</button>
         </div>
 
         <!-- iOS Instructions -->
@@ -194,43 +200,48 @@
             <h3 style="margin-bottom:10px;font-size:1.1rem;">📱 Näin asennat iPhonella:</h3>
             <ol style="margin-left:20px;line-height:1.8;color:#cbd5e1;">
                 <li>Paina Safari-selaimen <b>alareunasta Jaa-kuvaketta</b></li>
-                <li>Selaa alas ja valitse <b>"Lisää kotivalikkoon"</b></li>
+                <li>Selaa alas ja valitse <b>"Lisää kotivalikkoon"</b> (Add to Home Screen)</li>
                 <li>Napsauta <b>"Lisää"</b> oikeassa yläkulmassa</li>
-                <li>Avaa SK-sovellus kotivalikosta</li>
+                <li>Avaa SK-sovellus kotivalikosta!</li>
             </ol>
         </div>
     </div>
 
     <!-- Global Notification -->
     <div class="android-notification" id="global-popup">
-        <div style="font-size:.75rem;color:#b3b3b3;font-weight:700;text-transform:uppercase;">⚠️ Ilmoitus Johdolta</div>
+        <div style="font-size:.75rem;color:#b3b3b3;font-weight:700;text-transform:uppercase;" id="popup-category">⚠️ Ilmoitus Järjestelmästä</div>
         <div id="popup-title" style="font-weight:700;font-size:1.1rem;margin:8px 0;">Otsikko</div>
         <div id="popup-body" style="margin-bottom:16px;">Viesti tähän.</div>
-        <button class="btn" style="background:#ffffff;color:#000000;align-self:flex-end;width:auto;" onclick="closeNotification()">Ymmärretty</button>
+        <button class="btn" style="background:#ffffff;color:#000000;align-self:flex-end;width:auto;" onclick="closeNotification()">Selvä</button>
     </div>
 
-    <!-- Login View -->
+    <!-- Login View (Corrected per instructions) -->
     <div id="login-view">
-        <div class="login-logo">SK</div>
-        <h1>Tervetuloa.</h1>
-        <p>Kirjaudu sisään valmennusportaaliin.</p>
-        <div class="error-message" id="login-error">Väärä käyttätili. Valmentaja ei ole luonut tiliä tälle sähköpostille.</div>
-        <button class="google-btn" onclick="startLogin()">
-            <svg viewBox="0 0 24 24" style="color:#ea4335;">
-                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
-                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-            </svg>
-            Kirjaudu Googlella
-        </button>
+        <div class="login-content">
+            <div class="login-logo">SK</div>
+            <h1>Kirjaudu sisään</h1>
+            <p>Tervetuloa valmennusportaaliin.</p>
+            <div class="error-message" id="login-error">Väärä käyttäjätili. Valmentaja ei ole luonut tiliä tälle sähköpostille.</div>
+        </div>
+        
+        <div class="login-footer">
+            <button class="google-btn" onclick="startLogin()">
+                <svg viewBox="0 0 24 24" style="width:28px;height:28px;">
+                    <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                    <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                    <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+                    <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+                </svg>
+                Jatka Googlella
+            </button>
+        </div>
     </div>
 
     <!-- Main App -->
     <div id="app-container">
         <header class="top-bar">
             <div class="top-bar-left">
-                <img src="icon.png" width="36" height="36" style="border-radius:8px;" alt="SK">
+                <img src="icon.png" width="36" height="36" style="border-radius:8px;" alt="SK" onerror="this.style.display='none'">
                 <div class="top-bar-title" id="app-title-name">Suorituskyky Kuntoon</div>
             </div>
             <button class="icon-btn" onclick="toggleTheme()">
@@ -242,7 +253,7 @@
             <div class="sidebar-header"><h2>Päävalikko</h2></div>
             <div class="nav-items" id="nav-items"></div>
             <div class="logout-wrapper" style="margin-top:auto;padding:0 1rem;">
-                <button class="btn btn-outline" style="border:none;justify-content:flex-start;" onclick="logout()">Kirjaudu ulos</button>
+                <button class="btn btn-outline" style="border:none;justify-content:flex-start;width:100%;" onclick="logout()">Kirjaudu ulos</button>
             </div>
         </nav>
 
@@ -257,7 +268,7 @@
             <div class="content-container">
                 <div id="view-jasen-treeni" class="view-section">
                     <h2 class="section-title">Ohjelmasi</h2>
-                    <div id="jasen-treeni-container"></div>
+                    <div id="jasen-treeni-container" class="card">Ladataan ohjelmaa...</div>
                 </div>
 
                 <div id="view-omistaja-jasenet" class="view-section">
@@ -279,7 +290,7 @@
                         <div class="card animate-enter" style="animation-delay:.1s;">
                             <h3 style="margin-bottom:1.5rem;">+ Uusi Treeniohjelma</h3>
                             <label>Valitse Asiakas</label>
-                            <select id="workout-client-select"></select>
+                            <select id="workout-client-select"><option value="">-- Valitse --</option></select>
                             <label>Ohjelman Nimi</label>
                             <input type="text" id="workout-title" placeholder="Vetävät Lihakset">
                             <label>Liikkeet (Yksi per rivi)</label>
@@ -287,45 +298,8 @@
                             <button class="btn" onclick="addWorkout()">Lähetä Asiakkaalle</button>
                         </div>
                     </div>
-                    <h2 class="section-title" style="margin-top:2rem;">Aktiiviset Asiakkaat</h2>
-                    <div class="card animate-enter" id="omistaja-jasen-lista" style="padding:1rem 2rem;"></div>
-                </div>
-
-                <div id="view-omistaja-tilastot" class="view-section">
-                    <h2 class="section-title">Asiakkaan Tilastot & Kehitys</h2>
-                    <div class="card animate-enter">
-                        <label>Valitse tarkasteltava asiakas</label>
-                        <select id="stat-client-select" onchange="loadClientStats(this.value)">
-                            <option value="">-- Valitse Asiakas --</option>
-                        </select>
-                    </div>
-                    <div id="stat-results" style="display:none;">
-                        <div class="stat-grid animate-enter">
-                            <div class="stat-box">
-                                <div class="stat-number" id="stat-workout-count">0</div>
-                                <div class="stat-label">Annetut Ohjelmat</div>
-                            </div>
-                            <div class="stat-box">
-                                <div class="stat-number" id="stat-last-active" style="font-size:1.5rem;margin-top:10px;">Ei dataa</div>
-                                <div class="stat-label" style="margin-top:15px;">Viimeisin ohjelma</div>
-                            </div>
-                        </div>
-                        <div class="card animate-enter" style="margin-top:1.5rem;">
-                            <h3>Aktiivisuustaso</h3>
-                            <div class="progress-bar"><div class="progress-fill" id="stat-progress" style="width:0%;"></div></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="view-eeli-global" class="view-section">
-                    <h2 class="section-title">Global Push System</h2>
-                    <div class="card">
-                        <label>Ilmoituksen Otsikko</label>
-                        <input type="text" id="global-msg-title" placeholder="PÄIVITYS JÄRJESTELMÄSSÄ">
-                        <label>Viesti</label>
-                        <textarea id="global-msg-body" rows="3" placeholder="Tämä viesti menee kaikille..."></textarea>
-                        <button class="btn" onclick="sendGlobalMessage()">Broadcast Message</button>
-                    </div>
+                    <h2 class="section-title" style="margin-top:2rem;">Aktiiviset Käyttäjät</h2>
+                    <div class="card animate-enter" id="omistaja-jasen-lista" style="padding:1rem 2rem;">Ladataan...</div>
                 </div>
 
                 <div id="view-asetukset" class="view-section">
@@ -349,21 +323,30 @@
 
 <script type="module">
 import{initializeApp as _iA}from"https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-import{getAnalytics as _gAn}from"https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
-import{getAuth as _gAu,GoogleAuthProvider as _gP,signInWithRedirect as _sIWR,onAuthStateChanged as _oASC,signOut as _sO,setPersistence as _sP,browserLocalPersistence as _bLP}from"https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-import{getFirestore as _gF,collection as _c,doc as _d,getDoc as _gD,getDocs as _gDs,setDoc as _sD,addDoc as _aD,deleteDoc as _dD,query as _q,where as _w,orderBy as _oB,onSnapshot as _oS,serverTimestamp as _sT,limit as _l}from"https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import{getAuth as _gAu,GoogleAuthProvider as _gP,signInWithRedirect as _sIWR,onAuthStateChanged as _oASC,signOut as _sO}from"https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+import{getFirestore as _gF,collection as _c,doc as _d,getDoc as _gD,getDocs as _gDs,setDoc as _sD,addDoc as _aD,query as _q,where as _w,serverTimestamp as _sT}from"https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-const _fc = {apiKey:"AIzaSyC6nhZbUx_Eg226Bzm5NSqNS926XpRf9zE",authDomain:"suorituskykykuntoon-1.firebaseapp.com",projectId:"suorituskykykuntoon-1",storageBucket:"suorituskykykuntoon-1.firebasestorage.app"};
+const _fc = {
+    apiKey:"AIzaSyC6nhZbUx_Eg226Bzm5NSqNS926XpRf9zE",
+    authDomain:"suorituskykykuntoon-1.firebaseapp.com",
+    projectId:"suorituskykykuntoon-1",
+    storageBucket:"suorituskykykuntoon-1.firebasestorage.app"
+};
 
-const _a=_iA(_fc), _au=_gAu(_a), _db=_gF(_a);
-let _dm=false, _cUE="", _cUR="", _snd=localStorage.getItem('ui_snd')==='1';
+const _a = _iA(_fc);
+const _au = _gAu(_a);
+const _db = _gF(_a);
+
+let _dm = false, _cUE = "", _cUR = "", _cUN = "", _snd = localStorage.getItem('ui_snd')==='1';
 let deferredPrompt = null;
 
 const _$ = (i) => document.getElementById(i);
+const _admins = ['vepiasko@gmail.com', 'eelukka12@gmail.com']; // Kova koodatut adminit
 
-// === PWA INSTALL LOGIC ===
+// === PWA LOGIIKKA ===
 const _isIOS = /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase());
-const _isAndroid = /android/.test(window.navigator.userAgent.toLowerCase());
+const _isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+const _pwaSkipped = localStorage.getItem('pwa_skipped') === 'true';
 
 window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
@@ -371,86 +354,258 @@ window.addEventListener('beforeinstallprompt', (e) => {
     _$('install-btn-android').classList.add('active');
 });
 
-async function installAndroid() {
+window.installAndroid = async function() {
     if (deferredPrompt) {
         deferredPrompt.prompt();
         const { outcome } = await deferredPrompt.userChoice;
-        console.log(`Install response: ${outcome}`);
+        if(outcome === 'accepted') {
+            showNotification('Asennus käynnissä', 'Sovellus asennetaan puhelimeesi. Löydät sen pian kotivalikosta.');
+            skipInstall();
+        }
         deferredPrompt = null;
+    } else {
+        showNotification('Asennusohje', 'Paina selaimen asetuksista "Lisää aloitusnäyttöön" asentaaksesi sovelluksen.');
     }
 }
 
-function showIOSInstructions() {
+window.showIOSInstructions = function() {
     _$('install-instruction-ios').classList.toggle('visible');
 }
 
-const _iS = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
-if (_iS) {
+window.skipInstall = function() {
+    localStorage.setItem('pwa_skipped', 'true');
     _$('pwa-install-view').style.display = 'none';
-} else {
-    _$('pwa-install-view').style.display = 'flex';
-    if (_isIOS) {
-        _$('install-btn-ios').classList.add('active');
+    _$('login-view').style.display = 'flex';
+}
+
+// === AUTH LOGIIKKA JA ADMIN BYPASS ===
+_oASC(_au, async (user) => {
+    if (user) {
+        // Piilotetaan kirjautumis/PWA näkymät
+        _$('login-view').style.display = 'none';
+        _$('pwa-install-view').style.display = 'none';
+        
+        _cUE = user.email;
+        _cUN = user.displayName || "Käyttäjä";
+
+        // 1. TARKISTETAAN ONKO KOVAKOODATTU ADMIN
+        if (_admins.includes(_cUE)) {
+            _cUR = 'omistaja';
+            
+            // Varmistetaan että heillä on myös db documentti (jotta haku/listaus toimii myöhemmin)
+            const q = _q(_c(_db, "users"), _w("email", "==", _cUE));
+            const qSnap = await _gDs(q);
+            if (qSnap.empty) {
+                await _aD(_c(_db, "users"), { email: _cUE, name: _cUN, role: 'omistaja', createdAt: _sT() });
+            }
+            initApp();
+        } 
+        // 2. JOS EI OLE ADMIN, TARKISTETAAN LÖYTYYKÖ TIETOKANNASTA VALMENTAJAN LISÄÄMÄNÄ
+        else {
+            const q = _q(_c(_db, "users"), _w("email", "==", _cUE));
+            const qSnap = await _gDs(q);
+            
+            if (!qSnap.empty) {
+                const docData = qSnap.docs[0].data();
+                _cUR = docData.role || 'jasen';
+                initApp();
+            } else {
+                // Käyttäjälle ei ole luotu tiliä
+                _sO(_au);
+                _$('login-view').style.display = 'flex';
+                _$('login-error').style.display = 'block';
+            }
+        }
+    } else {
+        // Ei kirjautunut
+        if (!_isStandalone && !_pwaSkipped) {
+            _$('pwa-install-view').style.display = 'flex';
+            if (_isIOS) _$('install-btn-ios').classList.add('active');
+        } else {
+            _$('login-view').style.display = 'flex';
+        }
+    }
+});
+
+function initApp() {
+    _$('app-container').style.display = 'block';
+    _$('greeting-text').innerText = `Hei, ${_cUN.split(' ')[0]}.`;
+    _$('settings-name').innerText = _cUN;
+    _$('settings-email').innerText = _cUE;
+    
+    let roleBadge = _cUR === 'omistaja' ? '<span class="status-badge status-admin">Omistaja</span>' : '<span class="status-badge status-active">Jäsen</span>';
+    _$('settings-role-badge').innerHTML = roleBadge;
+    if(_snd) _$('snd-tog').classList.add('active');
+
+    buildMenu();
+    loadUsersIfAdmin();
+}
+
+function buildMenu() {
+    const nav = _$('nav-items');
+    nav.innerHTML = '';
+    
+    if (_cUR === 'omistaja') {
+        nav.innerHTML += `<div class="nav-item active" id="nav-omistaja-jasenet" onclick="switchView('view-omistaja-jasenet', 'nav-omistaja-jasenet')">
+            <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+            Valmennus
+        </div>`;
+    } else {
+        nav.innerHTML += `<div class="nav-item active" id="nav-jasen-treeni" onclick="switchView('view-jasen-treeni', 'nav-jasen-treeni')">
+            <svg viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1"></path><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path><line x1="6" y1="1" x2="6" y2="4"></line><line x1="10" y1="1" x2="10" y2="4"></line><line x1="14" y1="1" x2="14" y2="4"></line></svg>
+            Ohjelma
+        </div>`;
+    }
+    
+    nav.innerHTML += `<div class="nav-item" id="nav-asetukset" onclick="switchView('view-asetukset', 'nav-asetukset')">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+        Asetukset
+    </div>`;
+
+    if(_cUR === 'omistaja') {
+        switchView('view-omistaja-jasenet', 'nav-omistaja-jasenet');
+    } else {
+        switchView('view-jasen-treeni', 'nav-jasen-treeni');
     }
 }
 
-// === THEME ===
-function toggleTheme() {
+// === TÄYDENNETYT TOIMINNOT ===
+window.addUser = async function() {
+    if (_cUR !== 'omistaja') return;
+    const email = _$('new-user-email').value.trim();
+    const name = _$('new-user-name').value.trim();
+    const role = _$('new-user-role').value;
+    
+    if(!email || !name) return showNotification("Virhe", "Täytä sähköposti ja nimi.");
+
+    try {
+        await _aD(_c(_db, "users"), {
+            email: email,
+            name: name,
+            role: role,
+            createdAt: _sT()
+        });
+        showNotification("Onnistui", `Käyttäjä ${name} lisätty onnistuneesti.`);
+        _$('new-user-email').value = '';
+        _$('new-user-name').value = '';
+        loadUsersIfAdmin();
+    } catch(e) {
+        showNotification("Virhe", "Käyttäjän lisääminen epäonnistui.");
+        console.error(e);
+    }
+}
+
+window.addWorkout = async function() {
+    const clientId = _$('workout-client-select').value;
+    const title = _$('workout-title').value;
+    const desc = _$('workout-exercises').value;
+    
+    if(!clientId || !title) return showNotification("Virhe", "Valitse asiakas ja otsikko.");
+    
+    try {
+        await _aD(_c(_db, "workouts"), {
+            userEmail: clientId, // Tallennetaan spostiin viitaten helpomman haun vuoksi
+            title: title,
+            description: desc,
+            createdAt: _sT()
+        });
+        showNotification("Onnistui", "Ohjelma lähetetty asiakkaalle.");
+        _$('workout-title').value = '';
+        _$('workout-exercises').value = '';
+    } catch (e) {
+        showNotification("Virhe", "Ohjelman lähetys epäonnistui.");
+    }
+}
+
+async function loadUsersIfAdmin() {
+    if (_cUR !== 'omistaja') return;
+    
+    const qSnap = await _gDs(_c(_db, "users"));
+    let html = '';
+    let selectHtml = '<option value="">-- Valitse --</option>';
+    
+    qSnap.forEach(doc => {
+        const d = doc.data();
+        let badge = d.role === 'omistaja' ? '<span class="status-badge status-admin">Omistaja</span>' : '<span class="status-badge status-active">Jäsen</span>';
+        html += `<div class="member-row">
+            <div>
+                <div style="font-weight:700;">${d.name}</div>
+                <div style="font-size:0.85rem;">${d.email}</div>
+            </div>
+            ${badge}
+        </div>`;
+        if(d.role === 'jasen') {
+            selectHtml += `<option value="${d.email}">${d.name}</option>`;
+        }
+    });
+    
+    _$('omistaja-jasen-lista').innerHTML = html || 'Ei käyttäjiä.';
+    _$('workout-client-select').innerHTML = selectHtml;
+}
+
+// === KÄYTTÖLIITTYMÄ FUNKTIOT ===
+window.showNotification = function(title, body) {
+    _$('popup-title').innerText = title;
+    _$('popup-body').innerText = body;
+    _$('global-popup').classList.add('active');
+    if(_snd) playBeep();
+}
+
+window.closeNotification = function() {
+    _$('global-popup').classList.remove('active');
+}
+
+window.startLogin = function() {
+    _$('login-error').style.display = 'none';
+    _sIWR(_au, new _gP());
+}
+
+window.logout = function() {
+    _sO(_au).then(() => {
+        window.location.reload();
+    });
+}
+
+window.switchView = function(viewId, navId) {
+    if(navId) {
+        document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+        const navEl = _$(navId);
+        if(navEl) navEl.classList.add('active');
+    }
+    document.querySelectorAll('.view-section').forEach(view => view.classList.remove('active'));
+    const viewEl = _$(viewId);
+    if(viewEl) viewEl.classList.add('active');
+    if(window.innerWidth <= 768 && _$('nav-items').innerHTML !== '') {
+        // Mobilenavigoinnin mahdollinen käsittely (hiding sidebar etc jos koodaat myöhemmin tähän)
+    }
+}
+
+window.toggleTheme = function() {
     _dm = !_dm;
     document.documentElement.setAttribute('data-theme', _dm ? 'dark' : 'light');
 }
 
-function toggleSound() {
+window.toggleSound = function() {
     _snd = !_snd;
     localStorage.setItem('ui_snd', _snd ? '1' : '0');
     _$('snd-tog').classList.toggle('active');
 }
 
-function closeNotification() {
-    _$('global-popup').classList.remove('active');
+function playBeep() {
+    try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const oscillator = audioCtx.createOscillator();
+        const gainNode = audioCtx.createGain();
+        oscillator.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+        oscillator.type = 'sine';
+        oscillator.frequency.setValueAtTime(440, audioCtx.currentTime);
+        gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+        oscillator.start();
+        gainNode.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 0.1);
+        oscillator.stop(audioCtx.currentTime + 0.1);
+    } catch(e) {}
 }
-
-function startLogin() {
-    _$('login-error').style.display = 'none';
-    _sIWR(_au, new _gP());
-}
-
-function logout() {
-    _sO(_au);
-    _$('pwa-install-view').style.display = 'flex';
-}
-
-function switchView(viewId, navId) {
-    if(navId) {
-        document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-        _$(navId).classList.add('active');
-    }
-    document.querySelectorAll('.view-section').forEach(view => view.classList.remove('active'));
-    _$(viewId).classList.add('active');
-    window.scrollTo(0,0);
-}
-
-window._sV = (v, n) => switchView(v, n);
-
-// === PLACEHOLDER FUNCTIONS ===
-function addUser() { alert('Uusi käyttäjä lisätty!'); }
-function addWorkout() { alert('Treeniohjelma lähetetty!'); }
-function loadClientStats(id) { alert('Tilastot: ' + id); }
-function sendGlobalMessage() { alert('Viesti lähetetty!'); }
-
-// Expose functions globally
-window.installAndroid = installAndroid;
-window.showIOSInstructions = showIOSInstructions;
-window.toggleTheme = toggleTheme;
-window.toggleSound = toggleSound;
-window.closeNotification = closeNotification;
-window.startLogin = startLogin;
-window.logout = logout;
-window.switchView = switchView;
-window.addUser = addUser;
-window.addWorkout = addWorkout;
-window.loadClientStats = loadClientStats;
-window.sendGlobalMessage = sendGlobalMessage;
 </script>
 </body>
 </html>
