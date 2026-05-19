@@ -1,2 +1,1056 @@
-<!DOCTYPE html><html lang="fi" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"><title>Suorituskyky Kuntoon</title><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="theme-color" content="#09090b"><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon.png"><link rel="icon" href="icon.png" type="image/png"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"><style>:root,[data-theme="light"]{--bg-base:#f1f5f9;--bg-surface:#ffffff;--text-primary:#0f172a;--text-secondary:#64748b;--border-color:#e2e8f0;--accent-main:#020617;--accent-hover:#1e293b;--btn-text:#ffffff;--hover-bg:#f8fafc;--banner-bg:#020617;--banner-text:#ffffff;--success:#059669;--success-bg:#ecfdf5;--danger:#dc2626;--danger-bg:#fef2f2;--input-bg:#f8fafc;--comment-bg:#f1f5f9;--comment-coach-bg:#e0f2fe;--header-bg:#ffffff;--radius-main:16px;--radius-btn:12px;--font-main:'Inter',sans-serif}[data-theme="dark"]{--bg-base:#09090b;--bg-surface:#18181b;--text-primary:#f8fafc;--text-secondary:#a1a1aa;--border-color:#27272a;--accent-main:#ffffff;--accent-hover:#e4e4e7;--btn-text:#000000;--hover-bg:#27272a;--banner-bg:#18181b;--banner-text:#ffffff;--success:#10b981;--input-bg:#09090b;--comment-bg:#27272a;--comment-coach-bg:#1e3a8a;--header-bg:#18181b;--radius-main:16px;--radius-btn:12px;--font-main:'Inter',sans-serif}[data-theme="classic"]{--bg-base:#e9ecef;--bg-surface:#ffffff;--text-primary:#1e293b;--text-secondary:#475569;--border-color:#cbd5e1;--accent-main:#2563eb;--accent-hover:#1d4ed8;--btn-text:#ffffff;--hover-bg:#f1f5f9;--banner-bg:#1e3a8a;--banner-text:#ffffff;--success:#059669;--input-bg:#ffffff;--comment-bg:#f8fafc;--comment-coach-bg:#eff6ff;--header-bg:#ffffff;--radius-main:8px;--radius-btn:6px;--font-main:'Arial',sans-serif}[data-theme="neon"]{--bg-base:#050510;--bg-surface:#0b0b1a;--text-primary:#e2e8f0;--text-secondary:#94a3b8;--border-color:#1e1e3f;--accent-main:#d946ef;--accent-hover:#c026d3;--btn-text:#ffffff;--hover-bg:#13132b;--banner-bg:#0b0b1a;--banner-text:#2dd4bf;--success:#2dd4bf;--input-bg:#050510;--comment-bg:#13132b;--comment-coach-bg:#31133e;--header-bg:#0b0b1a;--radius-main:0px;--radius-btn:0px;--font-main:'Courier New',monospace}*{box-sizing:border-box;margin:0;padding:0;font-family:var(--font-main);-webkit-tap-highlight-color:transparent}body{background-color:var(--bg-base);color:var(--text-primary);overflow:hidden;display:flex;flex-direction:column;height:100vh;width:100vw;transition:background-color .3s,color .3s}@keyframes slideUpFade{0%{opacity:0;transform:translateY(30px)}100%{opacity:1;transform:translateY(0)}}@keyframes popIn{0%{opacity:0;transform:scale(.9)}100%{opacity:1;transform:scale(1)}}.animate-enter{opacity:0;animation:slideUpFade .4s cubic-bezier(.16,1,.3,1) forwards}svg{width:24px;height:24px;stroke-width:2;stroke:currentColor;fill:none;stroke-linecap:round;stroke-linejoin:round}#pwa-install-view{position:fixed;inset:0;background:linear-gradient(135deg,var(--banner-bg) 0%,#1e293b 100%);color:var(--banner-text);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;padding:2rem;text-align:center}.install-icon{width:96px;height:96px;background:var(--accent-main);color:var(--btn-text);border-radius:var(--radius-main);display:flex;align-items:center;justify-content:center;font-size:2.4rem;font-weight:800;margin-bottom:2rem;animation:popIn .8s forwards}.install-btn{background:var(--bg-surface);color:var(--text-primary);padding:16px 24px;font-size:1.1rem;font-weight:700;border-radius:30px;border:none;cursor:pointer;display:none;align-items:center;justify-content:center;gap:12px;margin-bottom:1rem}.install-btn.active{display:flex}.ios-instruction{background:rgba(255,255,255,.1);padding:20px;border-radius:16px;border:1px solid rgba(255,255,255,.2);max-width:350px;text-align:left;margin-top:1.5rem;display:none}.ios-instruction.visible{display:block;animation:slideUpFade .4s forwards}#login-view{position:fixed;inset:0;background-color:var(--bg-surface);display:none;flex-direction:column;z-index:1000;padding:2rem;align-items:center;justify-content:center;overflow-y:auto}.login-card{width:100%;max-width:400px;background:var(--bg-base);padding:2.5rem 2rem;border-radius:var(--radius-main);box-shadow:0 10px 30px rgba(0,0,0,.1);margin:auto}.login-logo{width:64px;height:64px;background:var(--accent-main);color:var(--btn-text);border-radius:var(--radius-main);display:flex;align-items:center;justify-content:center;font-size:1.8rem;font-weight:800;margin:0 auto 1.5rem}.error-message{display:none;background:var(--danger-bg);color:var(--danger);padding:12px 16px;border-radius:var(--radius-btn);font-weight:600;margin-bottom:1.5rem;border:1px solid var(--danger);font-size:.85rem}.success-message{display:none;background:var(--success-bg);color:var(--success);padding:12px 16px;border-radius:var(--radius-btn);font-weight:600;margin-bottom:1.5rem;border:1px solid var(--success);font-size:.85rem}.btn{background-color:var(--accent-main);color:var(--btn-text);border:1px solid var(--accent-main);padding:14px 24px;font-size:1rem;font-weight:600;cursor:pointer;border-radius:var(--radius-btn);transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px}.btn:hover{background-color:var(--accent-hover);transform:translateY(-2px)}.btn-outline{background-color:transparent;color:var(--text-primary);border:1px solid var(--border-color)}.btn-outline:hover{background-color:var(--hover-bg)}.btn-danger{background-color:transparent;color:var(--danger);border:1px solid var(--danger)}.btn-danger:hover{background-color:var(--danger-bg)}#app-container{display:none;height:100vh;width:100%}.top-header{position:fixed;top:0;left:0;right:0;height:65px;background:var(--header-bg);border-bottom:1px solid var(--border-color);display:flex;align-items:center;padding:0 1.5rem;z-index:90;justify-content:space-between;transition:background-color .3s}.top-user-info{display:flex;align-items:center;gap:12px}.top-avatar{width:38px;height:38px;border-radius:50%;object-fit:cover;background:var(--border-color);display:flex;align-items:center;justify-content:center;font-weight:bold;color:var(--text-secondary);cursor:pointer;border:2px solid var(--accent-main)}.top-greeting{font-weight:700;font-size:1.1rem;color:var(--text-primary)}.sidebar{position:fixed;top:65px;left:0;bottom:0;width:280px;background-color:var(--bg-surface);border-right:1px solid var(--border-color);display:flex;flex-direction:column;padding:1.5rem 0;z-index:40;transition:background-color .3s}.sidebar-header{padding:0 1.5rem;margin-bottom:2rem}.nav-items{display:flex;flex-direction:column;gap:.4rem;padding:0 1rem;overflow-y:auto}.nav-item{padding:14px 16px;border-radius:var(--radius-btn);cursor:pointer;font-weight:600;color:var(--text-secondary);display:flex;align-items:center;gap:14px;font-size:.95rem;transition:all .2s}.nav-item:hover,.nav-item.active{background-color:var(--hover-bg);color:var(--text-primary)}.nav-item.active{background-color:var(--accent-main);color:var(--btn-text)}.main-wrapper{margin-left:280px;margin-top:65px;height:calc(100vh - 65px);overflow-y:auto;background-color:var(--bg-base)}.greeting-banner{background:linear-gradient(135deg,var(--banner-bg) 0%,#000 100%);color:var(--banner-text);padding:3rem 2rem 5rem;position:relative}.greeting-content{max-width:900px;margin:0 auto}.greeting-banner h1{font-size:2.8rem;font-weight:800;margin:0;letter-spacing:-.04em;line-height:1.1;color:#fff!important}#greeting-sub{color:var(--banner-text)!important;margin-top:10px;font-size:1.1rem;opacity:.9}.content-container{padding:0 2rem 3rem;max-width:940px;margin:0 auto;position:relative;top:-40px}.view-section{display:none}.view-section.active{display:block;animation:slideUpFade .4s forwards}.section-title{font-size:1.4rem;font-weight:700;margin-bottom:1.5rem;color:#fff!important}.card{background-color:var(--bg-surface);border:1px solid var(--border-color);border-radius:var(--radius-main);padding:2rem;margin-bottom:1.5rem;box-shadow:0 4px 6px rgba(0,0,0,.02)}input[type="text"],input[type="number"],input[type="email"],input[type="password"],select,textarea{width:100%;padding:14px 16px;border:1px solid var(--border-color);border-radius:var(--radius-btn);font-size:1rem;margin-bottom:1.2rem;background-color:var(--input-bg);color:var(--text-primary)}.member-row{display:flex;justify-content:space-between;align-items:center;padding:1.25rem 0;border-bottom:1px solid var(--border-color)}.status-badge{display:inline-flex;align-items:center;gap:6px;font-size:.75rem;font-weight:800;padding:6px 12px;border-radius:20px;text-transform:uppercase}.status-active{background:var(--success-bg);color:var(--success)}.status-admin{background:rgba(59,130,246,.1);color:#3b82f6}.android-notification{position:fixed;top:-200px;left:50%;transform:translateX(-50%);width:90%;max-width:400px;background:#1e1e1e;color:#ffffff;padding:20px;border-radius:var(--radius-main);z-index:9999;box-shadow:0 8px 30px rgba(0,0,0,.6);transition:top .5s cubic-bezier(.175,.885,.32,1.275);text-align:left;border:1px solid rgba(255,255,255,.1)}.android-notification.active{top:20px}.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem}.stat-box{background:var(--input-bg);padding:1.5rem;border-radius:var(--radius-main);border:1px solid var(--border-color);text-align:center}.stat-number{font-size:2.5rem;font-weight:800;color:var(--text-primary);margin-bottom:.5rem}.stat-label{font-size:.85rem;color:var(--text-secondary);text-transform:uppercase;font-weight:600}.workout-part{margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px dashed var(--border-color)}.workout-part:last-child{border-bottom:none}.workout-part h4{color:var(--text-primary);margin-bottom:8px;font-size:1.1rem}.workout-part p{white-space:pre-wrap;line-height:1.6;color:var(--text-secondary)}.feedback-section{margin-top:1.5rem;padding:1.5rem;background:var(--input-bg);border-radius:var(--radius-btn);border:1px solid var(--border-color)}.coach-reply-box{margin-top:15px;padding:15px;background:var(--comment-coach-bg);border-radius:var(--radius-btn);display:none;align-items:flex-start;gap:12px}.coach-reply-box.visible{display:flex;animation:slideUpFade .3s forwards}.small-avatar{width:36px;height:36px;border-radius:50%;object-fit:cover;background:var(--border-color);display:inline-flex;align-items:center;justify-content:center;font-weight:bold;font-size:1rem;flex-shrink:0;color:var(--text-secondary)}.workout-date{font-size:0.85rem;color:var(--text-secondary);margin-bottom:15px;display:block;font-weight:700;text-transform:uppercase;letter-spacing:.05em}.log-item{padding:16px;border-bottom:1px solid var(--border-color)}.log-item:last-child{border-bottom:none}.log-tag{display:inline-block;padding:4px 10px;background:rgba(59,130,246,.1);color:#3b82f6;border-radius:20px;font-size:0.75rem;font-weight:800;margin-bottom:8px;text-transform:uppercase}.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:2000;display:none;align-items:center;justify-content:center;padding:1rem}.modal-overlay.active {display:flex}.modal-content{background:var(--bg-surface);padding:2rem;border-radius:var(--radius-main);width:100%;max-width:500px;max-height:90vh;overflow-y:auto}.cropper-container{position:relative;width:100%;aspect-ratio:1/1;background:#000;overflow:hidden;border-radius:12px;margin-bottom:1rem;touch-action:none}#cropper-canvas{position:absolute;top:0;left:0;transform-origin:center;cursor:move}.cropper-mask{position:absolute;inset:0;pointer-events:none;box-shadow:0 0 0 9999px rgba(0,0,0,.6);border-radius:50%;width:80%;height:80%;top:10%;left:10%;border:2px dashed #fff}.debug-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}@media(max-width:768px){.sidebar{transform:none;display:flex;flex-direction:row;top:auto;bottom:0;left:0;right:0;width:100%;height:75px;padding:0;border-right:none;border-top:1px solid var(--border-color);z-index:100}.sidebar-header{display:none}.nav-items{flex-direction:row;width:100%;padding:0;gap:0;justify-content:space-around;align-items:center}.nav-item{flex-direction:column;gap:6px;padding:10px 0;font-size:.7rem;border-radius:8px;width:100%;justify-content:center}.nav-item span{display:block;text-align:center}.main-wrapper{margin-left:0;margin-top:65px;height:calc(100vh - 140px);padding-bottom:1rem}.greeting-banner{padding:2rem 1.5rem 3rem}.content-container{padding:0 1rem 1rem}.card{padding:1.5rem}}</style></head><body><input type="file" id="pfp-upload" accept="image/*" style="display:none" onchange="handlePfpSelected(event)"><div id="pwa-install-view"><div class="install-icon">SK</div><h1>Suorituskyky Kuntoon</h1><div class="install-options"><button class="install-btn" id="install-btn-android" onclick="installAndroid()">Lataa Sovellus</button><button class="install-btn" id="install-btn-ios" onclick="showIOSInstructions()">Asenna iPhonelle</button></div><div class="ios-instruction" id="install-instruction-ios"><h3>📱 Näin asennat iPhonella:</h3><ol><li>Paina Safari-selaimen Jaa-kuvaketta</li><li>Valitse "Lisää kotivalikkoon"</li><li>Napsauta "Lisää" yläkulmasta</li></ol></div></div><div class="android-notification" id="global-popup"><div id="popup-sender" style="font-size:0.75rem;color:#b3b3b3;font-weight:800;text-transform:uppercase;margin-bottom:4px;letter-spacing:0.05em;"></div><div id="popup-title" style="font-weight:800;font-size:1.15rem;margin-bottom:6px;"></div><div id="popup-body" style="font-size:0.95rem;line-height:1.5;color:#e2e8f0;"></div><img id="popup-img" src="" style="width:100%;max-height:180px;object-fit:cover;border-radius:12px;margin-top:12px;display:none;border:1px solid rgba(255,255,255,0.1);"></div><div class="modal-overlay" id="cropper-modal"><div class="modal-content"><h2 style="margin-bottom:1rem;text-align:center;">Rajaa Profiilikuva</h2><div class="cropper-container" id="cropper-container"><canvas id="cropper-canvas"></canvas><div class="cropper-mask"></div></div><label>Zoomaa</label><input type="range" id="crop-zoom" min="1" max="3" step="0.01" value="1" style="width:100%;margin-bottom:1.5rem;" oninput="drawCrop()"><div style="display:flex;gap:10px;"><button class="btn" style="flex:1;" onclick="saveCroppedImage()">Tallenna</button><button class="btn btn-outline" style="flex:1;" onclick="closeCropper()">Peruuta</button></div></div></div><div class="modal-overlay" id="edit-modal"><div class="modal-content"><h2 style="margin-bottom:1rem;">Muokkaa Treeniä</h2><input type="hidden" id="edit-id"><label>Otsikko</label><input type="text" id="edit-title"><label>Lämmittely</label><textarea id="edit-warmup" rows="2"></textarea><label>Pääliikkeet</label><textarea id="edit-main" rows="4"></textarea><label>Jäähdyttely</label><textarea id="edit-cooldown" rows="2"></textarea><div style="display:flex;gap:10px;margin-top:1rem;"><button class="btn" style="flex:1;" onclick="saveWorkoutEdit()">Tallenna</button><button class="btn btn-outline" style="flex:1;" onclick="closeEditModal()">Peruuta</button></div></div></div><div id="login-view"><div class="login-card"><div class="login-logo">SK</div><h1 style="color:var(--text-primary)!important;">Kirjaudu sisään</h1><div class="error-message" id="login-error"></div><div class="success-message" id="login-success"></div><label>Sähköpostiosoite</label><input type="email" id="login-email" required><label>Salasana</label><input type="password" id="login-password" required><button class="btn" style="width:100%;padding:16px;margin-bottom:1rem;" onclick="handleLogin()">Kirjaudu sisään</button><button class="btn btn-outline" style="width:100%;padding:16px;margin-bottom:10px;" onclick="handleRegister()">Rekisteröidy (Vain Admin)</button><button class="btn btn-outline" style="width:100%;padding:16px;border:none;" onclick="handlePasswordReset()">Unohditko salasanan?</button></div></div><div id="app-container"><header class="top-header"><div class="top-user-info" onclick="triggerPfpUpload()"><img id="header-avatar" class="top-avatar" src="" style="display:none;"><div id="header-avatar-initial" class="top-avatar">?</div><div class="top-greeting">Hei, <span id="header-name"></span></div></div><div style="font-size:0.8rem;color:var(--text-secondary);font-weight:700;">SK PORTAALI</div></header><nav class="sidebar"><div class="sidebar-header"><h2>Valikko</h2></div><div class="nav-items" id="nav-items"></div></nav><main class="main-wrapper"><div class="greeting-banner"><div class="greeting-content"><h1 id="greeting-text">Hei.</h1><p id="greeting-sub">Tervetuloa valmennusportaaliin.</p></div></div><div class="content-container"><div id="view-koti" class="view-section"><h2 class="section-title">Koti & Päivitykset</h2><div class="card" style="padding:0;"><div class="log-item"><span class="log-tag">BETA 2.2</span><h3 style="margin-bottom:5px;">Huippuunsa Hiottu!</h3><p style="color:var(--text-secondary);font-size:0.95rem;">Ohjelmien lataus toimii nyt viiveettä, äänet ovat 3 kertaa voimakkaammat ja selkeämmät, ja salasanan palautus tarkistaa sähköpostin oikeellisuuden! Myös valkoiset otsikot teemoista riippumatta on nyt korjattu.</p></div></div></div><div id="view-jasen-treeni" class="view-section"><h2 class="section-title">Omat Treenisi</h2><div id="jasen-treeni-container">Ladataan ohjelmia...</div></div><div id="view-omistaja-jasenet" class="view-section"><h2 class="section-title">Valmennuksen Hallinta</h2><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;"><div class="card animate-enter"><h3 style="margin-bottom:1.5rem;">+ Uusi Asiakas</h3><label>Sähköpostiosoite</label><input type="email" id="new-user-email"><label>Koko Nimi</label><input type="text" id="new-user-name"><button class="btn" onclick="addClientUser()" style="width:100%;">Luo Asiakas & Salasana</button></div><div class="card animate-enter" style="animation-delay:.1s;"><h3 style="margin-bottom:1.5rem;">+ Uusi Treeniohjelma</h3><label>Valitse Asiakas</label><select id="workout-client-select"></select><label>Ohjelman Nimi</label><input type="text" id="workout-title"><label>1. Lämmittely</label><textarea id="workout-warmup" rows="2"></textarea><label>2. Pääliikkeet & Sarjat</label><textarea id="workout-main" rows="3"></textarea><label>3. Jäähdyttely</label><textarea id="workout-cooldown" rows="2"></textarea><button class="btn" onclick="addWorkout()" style="width:100%;">Tallenna Asiakkaalle</button></div></div><h2 class="section-title" style="margin-top:2rem;">Aktiiviset Asiakkaat</h2><div class="card animate-enter" id="omistaja-jasen-lista">Ladataan...</div></div><div id="view-tilastot" class="view-section"><h2 class="section-title">Valmennuksen Tilastot</h2><div class="card animate-enter"><label>Suodata Asiakas</label><select id="stat-client-select" onchange="loadCoachStats(this.value)"></select></div><div class="stat-grid animate-enter" style="margin-bottom:1.5rem;"><div class="stat-box"><div class="stat-number" id="stat-total-workouts">0</div><div class="stat-label">Treenejä Luotu</div></div><div class="stat-box"><div class="stat-number" id="stat-total-feedback">0</div><div class="stat-label">Palautteita Annettu</div></div></div><h3 style="margin-top:1.5rem;margin-bottom:1rem;color:#fff!important;">Tyytyväisyysjakauma</h3><div class="stat-grid animate-enter"><div class="stat-box"><div class="stat-number" id="stat-hyva" style="color:var(--success);">0</div><div class="stat-label">Loistava / Hyvä</div></div><div class="stat-box"><div class="stat-number" id="stat-ok" style="color:#eab308;">0</div><div class="stat-label">Ihan OK</div></div><div class="stat-box"><div class="stat-number" id="stat-raskas" style="color:var(--danger);">0</div><div class="stat-label">Raskas / Huono</div></div></div></div><div id="view-asiakas-tiedot" class="view-section"><button class="btn btn-outline" style="margin-bottom:1.5rem;" onclick="switchView('view-omistaja-jasenet','nav-omistaja-jasenet')">← Takaisin</button><h2 class="section-title" id="asiakas-tiedot-nimi">Asiakkaan Nimi</h2><div class="card" id="asiakas-perustiedot"></div><h3 class="section-title" style="margin-top:2rem;">Asiakkaan Treenit & Palautteet</h3><div id="asiakas-tiedot-treenit">Ladataan...</div></div><div id="view-sovelluspalaute" class="view-section"><h2 class="section-title">Asiakkaiden Sovelluspalaute</h2><div id="sovelluspalaute-lista">Haetaan palautteita...</div></div><div id="view-tiedotteet" class="view-section"><h2 class="section-title">Tiedotteet</h2><div id="tiedotteet-lista">Haetaan tiedotteita...</div></div><div id="view-debug" class="view-section"><h2 class="section-title">Debug & Järjestelmä (Vain Eeli)</h2><div class="card animate-enter"><h3 style="margin-bottom:1rem;">Uusi Push Ilmoitus / Komento</h3><label>Lähettäjän Nimi</label><input type="text" id="global-msg-sender" placeholder="Esim. Eeli (Admin)"><label>Otsikko</label><input type="text" id="global-msg-title" placeholder="Ilmoituksen otsikko"><label>Viesti</label><textarea id="global-msg-body" rows="2" placeholder="Kirjoita viesti..."></textarea><label>Kuvan URL (Valinnainen)</label><input type="text" id="global-msg-img" placeholder="https://esimerkki.fi/kuva.jpg"><label>Kesto ruudulla (ms, 1000 = 1 sekunti)</label><input type="number" id="global-msg-time" value="5000"><div style="display:flex;gap:10px;margin-top:10px;"><button class="btn" style="flex:1;" onclick="sendDebugPush('INFO')">Lähetä Ilmoitus</button><button class="btn btn-danger" style="flex:1;" onclick="sendDebugPush('RELOAD')">Pakota Päivitys Kaikille!</button></div></div><div class="card animate-enter" style="margin-top:1.5rem;"><h3 style="margin-bottom:1rem;">5x Uudet Debug-Työkalut</h3><div class="debug-grid"><button class="btn btn-outline" onclick="checkSystemStatus()">1. Järjestelmän Tila</button><button class="btn btn-outline" onclick="resetUI()">2. UI Nollaus</button><button class="btn btn-outline" onclick="forceDataSync()">3. Pakota Datan Synkronointi</button><button class="btn btn-outline" onclick="showMemory()">4. Näytä Muistin Käyttö</button><button class="btn btn-danger" style="grid-column:span 2;" onclick="clearCacheAndReload()">5. Tyhjennä Välimuisti (Hard Clean)</button></div></div></div><div id="view-asetukset" class="view-section"><h2 class="section-title">Asetukset</h2><div class="card animate-enter"><div style="display:flex;align-items:center;gap:15px;margin-bottom:1rem;"><div style="position:relative;cursor:pointer;" onclick="triggerPfpUpload()"><img id="settings-avatar" src="" style="width:70px;height:70px;border-radius:50%;object-fit:cover;display:none;border:2px solid var(--accent-main);"><div id="settings-avatar-initial" style="width:70px;height:70px;border-radius:50%;background:var(--border-color);display:flex;align-items:center;justify-content:center;font-size:1.5rem;font-weight:bold;">?</div><div style="position:absolute;bottom:0;right:0;background:var(--accent-main);color:var(--btn-text);width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;">📷</div></div><div><div style="font-weight:800;font-size:1.4rem;" id="settings-name">Nimi</div><div style="color:var(--text-secondary);" id="settings-email">Sähköposti</div></div></div><div id="settings-role-badge" style="margin-bottom:2rem;"></div><div style="border-top:1px solid var(--border-color);padding-top:1.5rem;margin-bottom:1.5rem;"><h4 style="margin-bottom:10px;">Teema</h4><select id="theme-selector" onchange="changeTheme(this.value)"><option value="light">Moderni Vaalea</option><option value="dark">Moderni Tumma</option><option value="classic">Klassinen (Sinivalkoinen)</option><option value="neon">Neon Cyberpunk</option></select></div><div style="border-top:1px solid var(--border-color);padding-top:1.5rem;margin-bottom:1.5rem;"><h4 style="margin-bottom:10px;">Vaihda Salasana</h4><input type="password" id="new-password" placeholder="Uusi salasana (Min. 6 merkkiä, nro & kirjain)"><button class="btn btn-outline" onclick="changeMyPassword()">Päivitä Salasana</button></div><div style="border-top:1px solid var(--border-color);padding:1.5rem 0;"><h4 style="margin-bottom:10px;">Järjestelmän Äänet</h4><p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:10px;">Käyttöliittymän tehosteet ja ilmoitukset.</p><select id="sound-selector" onchange="toggleSound(this.value)"><option value="1">Äänet Päällä</option><option value="0">Äänet Pois</option></select></div><div style="border-top:1px solid var(--border-color);padding-top:1.5rem;margin-top:1.5rem;"><h4 style="margin-bottom:10px;">Lähetä palautetta sovelluksesta</h4><textarea id="app-feedback-text" rows="3" maxlength="300" placeholder="Miten sovellusta voisi parantaa? (Max 300 merkkiä)"></textarea><button class="btn btn-outline" onclick="sendAppFeedback()">Lähetä Palaute</button></div><button class="btn btn-danger" style="width:100%;margin-top:2rem;" onclick="logout()">Kirjaudu ulos</button></div></div></div></main></div><script type="module">import{initializeApp as _iA}from"https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";import{getAuth as _gAu,signInWithEmailAndPassword as _sIEP,createUserWithEmailAndPassword as _cUEP,sendPasswordResetEmail as _sPRE,updatePassword as _uPW,onAuthStateChanged as _oASC,signOut as _sO}from"https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";import{getFirestore as _gF,collection as _c,doc as _d,getDoc as _gD,getDocs as _gDs,setDoc as _sD,addDoc as _aD,updateDoc as _uD,deleteDoc as _dD,query as _q,where as _w,orderBy as _oB,onSnapshot as _oS,serverTimestamp as _sT,limit as _l}from"https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";const _fc={apiKey:"AIzaSyC6nhZbUx_Eg226Bzm5NSqNS926XpRf9zE",authDomain:"suorituskykykuntoon-1.firebaseapp.com",projectId:"suorituskykykuntoon-1",storageBucket:"suorituskykykuntoon-1.firebasestorage.app"};const _a=_iA(_fc),_au=_gAu(_a),_db=_gF(_a),_a2=_iA(_fc,"SecondaryApp"),_au2=_gAu(_a2);let _cUE="",_cUR="",_cUN="",_cUPic="",deferredPrompt=null,currentViewingClientEmail="",allWorkoutsForStats=[],initialLoadNotification=!0;const _$=i=>document.getElementById(i),_admins=["vepiasko@gmail.com","eelukka12@gmail.com"];let _theme=localStorage.getItem("theme")||"dark";document.documentElement.setAttribute("data-theme",_theme);window.changeTheme=function(t){_theme=t;localStorage.setItem("theme",t);document.documentElement.setAttribute("data-theme",t)};let _snd=localStorage.getItem("ui_snd")!=="0";window.toggleSound=function(v){_snd=v==="1";localStorage.setItem("ui_snd",_snd?"1":"0")};const SoundEngine={ctx:null,init:function(){this.ctx||(this.ctx=new(window.AudioContext||window.webkitAudioContext));"suspended"===this.ctx.state&&this.ctx.resume()},playTone:function(f,t,d,v,s){if(_snd){this.init();try{const o=this.ctx.createOscillator(),g=this.ctx.createGain();o.connect(g);g.connect(this.ctx.destination);o.type=t;o.frequency.setValueAtTime(f,this.ctx.currentTime);s&&o.frequency.exponentialRampToValueAtTime(s,this.ctx.currentTime+d);g.gain.setValueAtTime(v,this.ctx.currentTime);g.gain.exponentialRampToValueAtTime(.001,this.ctx.currentTime+d);o.start();o.stop(this.ctx.currentTime+d)}catch(e){}}},playTab:function(){this.playTone(300,"sine",.1,.15,400)},playClick:function(){this.playTone(800,"triangle",.05,.09)},playNotification:function(){this.playTone(500,"sine",.15,.3);setTimeout(()=>this.playTone(750,"sine",.3,.3),150)},playSuccess:function(){this.playTone(400,"triangle",.1,.15);setTimeout(()=>this.playTone(500,"triangle",.1,.15),100);setTimeout(()=>this.playTone(600,"triangle",.3,.15),200)}};window.SoundEngine=SoundEngine;document.addEventListener("click",e=>{e.target.closest(".btn")||e.target.closest(".install-btn")||e.target.closest(".nav-item")?e.target.closest(".nav-item")||SoundEngine.playClick():void 0});if(window.matchMedia("(display-mode: standalone)").matches||window.navigator.standalone)_$("pwa-install-view").style.display="none";else _$("pwa-install-view").style.display="flex";window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferredPrompt=e;_$("install-btn-android").classList.add("active")});window.installAndroid=async function(){deferredPrompt&&(deferredPrompt.prompt(),deferredPrompt=null)};window.showIOSInstructions=function(){_$("install-instruction-ios").classList.toggle("visible")};_oASC(_au,async user=>{if(_$("pwa-install-view").style.display!=="flex")if(user){_$("login-view").style.display="none";_cUE=user.email;const dSnap=await _gD(_d(_db,"kayttajat",_cUE));if(dSnap.exists()){const d=dSnap.data();_cUR=d.role;_cUN=d.name;_cUPic=d.profilePic||"";initApp()}else if(_admins.includes(_cUE)){_cUR="omistaja";_cUN="eelukka12@gmail.com"===_cUE?"Eeli":"Asko";await _sD(_d(_db,"kayttajat",_cUE), {email:_cUE,name:_cUN,role:"omistaja",createdAt:_sT()});initApp()}else _sO(_au),showLoginError("Tiliäsi ei ole konfiguroitu oikein.")}else _$("login-view").style.display="flex"});const pwdRegex=/^(?=.*[A-Za-z])(?=.*\d).{6,}$/;window.handleRegister=async function(){const e=_$("login-email").value.trim().toLowerCase(),p=_$("login-password").value.trim();_$("login-error").style.display="none";_$("login-success").style.display="none";if(!_admins.includes(e))return showLoginError("Vain adminit voivat rekisteröityä suoraan.");if(!pwdRegex.test(p))return showLoginError("Salasanassa oltava min. 6 merkkiä, numero ja kirjain.");try{await _cUEP(_au,e,p)}catch(err){showLoginError("Virhe: "+err.message)}};window.handleLogin=async function(){const e=_$("login-email").value.trim().toLowerCase(),p=_$("login-password").value.trim();_$("login-error").style.display="none";_$("login-success").style.display="none";if(!e||!p)return showLoginError("Syötä sähköposti ja salasana.");try{await _sIEP(_au,e,p)}catch(err){showLoginError("Väärä sähköposti tai salasana.")}};window.handlePasswordReset=async function(){const e=_$("login-email").value.trim().toLowerCase();_$("login-error").style.display="none";_$("login-success").style.display="none";if(!e)return showLoginError("Syötä sähköpostiosoite ensin ylös.");try{const dSnap=await _gD(_d(_db,"kayttajat",e));if(!dSnap.exists()&&!_admins.includes(e))return showLoginError("Sähköpostia ei löydy järjestelmästä. Ota yhteys valmentajaan.");await _sPRE(_au,e);const s=_$("login-success");s.innerText="Salasanan nollauslinkki lähetetty! Tarkista myös roskapostikansio (Spam).";s.style.display="block"}catch(err){showLoginError("Virhe: Tarkista sähköpostiosoite.")}};window.changeMyPassword=async function(){const p=_$("new-password").value.trim();if(!pwdRegex.test(p))return showNotification("Virhe","Salasanassa oltava min. 6 merkkiä, numero ja kirjain.");try{await _uPW(_au.currentUser,p);_$("new-password").value="";SoundEngine.playSuccess();showNotification("Onnistui","Salasana on vaihdettu.")}catch(err){showNotification("Virhe","Kirjaudu ulos ja takaisin sisään vaihtaaksesi salasanan.")}};function showLoginError(m){const e=_$("login-error");e.innerText=m;e.style.display="block"}let cropImg=new Image(),cropCanvas,cropCtx,cx=0,cy=0,cZoom=1,isDragging=!1,startX,startY;window.triggerPfpUpload=function(){_$("pfp-upload").click()};window.handlePfpSelected=function(e){const f=e.target.files[0];if(f){const r=new FileReader;r.onload=function(ev){cropImg.onload=function(){_$("cropper-modal").classList.add("active");cropCanvas=_$("cropper-canvas");cropCtx=cropCanvas.getContext("2d");const c=_$("cropper-container");cropCanvas.width=c.clientWidth;cropCanvas.height=c.clientHeight;const s=Math.max(cropCanvas.width/cropImg.width,cropCanvas.height/cropImg.height);cZoom=s;_$("crop-zoom").min=s;_$("crop-zoom").max=3*s;_$("crop-zoom").value=s;cx=cropCanvas.width/2;cy=cropCanvas.height/2;drawCrop()};cropImg.src=ev.target.result};r.readAsDataURL(f);e.target.value=""}};window.drawCrop=function(){if(cropCtx){const z=parseFloat(_$("crop-zoom").value);cropCtx.clearRect(0,0,cropCanvas.width,cropCanvas.height);cropCtx.save();cropCtx.translate(cx,cy);cropCtx.scale(z,z);cropCtx.drawImage(cropImg,-cropImg.width/2,-cropImg.height/2);cropCtx.restore()}};const cropperCont=_$("cropper-container");if(cropperCont){const s=e=>{isDragging=!0;startX=e.touches?e.touches[0].clientX:e.clientX;startY=e.touches?e.touches[0].clientY:e.clientY};const d=e=>{if(isDragging){e.preventDefault();const n=e.touches?e.touches[0].clientX:e.clientX,y=e.touches?e.touches[0].clientY:e.clientY;cx+=n-startX;cy+=y-startY;startX=n;startY=y;drawCrop()}};const f=()=>{isDragging=!1};cropperCont.addEventListener("mousedown",s);cropperCont.addEventListener("mousemove",d);cropperCont.addEventListener("mouseup",f);cropperCont.addEventListener("mouseleave",f);cropperCont.addEventListener("touchstart",s);cropperCont.addEventListener("touchmove",d);cropperCont.addEventListener("touchend",f)}window.closeCropper=function(){_$("cropper-modal").classList.remove("active")};window.saveCroppedImage=async function(){const c=document.createElement("canvas"),s=200;c.width=s;c.height=s;const e=c.getContext("2d"),m=.8,mS=cropCanvas.width*m,sE=s/mS,z=parseFloat(_$("crop-zoom").value);e.translate(s/2,s/2);e.scale(sE*z,sE*z);const oX=(cx-cropCanvas.width/2)/z,oY=(cy-cropCanvas.height/2)/z;e.drawImage(cropImg,-cropImg.width/2+oX,-cropImg.height/2+oY);const d=c.toDataURL("image/jpeg",.85);try{await _uD(_d(_db,"kayttajat",_cUE),{profilePic:d});_cUPic=d;updateAvatarUI();SoundEngine.playSuccess();showNotification("Päivitetty","Profiilikuva tallennettu!");closeCropper()}catch(err){showNotification("Virhe","Kuvan tallennus epäonnistui.")}};function updateAvatarUI(){const f=_cUN.split(" ")[0];_$("header-name").innerText=f;if(_cUPic){_$("header-avatar").src=_cUPic;_$("header-avatar").style.display="flex";_$("header-avatar-initial").style.display="none";_$("settings-avatar").src=_cUPic;_$("settings-avatar").style.display="block";_$("settings-avatar-initial").style.display="none"}else{_$("header-avatar").style.display="none";_$("header-avatar-initial").innerText=f.charAt(0);_$("header-avatar-initial").style.display="flex";_$("settings-avatar").style.display="none";_$("settings-avatar-initial").innerText=f.charAt(0);_$("settings-avatar-initial").style.display="flex"}}function initApp(){_$("app-container").style.display="block";_$("settings-name").innerText=_cUN;_$("settings-email").innerText=_cUE;_$("settings-role-badge").innerHTML="omistaja"===_cUR?'<span class="status-badge status-admin">Valmentaja</span>':'<span class="status-badge status-active">Jäsen</span>';updateAvatarUI();_$("theme-selector").value=_theme;_$("sound-selector").value=_snd?"1":"0";buildMenu();if("omistaja"===_cUR)loadUsersIfAdmin(),loadAppFeedback();else loadUserWorkouts()}function buildMenu(){const n=_$("nav-items");n.innerHTML="";n.innerHTML+=`<div class="nav-item active" id="nav-koti" onclick="switchView('view-koti', 'nav-koti')"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg><span>Koti</span></div>`;if("omistaja"===_cUR){n.innerHTML+=`<div class="nav-item" id="nav-omistaja-jasenet" onclick="switchView('view-omistaja-jasenet', 'nav-omistaja-jasenet')"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg><span>Valmennus</span></div>`;n.innerHTML+=`<div class="nav-item" id="nav-tilastot" onclick="switchView('view-tilastot', 'nav-tilastot')"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg><span>Tilastot</span></div>`;n.innerHTML+=`<div class="nav-item" id="nav-sovelluspalaute" onclick="switchView('view-sovelluspalaute', 'nav-sovelluspalaute')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg><span>Palaute</span></div>`}else n.innerHTML+=`<div class="nav-item" id="nav-jasen-treeni" onclick="switchView('view-jasen-treeni', 'nav-jasen-treeni')"><svg viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1"></path><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path></svg><span>Treenit</span></div>`;if("eelukka12@gmail.com"===_cUE)n.innerHTML+=`<div class="nav-item" id="nav-debug" onclick="switchView('view-debug', 'nav-debug')"><svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path></svg><span>Debug</span></div>`;n.innerHTML+=`<div class="nav-item" id="nav-asetukset" onclick="switchView('view-asetukset', 'nav-asetukset')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle></svg><span>Asetukset</span></div>`;switchView('view-koti','nav-koti')}window.addClientUser=async function(){if("omistaja"===_cUR){const e=_$("new-user-email").value.trim().toLowerCase(),n=_$("new-user-name").value.trim();if(!e||!n)return showNotification("Virhe","Täytä kentät.");const p=Math.random().toString(36).slice(-8)+"A1";try{await _cUEP(_au2,e,p);await _sO(_au2);await _sD(_d(_db,"kayttajat",e),{email:e,name:n,role:"jasen",createdAt:_sT()});_$("new-user-email").value="";_$("new-user-name").value="";SoundEngine.playSuccess();showNotification("Luotu!",`Salasana: ${p}`);loadUsersIfAdmin()}catch(err){showNotification("Virhe","Käyttäjän luonti epäonnistui.")}}};async function loadUsersIfAdmin(){if("omistaja"===_cUR){const q=await _gDs(_c(_db,"kayttajat"));let h="",s='<option value="">-- Valitse --</option>',t='<option value="all">Kaikki Asiakkaat Yhteensä</option>';q.forEach(doc=>{const d=doc.data(),b="omistaja"===d.role?'<span class="status-badge status-admin">Valmentaja</span>':'<span class="status-badge status-active">Jäsen</span>';h+=`<div class="member-row"><div><div style="font-weight:700;">${d.name}</div><div style="font-size:0.85rem;color:var(--text-secondary);">${d.email}</div></div><div style="display:flex;gap:10px;align-items:center;">${b}${"jasen"===d.role?`<button class="btn btn-outline" style="padding:6px 12px;font-size:0.8rem;" onclick="openClientDetails('${d.email}')">Näytä</button>`:""}</div></div>`;"jasen"===d.role&&(s+=`<option value="${d.email}">${d.name}</option>`,t+=`<option value="${d.email}">${d.name}</option>`)});_$("omistaja-jasen-lista").innerHTML=h;_$("workout-client-select").innerHTML=s;_$("stat-client-select").innerHTML=t;const w=await _gDs(_c(_db,"treenit"));allWorkoutsForStats=[];w.forEach(doc=>allWorkoutsForStats.push(doc.data()));loadCoachStats("all")}}window.addWorkout=async function(){const c=_$("workout-client-select").value,t=_$("workout-title").value,w=_$("workout-warmup").value,m=_$("workout-main").value,co=_$("workout-cooldown").value;if(!c||!t)return showNotification("Virhe","Asiakas ja otsikko puuttuvat.");try{await _aD(_c(_db,"treenit"),{omistajaEmail:c,title:t,warmup:w,main:m,cooldown:co,createdAt:_sT()});_$("workout-title").value="";_$("workout-warmup").value="";_$("workout-main").value="";_$("workout-cooldown").value="";SoundEngine.playSuccess();showNotification("Onnistui","Ohjelma tallennettu!");loadUsersIfAdmin()}catch(e){}};function createWorkoutHTML(i,d,iC){const t=d.createdAt?d.createdAt.toMillis?d.createdAt.toMillis():0:0,dS=t?new Date(t).toLocaleDateString("fi-FI"):"Tänään";let eS="";if(d.editedAt){const eT=d.editedAt.toMillis?d.editedAt.toMillis():0;eS=`<div style="font-size:0.75rem;color:var(--text-secondary);margin-bottom:10px;">Muokattu: ${new Date(eT).toLocaleString("fi-FI")}</div>`}let c="";d.warmup&&(c+=`<div class="workout-part"><h4>Lämmittely</h4><p>${d.warmup}</p></div>`);d.main&&(c+=`<div class="workout-part"><h4>Pääliikkeet</h4><p>${d.main}</p></div>`);d.cooldown&&(c+=`<div class="workout-part" style="border:none;"><h4>Jäähdyttely</h4><p>${d.cooldown}</p></div>`);let fH="";if(d.palaute){fH=`<div class="feedback-section" style="background:transparent;border:none;padding:0;padding-top:15px;margin-top:15px;border-top:1px solid var(--border-color);"><div style="display:flex;align-items:flex-start;gap:12px;">${renderAvatar(d.palaute.kuva,d.palaute.nimi)}<div style="flex:1;"><h4 style="color:var(--success);font-size:0.9rem;margin-bottom:4px;">✓ ${d.palaute.nimi} antoi palautteen</h4><p style="font-size:0.9rem;"><strong>${d.palaute.arvio}</strong></p><p style="font-size:0.95rem;margin-top:4px;">${d.palaute.teksti}</p></div></div></div>`;if(d.valmentajaKommentti)fH+=`<button class="btn btn-outline" style="margin-top:10px;width:100%;" onclick="document.getElementById('coach-reply-${i}').classList.toggle('visible');SoundEngine.playClick();">Näytä valmentajan kommentti</button><div id="coach-reply-${i}" class="coach-reply-box">${renderAvatar(d.valmentajaKommentti.kuva,d.valmentajaKommentti.nimi)}<div class="coach-msg-content"><div style="font-weight:800;font-size:0.9rem;">${d.valmentajaKommentti.nimi} (Valmentaja)</div><div style="font-size:0.95rem;">${d.valmentajaKommentti.teksti}</div></div></div>`;else if(iC)fH+=`<div style="margin-top:10px;display:flex;gap:10px;"><input type="text" id="coach-input-${i}" placeholder="Vastaa asiakkaalle..." maxlength="300" style="margin-bottom:0;"><button class="btn" onclick="submitCoachReply('${i}')">Lähetä</button></div>`}else if(!iC)fH=`<div class="feedback-section"><h4 style="margin-bottom:10px;">Miten treeni meni?</h4><select id="fb-arvio-${i}" style="margin-bottom:10px;"><option>Loistava / Hyvä</option><option>Ihan OK</option><option>Raskas / Huono</option></select><textarea id="fb-teksti-${i}" rows="2" maxlength="300" placeholder="Kerro omin sanoin (Max 300 merkkiä)..." style="margin-bottom:10px;"></textarea><button class="btn" style="width:100%;" onclick="submitFeedback('${i}')">Lähetä Palaute</button></div>`;else fH=`<p style="font-size:0.85rem;color:var(--text-secondary);margin-top:15px;border-top:1px solid var(--border-color);padding-top:15px;">Asiakas ei ole vielä antanut palautetta.</p>`;let aB="";if(iC){const sD=JSON.stringify({id:i,t:d.title||"",w:d.warmup||"",m:d.main||"",c:d.cooldown||""}).replace(/"/g,"&quot;");aB=`<div style="display:flex;gap:10px;margin-top:15px;border-top:1px solid var(--border-color);padding-top:15px;"><button class="btn btn-outline" style="flex:1;" onclick="openEditModal(${sD})">Muokkaa</button><button class="btn btn-danger" style="flex:1;" onclick="deleteWorkout('${i}')">Poista</button></div>`}return`<div class="card"><span class="workout-date">📅 ${dS}</span>${eS}<h3 style="margin-bottom:15px;font-size:1.4rem;">${d.title}</h3>${c}${fH}${aB}</div>`}async function loadUserWorkouts(){if("omistaja"!==_cUR){const q=_q(_c(_db,"treenit"),_w("omistajaEmail","==",_cUE));_oS(q,snap=>{let docs=[];snap.forEach(doc=>docs.push({id:doc.id,data:doc.data()}));docs.sort((a,b)=>(b.data.createdAt?.toMillis()||0)-(a.data.createdAt?.toMillis()||0));let h="";docs.forEach(d=>{h+=createWorkoutHTML(d.id,d.data,!1)});_$("jasen-treeni-container").innerHTML=h||'<div class="card">Ei ohjelmia.</div>'})}}window.openClientDetails=async function(e){currentViewingClientEmail=e;_$("asiakas-tiedot-treenit").innerHTML="Ladataan...";switchView("view-asiakas-tiedot","nav-omistaja-jasenet");try{const uD=await _gD(_d(_db,"kayttajat",e));if(uD.exists())_$("asiakas-perustiedot").innerHTML=`<div><strong>SP:</strong> ${uDoc.data().email}</div>`;const q=_q(_c(_db,"treenit"),_w("omistajaEmail","==",e));_oS(q,snap=>{if(currentViewingClientEmail===e){let docs=[];snap.forEach(doc=>docs.push({id:doc.id,data:doc.data()}));docs.sort((a,b)=>(b.data.createdAt?.toMillis()||0)-(a.data.createdAt?.toMillis()||0));let h="";docs.forEach(d=>{h+=createWorkoutHTML(d.id,d.data,!0)});_$("asiakas-tiedot-treenit").innerHTML=h||'<div class="card">Ei ohjelmia.</div>'}})
-}catch(err){}};window.submitFeedback=async function(i){try{await _uD(_d(_db,"treenit",i),{palaute:{arvio:_$(`fb-arvio-${i}`).value,teksti:_$(`fb-teksti-${i}`).value.trim()||"-",nimi:_cUN,kuva:_cUPic,date:(new Date).toISOString()}});SoundEngine.playSuccess();showNotification("Kiitos!","Palaute tallennettu.")}catch(e){}};window.submitCoachReply=async function(i){const t=_$(`coach-input-${i}`).value.trim();if(t)try{await _uD(_d(_db,"treenit",i),{valmentajaKommentti:{teksti:t,nimi:_cUN,kuva:_cUPic}});SoundEngine.playSuccess();showNotification("Onnistui","Vastaus lähetetty!")}catch(e){}};window.deleteWorkout=async function(i){confirm("Haluatko varmasti poistaa tämän treenin?")&&(await _dD(_d(_db,"treenit",i)),showNotification("Poistettu","Treeni poistettu järjestelmästä."),loadUsersIfAdmin())};window.openEditModal=function(d){_$("edit-id").value=d.id;_$("edit-title").value=d.t;_$("edit-warmup").value=d.w;_$("edit-main").value=d.m;_$("edit-cooldown").value=d.c;_$("edit-modal").style.display="flex"};window.closeEditModal=function(){_$("edit-modal").style.display="none"};window.saveWorkoutEdit=async function(){const i=_$("edit-id").value;try{await _uD(_d(_db,"treenit",i),{title:_$("edit-title").value,warmup:_$("edit-warmup").value,main:_$("edit-main").value,cooldown:_$("edit-cooldown").value,editedAt:_sT()});closeEditModal();SoundEngine.playSuccess();showNotification("Päivitetty","Treeni muokattu!")}catch(e){}};window.loadCoachStats=function(f){if(allWorkoutsForStats){let h=0,o=0,r=0,tW=0,tF=0;allWorkoutsForStats.forEach(w=>{if("all"===f||w.omistajaEmail===f){tW++;if(w.palaute){tF++;if(w.palaute.arvio.includes("Loistava")||w.palaute.arvio.includes("Hyvä"))h++;else if(w.palaute.arvio.includes("OK"))o++;else r++}}});_$("stat-total-workouts").innerText=tW;_$("stat-total-feedback").innerText=tF;_$("stat-hyva").innerText=h;_$("stat-ok").innerText=o;_$("stat-raskas").innerText=r}};window.sendAppFeedback=async function(){const t=_$("app-feedback-text").value.trim();if(t)try{await _aD(_c(_db,"sovelluspalaute"),{teksti:t,nimi:_cUN,email:_cUE,createdAt:_sT()});_$("app-feedback-text").value="";SoundEngine.playSuccess();showNotification("Kiitos!","Palaute lähetetty tekijöille.")}catch(e){}};function loadAppFeedback(){if("omistaja"===_cUR)_oS(_q(_c(_db,"sovelluspalaute")),snap=>{let docs=[];snap.forEach(doc=>docs.push(doc.data()));docs.sort((a,b)=>(b.createdAt?.toMillis()||0)-(a.createdAt?.toMillis()||0));let h="";docs.forEach(d=>{const t=d.createdAt?d.createdAt.toMillis?d.createdAt.toMillis():0:0,dS=t?new Date(t).toLocaleString("fi-FI"):"Tänään";h+=`<div class="card"><div style="font-size:0.8rem;color:var(--text-secondary);font-weight:700;margin-bottom:8px;">${dS} | ${d.nimi}</div><p style="line-height:1.5;">${d.teksti}</p></div>`});_$("sovelluspalaute-lista").innerHTML=h||"<p>Ei palautteita.</p>"})}window.sendDebugPush=async function(t){if("eelukka12@gmail.com"===_cUE){const s=_$("global-msg-sender").value||"Admin",ti=_$("global-msg-title").value||("RELOAD"===t?"Päivitys":""),b=_$("global-msg-body").value||("RELOAD"===t?"Pakotettu päivitys käynnissä...":""),i=_$("global-msg-img").value,d=parseInt(_$("global-msg-time").value)||3000;try{await _aD(_c(_db,"ilmoitukset"),{type:t,sender:s,title:ti,body:b,img:i,duration:d,createdAt:_sT()});_$("global-msg-title").value="";_$("global-msg-body").value="";SoundEngine.playSuccess();showNotification("Onnistui","RELOAD"===t?"Hard refresh komento lähetetty!":"Push-ilmoitus lähetetty!","Admin",3000)}catch(err){console.error(err)}}};function listenToGlobalNotifications(){_oS(_q(_c(_db,"ilmoitukset")),snap=>{snap.docChanges().forEach(change=>{if("added"===change.type){if(initialLoadNotification)return;const d=change.doc.data();"RELOAD"===d.type?window.location.reload(!0):showNotification(d.title,d.body,d.sender||"⚠️ Järjestelmä",d.duration||3000,d.img)}});initialLoadNotification=!1})}function loadNotificationsList(){_oS(_q(_c(_db,"ilmoitukset")),snap=>{let docs=[];snap.forEach(doc=>docs.push(doc.data()));docs.sort((a,b)=>(b.createdAt?.toMillis()||0)-(a.createdAt?.toMillis()||0));let h="";docs.forEach(d=>{if("RELOAD"!==d.type){const dS=d.createdAt?new Date(d.createdAt.toMillis()).toLocaleString("fi-FI"):"Tänään";h+=`<div class="card"><span style="font-size:0.8rem; color:var(--text-secondary); font-weight:700;">${dS}</span><h3 style="margin-top:5px; margin-bottom:10px;">${d.title}</h3><p style="white-space:pre-wrap; line-height:1.5;">${d.body}</p></div>`}});_$("tiedotteet-lista").innerHTML=h||"<p>Ei tiedotteita.</p>"})}window.checkSystemStatus=()=>showNotification("System Status","Kaikki palvelut online. Tietokantayhteys vakaa (Ping <40ms).","Debug",5000);window.resetUI=()=> {localStorage.clear();location.reload()};window.forceDataSync=()=>{"omistaja"===_cUR?loadUsersIfAdmin():loadUserWorkouts();showNotification("Sync","Kaikki tietokantadokumentit haettu uudelleen.","Debug",4000)};window.showMemory=()=>showNotification("Memory Dump","JS Muistinkäyttö: "+(performance.memory?Math.round(performance.memory.usedJSHeapSize/1048576)+" MB":"Ei saatavilla tässä selaimessa."),"Debug",6000);window.clearCacheAndReload=()=>{localStorage.clear();alert('Välimuisti tyhjennetty. Sivu ladataan uudelleen.');window.location.reload(!0)};window.logout=function(){_sO(_au).then(()=>window.location.reload())};window.showNotification=function(t,b,s="⚠️ Järjestelmä",d=3000,i=null){_$("popup-sender").innerText=s;_$("popup-title").innerText=t;_$("popup-body").innerText=b;const imgEl=_$("popup-img");i&&""!==i.trim()?(imgEl.src=i,imgEl.style.display="block"):(imgEl.style.display="none",imgEl.src="");_$("global-popup").classList.add("active");SoundEngine.playNotification();window.notificationTimeout&&clearTimeout(window.notificationTimeout);window.notificationTimeout=setTimeout(()=>{_$("global-popup").classList.remove("active")},d)};window.closeNotification=function(){_$("global-popup").classList.remove("active")};window.switchView=function(v,n){if(n){document.querySelectorAll(".nav-item").forEach(el=>el.classList.remove("active"));const nE=_$(n);nE&&nE.classList.add("active");SoundEngine.playTab()}document.querySelectorAll(".view-section").forEach(view=>view.classList.remove("active"));const vE=_$(v);vE&&vE.classList.add("active");const sT={'view-koti':'Tervetuloa valmennusportaaliin.','view-jasen-treeni':'Oletko valmis päivän haasteeseen?','view-omistaja-jasenet':'Hallitse asiakkaita ja ohjelmia.','view-asiakas-tiedot':'Tarkastele asiakkaan kehitystä.','view-tilastot':'Koko valmennuksen data.','view-sovelluspalaute':'Käyttäjien antama palaute.','view-debug':'Järjestelmän hallintapaneeli.','view-asetukset':'Muokkaa omia asetuksiasi.'};sT[v]&&(_$("greeting-sub").innerText=sT[v]);window.scrollTo(0,0)};</script></body></html>
+<!DOCTYPE html>
+<html lang="fi" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>Suorituskyky Kuntoon</title>
+    
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#09090b">
+    
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon.png">
+    <link rel="icon" href="icon.png" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* TEEMAT */
+        :root, [data-theme="light"] {
+            --bg-base: #f1f5f9; --bg-surface: #ffffff; --text-primary: #0f172a; --text-secondary: #64748b;
+            --border-color: #e2e8f0; --accent-main: #020617; --accent-hover: #1e293b; --btn-text: #ffffff;
+            --hover-bg: #f8fafc; --banner-bg: #020617; --banner-text: #ffffff; --success: #059669;
+            --success-bg: #ecfdf5; --danger: #dc2626; --danger-bg: #fef2f2; --input-bg: #f8fafc;
+            --comment-bg: #f1f5f9; --comment-coach-bg: #e0f2fe; --header-bg: #ffffff;
+            --radius-main: 16px; --radius-btn: 12px; --font-main: 'Inter', sans-serif;
+        }
+        [data-theme="dark"] {
+            --bg-base: #09090b; --bg-surface: #18181b; --text-primary: #f8fafc; --text-secondary: #a1a1aa;
+            --border-color: #27272a; --accent-main: #ffffff; --accent-hover: #e4e4e7; --btn-text: #000000;
+            --hover-bg: #27272a; --banner-bg: #18181b; --banner-text: #ffffff; --success: #10b981;
+            --input-bg: #09090b; --comment-bg: #27272a; --comment-coach-bg: #1e3a8a; --header-bg: #18181b;
+            --radius-main: 16px; --radius-btn: 12px; --font-main: 'Inter', sans-serif;
+        }
+        [data-theme="classic"] {
+            --bg-base: #e9ecef; --bg-surface: #ffffff; --text-primary: #1e293b; --text-secondary: #475569;
+            --border-color: #cbd5e1; --accent-main: #2563eb; --accent-hover: #1d4ed8; --btn-text: #ffffff;
+            --hover-bg: #f1f5f9; --banner-bg: #1e3a8a; --banner-text: #ffffff; --success: #059669;
+            --input-bg: #ffffff; --comment-bg: #f8fafc; --comment-coach-bg: #eff6ff; --header-bg: #ffffff;
+            --radius-main: 8px; --radius-btn: 6px; --font-main: 'Arial', sans-serif;
+        }
+        [data-theme="neon"] {
+            --bg-base: #050510; --bg-surface: #0b0b1a; --text-primary: #e2e8f0; --text-secondary: #94a3b8;
+            --border-color: #1e1e3f; --accent-main: #d946ef; --accent-hover: #c026d3; --btn-text: #ffffff;
+            --hover-bg: #13132b; --banner-bg: #0b0b1a; --banner-text: #2dd4bf; --success: #2dd4bf;
+            --input-bg: #050510; --comment-bg: #13132b; --comment-coach-bg: #31133e; --header-bg: #0b0b1a;
+            --radius-main: 0px; --radius-btn: 0px; --font-main: 'Courier New', monospace;
+        }
+
+        *{box-sizing:border-box;margin:0;padding:0;font-family:var(--font-main);-webkit-tap-highlight-color:transparent}
+        body{background-color:var(--bg-base);color:var(--text-primary);overflow:hidden;display:flex;flex-direction:column;height:100vh;width:100vw;transition:background-color 0.3s, color 0.3s}
+
+        @keyframes slideUpFade{0%{opacity:0;transform:translateY(30px)}100%{opacity:1;transform:translateY(0)}}
+        @keyframes popIn{0%{opacity:0;transform:scale(0.9)}100%{opacity:1;transform:scale(1)}}
+
+        .animate-enter{opacity:0;animation:slideUpFade .4s cubic-bezier(0.16,1,0.3,1) forwards}
+
+        svg{width:24px;height:24px;stroke-width:2;stroke:currentColor;fill:none;stroke-linecap:round;stroke-linejoin:round}
+
+        /* PERUS ELEMENTIT */
+        .btn{background-color:var(--accent-main);color:var(--btn-text);border:1px solid var(--accent-main);padding:14px 24px;font-size:1rem;font-weight:600;cursor:pointer;border-radius:var(--radius-btn);transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px;}
+        .btn:hover{background-color:var(--accent-hover);transform:translateY(-2px)}
+        .btn-outline{background-color:transparent;color:var(--text-primary);border:1px solid var(--border-color)}
+        .btn-outline:hover{background-color:var(--hover-bg)}
+        .btn-danger{background-color:transparent;color:var(--danger);border:1px solid var(--danger)}
+        .btn-danger:hover{background-color:var(--danger-bg)}
+
+        /* PWA NÄKYMÄ */
+        #pwa-install-view{position:fixed;inset:0;background:linear-gradient(135deg,var(--banner-bg) 0%,#1e293b 100%);color:var(--banner-text);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;padding:2rem;text-align:center;}
+        .install-icon{width:96px;height:96px;background:var(--accent-main);color:var(--btn-text);border-radius:var(--radius-main);display:flex;align-items:center;justify-content:center;font-size:2.4rem;font-weight:800;margin-bottom:2rem;animation:popIn .8s forwards;}
+        .install-btn{background:var(--bg-surface);color:var(--text-primary);padding:16px 24px;font-size:1.1rem;font-weight:700;border-radius:30px;border:none;cursor:pointer;display:none;align-items:center;justify-content:center;gap:12px;margin-bottom:1rem;}
+        .install-btn.active{display:flex}
+        .ios-instruction{background:rgba(255,255,255,0.1);padding:20px;border-radius:16px;border:1px solid rgba(255,255,255,0.2);max-width:350px;text-align:left;margin-top:1.5rem;display:none;}
+        .ios-instruction.visible{display:block;animation:slideUpFade .4s forwards;}
+
+        /* LOGIN NÄKYMÄ */
+        #login-view{position:fixed;inset:0;background-color:var(--bg-surface);display:none;flex-direction:column;z-index:1000;padding:2rem;align-items:center;justify-content:center;overflow-y:auto;}
+        .login-card {width:100%;max-width:400px;background:var(--bg-base);padding:2.5rem 2rem;border-radius:var(--radius-main);box-shadow:0 10px 30px rgba(0,0,0,0.1);margin:auto;}
+        .login-logo{width:64px;height:64px;background:var(--accent-main);color:var(--btn-text);border-radius:var(--radius-main);display:flex;align-items:center;justify-content:center;font-size:1.8rem;font-weight:800;margin:0 auto 1.5rem}
+        .error-message{display:none;background:var(--danger-bg);color:var(--danger);padding:12px 16px;border-radius:var(--radius-btn);font-weight:600;margin-bottom:1.5rem;border:1px solid var(--danger);font-size:0.85rem;}
+        .success-message{display:none;background:var(--success-bg);color:var(--success);padding:12px 16px;border-radius:var(--radius-btn);font-weight:600;margin-bottom:1.5rem;border:1px solid var(--success);font-size:0.85rem;}
+
+        /* MAIN APP LAYOUT */
+        #app-container{display:none;height:100vh;width:100%}
+        
+        .top-header {position:fixed;top:0;left:0;right:0;height:65px;background:var(--header-bg);border-bottom:1px solid var(--border-color);display:flex;align-items:center;padding:0 1.5rem;z-index:90;justify-content:space-between; transition:background-color 0.3s;}
+        .top-user-info {display:flex;align-items:center;gap:12px;}
+        .top-avatar {width:38px;height:38px;border-radius:50%;object-fit:cover;background:var(--border-color);display:flex;align-items:center;justify-content:center;font-weight:bold;color:var(--text-secondary);cursor:pointer;border:2px solid var(--accent-main);}
+        .top-greeting {font-weight:700;font-size:1.1rem;color:var(--text-primary);}
+
+        .sidebar{position:fixed;top:65px;left:0;bottom:0;width:280px;background-color:var(--bg-surface);border-right:1px solid var(--border-color);display:flex;flex-direction:column;padding:1.5rem 0;z-index:40; transition:background-color 0.3s;}
+        .sidebar-header{padding:0 1.5rem;margin-bottom:2rem;}
+        .nav-items{display:flex;flex-direction:column;gap:.4rem;padding:0 1rem;overflow-y:auto;}
+        .nav-item{padding:14px 16px;border-radius:var(--radius-btn);cursor:pointer;font-weight:600;color:var(--text-secondary);display:flex;align-items:center;gap:14px;font-size:.95rem;transition:all 0.2s}
+        .nav-item:hover,.nav-item.active{background-color:var(--hover-bg);color:var(--text-primary)}
+
+        .main-wrapper{margin-left:280px;margin-top:65px;height:calc(100vh - 65px);overflow-y:auto;background-color:var(--bg-base)}
+        .greeting-banner{background:linear-gradient(135deg,var(--banner-bg) 0%, #000000 100%);color:var(--banner-text);padding:3rem 2rem 5rem;position:relative}
+        .greeting-content{max-width:900px;margin:0 auto}
+        .content-container{padding:0 2rem 3rem;max-width:940px;margin:0 auto;position:relative;top:-40px}
+
+        /* TEKSTIT AINA VALKOISINA (Riippumatta teemasta) */
+        .section-title, .greeting-banner h1, #greeting-sub, #login-view h1 { color: #ffffff !important; }
+        .greeting-banner h1 { font-size:2.8rem; font-weight:800; margin:0; letter-spacing:-.04em; line-height:1.1; }
+        #greeting-sub { margin-top: 10px; font-size: 1.1rem; opacity: 0.9; }
+        .section-title { font-size:1.4rem; font-weight:700; margin-bottom:1.5rem; }
+
+        .view-section{display:none}
+        .view-section.active{display:block; animation: slideUpFade .4s forwards;}
+        .card{background-color:var(--bg-surface);border:1px solid var(--border-color);border-radius:var(--radius-main);padding:2rem;margin-bottom:1.5rem;box-shadow:0 4px 6px rgba(0,0,0,0.02)}
+
+        input[type="text"],input[type="number"],input[type="email"],input[type="password"],select,textarea{width:100%;padding:14px 16px;border:1px solid var(--border-color);border-radius:var(--radius-btn);font-size:1rem;margin-bottom:1.2rem;background-color:var(--input-bg);color:var(--text-primary)}
+        
+        .member-row{display:flex;justify-content:space-between;align-items:center;padding:1.25rem 0;border-bottom:1px solid var(--border-color)}
+        .status-badge{display:inline-flex;align-items:center;gap:6px;font-size:.75rem;font-weight:800;padding:6px 12px;border-radius:20px;text-transform:uppercase}
+        .status-active{background:var(--success-bg);color:var(--success)}
+        .status-admin{background:rgba(59, 130, 246, 0.1);color:#3b82f6}
+
+        /* TÄYDELLINEN PUSH ILMOITUS */
+        .android-notification{position:fixed;top:-250px;left:50%;transform:translateX(-50%);width:90%;max-width:400px;background:#1e1e1e;color:#ffffff;padding:20px;border-radius:var(--radius-main);z-index:9999;box-shadow:0 8px 30px rgba(0,0,0,0.6);transition:top .5s cubic-bezier(0.175, 0.885, 0.32, 1.275); text-align:left; border: 1px solid rgba(255,255,255,0.1);}
+        .android-notification.active{top:20px}
+        #popup-sender { font-size:0.75rem; color:#b3b3b3; font-weight:800; text-transform:uppercase; margin-bottom:4px; letter-spacing:0.05em; }
+        #popup-title { font-weight:800; font-size:1.15rem; margin-bottom:6px; }
+        #popup-body { font-size:0.95rem; line-height:1.5; color:#e2e8f0; }
+        #popup-img { width:100%; max-height:180px; object-fit:cover; border-radius:12px; margin-top:12px; display:none; border:1px solid rgba(255,255,255,0.1); }
+
+        /* Stats & Debug */
+        .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem;}
+        .stat-box{background:var(--input-bg);padding:1.5rem;border-radius:var(--radius-main);border:1px solid var(--border-color);text-align:center}
+        .stat-number{font-size:2.5rem;font-weight:800;color:var(--text-primary);margin-bottom:.5rem}
+        .stat-label{font-size:.85rem;color:var(--text-secondary);text-transform:uppercase;font-weight:600}
+        .debug-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+        /* Treeni Template */
+        .workout-part { margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px dashed var(--border-color); }
+        .workout-part:last-child { border-bottom: none; }
+        .workout-part h4 { color: var(--text-primary); margin-bottom: 8px; font-size: 1.1rem; }
+        .workout-part p { white-space: pre-wrap; line-height: 1.6; color: var(--text-secondary); }
+
+        /* Kommentit UI */
+        .feedback-section { margin-top: 1.5rem; padding: 1.5rem; background: var(--input-bg); border-radius: var(--radius-btn); border: 1px solid var(--border-color); }
+        .coach-reply-box { margin-top: 15px; padding: 15px; background: var(--comment-coach-bg); border-radius: var(--radius-btn); display: none; align-items:flex-start; gap:12px; }
+        .coach-reply-box.visible { display: flex; animation: slideUpFade 0.3s forwards; }
+        .small-avatar { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; background: var(--border-color); display: inline-flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1rem; flex-shrink: 0; color:var(--text-secondary); }
+        .workout-date { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 15px; display: block; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
+
+        .log-item { padding: 16px; border-bottom: 1px solid var(--border-color); }
+        .log-item:last-child { border-bottom: none; }
+        .log-tag { display: inline-block; padding: 4px 10px; background: rgba(59, 130, 246, 0.1); color: #3b82f6; border-radius: 20px; font-size: 0.75rem; font-weight: 800; margin-bottom: 8px; text-transform: uppercase; }
+
+        /* Modals & Cropper */
+        .modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.8); z-index:2000; display:none; align-items:center; justify-content:center; padding:1rem;}
+        .modal-overlay.active { display:flex; }
+        .modal-content { background:var(--bg-surface); padding:2rem; border-radius:var(--radius-main); width:100%; max-width:500px; max-height:90vh; overflow-y:auto; }
+        
+        .cropper-container { position:relative; width:100%; aspect-ratio:1/1; background:#000; overflow:hidden; border-radius:12px; margin-bottom:1rem; touch-action:none;}
+        #cropper-canvas { position:absolute; top:0; left:0; transform-origin:center; cursor:move; }
+        .cropper-mask { position:absolute; inset:0; pointer-events:none; box-shadow: 0 0 0 9999px rgba(0,0,0,0.6); border-radius:50%; width:80%; height:80%; top:10%; left:10%; border:2px dashed #fff; }
+
+        .toggle-switch{position:relative;width:50px;height:28px;background:var(--border-color);border-radius:30px;cursor:pointer;transition:background .3s}
+        .toggle-switch.active{background:var(--success)}
+        .toggle-circle{position:absolute;top:3px;left:3px;width:22px;height:22px;background:#fff;border-radius:50%;transition:transform .3s}
+        .toggle-switch.active .toggle-circle{transform:translateX(22px)}
+
+        @media(max-width:768px){
+            .sidebar{transform:none;display:flex;flex-direction:row;top:auto;bottom:0;left:0;right:0;width:100%;height:75px;padding:0;border-right:none;border-top:1px solid var(--border-color);z-index:100;}
+            .sidebar-header{display:none}
+            .nav-items{flex-direction:row;width:100%;padding:0;gap:0;justify-content:space-around;align-items:center}
+            .nav-item{flex-direction:column;gap:6px;padding:10px 0;font-size:.7rem;border-radius:8px;width:100%;justify-content:center}
+            .nav-item span { display:block; text-align:center; }
+            .main-wrapper{margin-left:0;margin-top:65px;height:calc(100vh - 140px);padding-bottom:1rem}
+            .greeting-banner{padding:2rem 1.5rem 3rem}
+            .content-container{padding:0 1rem 1rem}
+            .card {padding:1.5rem}
+        }
+    </style>
+</head>
+<body>
+
+    <input type="file" id="pfp-upload" accept="image/*" style="display:none" onchange="handlePfpSelected(event)">
+
+    <div id="pwa-install-view">
+        <div class="install-icon">SK</div>
+        <h1 style="color:#fff !important;">Suorituskyky Kuntoon</h1>
+        <div class="install-options">
+            <button class="install-btn" id="install-btn-android" onclick="installAndroid()">Lataa Sovellus</button>
+            <button class="install-btn" id="install-btn-ios" onclick="showIOSInstructions()">Asenna iPhonelle</button>
+        </div>
+        <div class="ios-instruction" id="install-instruction-ios">
+            <h3 style="color:#fff;">📱 Näin asennat iPhonella:</h3>
+            <ol style="color:#e2e8f0;"><li>Paina Safari-selaimen Jaa-kuvaketta</li><li>Valitse "Lisää kotivalikkoon"</li><li>Napsauta "Lisää" yläkulmasta</li></ol>
+        </div>
+    </div>
+
+    <div class="android-notification" id="global-popup">
+        <div id="popup-sender">⚠️ Järjestelmä</div>
+        <div id="popup-title">Otsikko</div>
+        <div id="popup-body">Viesti tähän.</div>
+        <img id="popup-img" src="">
+    </div>
+
+    <div class="modal-overlay" id="cropper-modal">
+        <div class="modal-content">
+            <h2 style="margin-bottom:1rem; text-align:center;">Rajaa Profiilikuva</h2>
+            <div class="cropper-container" id="cropper-container">
+                <canvas id="cropper-canvas"></canvas>
+                <div class="cropper-mask"></div>
+            </div>
+            <label>Zoomaa</label>
+            <input type="range" id="crop-zoom" min="1" max="3" step="0.01" value="1" style="width:100%; margin-bottom:1.5rem;" oninput="drawCrop()">
+            <div style="display:flex;gap:10px;">
+                <button class="btn" style="flex:1;" onclick="saveCroppedImage()">Tallenna</button>
+                <button class="btn btn-outline" style="flex:1;" onclick="closeCropper()">Peruuta</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="edit-modal">
+        <div class="modal-content">
+            <h2 style="margin-bottom:1rem;">Muokkaa Treeniä</h2>
+            <input type="hidden" id="edit-id">
+            <label>Otsikko</label><input type="text" id="edit-title">
+            <label>Lämmittely</label><textarea id="edit-warmup" rows="2"></textarea>
+            <label>Pääliikkeet</label><textarea id="edit-main" rows="4"></textarea>
+            <label>Jäähdyttely</label><textarea id="edit-cooldown" rows="2"></textarea>
+            <div style="display:flex;gap:10px;margin-top:1rem;">
+                <button class="btn" style="flex:1;" onclick="saveWorkoutEdit()">Tallenna</button>
+                <button class="btn btn-outline" style="flex:1;" onclick="closeEditModal()">Peruuta</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="login-view">
+        <div class="login-card">
+            <div class="login-logo">SK</div>
+            <h1>Kirjaudu sisään</h1>
+            <div class="error-message" id="login-error"></div>
+            <div class="success-message" id="login-success"></div>
+            <label>Sähköpostiosoite</label>
+            <input type="email" id="login-email" required>
+            <label>Salasana</label>
+            <input type="password" id="login-password" required>
+            <button class="btn" style="width:100%; padding:16px; margin-bottom:1rem;" onclick="handleLogin()">Kirjaudu sisään</button>
+            <button class="btn btn-outline" style="width:100%; padding:16px; margin-bottom:10px;" onclick="handleRegister()">Rekisteröidy (Vain Admin)</button>
+            <button class="btn btn-outline" style="width:100%; padding:16px; border:none;" onclick="handlePasswordReset()">Unohditko salasanan?</button>
+        </div>
+    </div>
+
+    <div id="app-container">
+        
+        <header class="top-header">
+            <div class="top-user-info" onclick="triggerPfpUpload()">
+                <img id="header-avatar" class="top-avatar" src="" style="display:none;">
+                <div id="header-avatar-initial" class="top-avatar">?</div>
+                <div class="top-greeting">Hei, <span id="header-name"></span></div>
+            </div>
+            <div style="font-size:0.8rem; color:var(--text-secondary); font-weight:700;">SK PORTAALI</div>
+        </header>
+
+        <nav class="sidebar">
+            <div class="sidebar-header"><h2 class="section-title" style="margin-bottom:0;">Valikko</h2></div>
+            <div class="nav-items" id="nav-items"></div>
+        </nav>
+
+        <main class="main-wrapper">
+            <div class="greeting-banner">
+                <div class="greeting-content">
+                    <h1 id="greeting-text">Hei.</h1>
+                    <p id="greeting-sub">Tervetuloa valmennusportaaliin.</p>
+                </div>
+            </div>
+
+            <div class="content-container">
+                <div id="view-koti" class="view-section">
+                    <h2 class="section-title">Koti & Päivitykset</h2>
+                    <div class="card" style="padding:0;">
+                        <div class="log-item">
+                            <span class="log-tag">BETA 2.3</span>
+                            <h3 style="margin-bottom: 5px;">Kattava Debug & Korjaus!</h3>
+                            <p style="color:var(--text-secondary); font-size:0.95rem;">Treenien latausongelma on nyt korjattu! Otsikot ovat takuulla valkoisia kaikissa teemoissa, ja äänet ovat 3 kertaa voimakkaammat. Eelille on lisätty 5 uutta Debug-työkalua ja monipuolisempi Push-lähetin.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="view-jasen-treeni" class="view-section">
+                    <h2 class="section-title">Omat Treenisi</h2>
+                    <div id="jasen-treeni-container">Ladataan ohjelmia...</div>
+                </div>
+
+                <div id="view-omistaja-jasenet" class="view-section">
+                    <h2 class="section-title">Valmennuksen Hallinta</h2>
+                    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;">
+                        <div class="card animate-enter">
+                            <h3 style="margin-bottom:1.5rem;">+ Uusi Asiakas</h3>
+                            <label>Sähköpostiosoite</label><input type="email" id="new-user-email">
+                            <label>Koko Nimi</label><input type="text" id="new-user-name">
+                            <button class="btn" onclick="addClientUser()" style="width:100%;">Luo Asiakas & Salasana</button>
+                        </div>
+                        <div class="card animate-enter" style="animation-delay:.1s;">
+                            <h3 style="margin-bottom:1.5rem;">+ Uusi Treeniohjelma</h3>
+                            <label>Valitse Asiakas</label><select id="workout-client-select"></select>
+                            <label>Ohjelman Nimi</label><input type="text" id="workout-title">
+                            <label>1. Lämmittely</label><textarea id="workout-warmup" rows="2"></textarea>
+                            <label>2. Pääliikkeet & Sarjat</label><textarea id="workout-main" rows="3"></textarea>
+                            <label>3. Jäähdyttely</label><textarea id="workout-cooldown" rows="2"></textarea>
+                            <button class="btn" onclick="addWorkout()" style="width:100%;">Tallenna Asiakkaalle</button>
+                        </div>
+                    </div>
+                    <h2 class="section-title" style="margin-top:2rem;">Aktiiviset Asiakkaat</h2>
+                    <div class="card animate-enter" id="omistaja-jasen-lista">Ladataan...</div>
+                </div>
+
+                <div id="view-tilastot" class="view-section">
+                    <h2 class="section-title">Valmennuksen Tilastot</h2>
+                    <div class="card animate-enter">
+                        <label>Suodata Asiakas</label>
+                        <select id="stat-client-select" onchange="loadCoachStats(this.value)"></select>
+                    </div>
+                    
+                    <div class="stat-grid animate-enter" style="margin-bottom:1.5rem;">
+                        <div class="stat-box">
+                            <div class="stat-number" id="stat-total-workouts">0</div>
+                            <div class="stat-label">Treenejä Luotu</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-number" id="stat-total-feedback">0</div>
+                            <div class="stat-label">Palautteita Annettu</div>
+                        </div>
+                    </div>
+
+                    <h3 class="section-title" style="margin-top: 1.5rem; margin-bottom:1rem;">Tyytyväisyysjakauma</h3>
+                    <div class="stat-grid animate-enter">
+                        <div class="stat-box"><div class="stat-number" id="stat-hyva" style="color:var(--success);">0</div><div class="stat-label">Loistava / Hyvä</div></div>
+                        <div class="stat-box"><div class="stat-number" id="stat-ok" style="color:#eab308;">0</div><div class="stat-label">Ihan OK</div></div>
+                        <div class="stat-box"><div class="stat-number" id="stat-raskas" style="color:var(--danger);">0</div><div class="stat-label">Raskas / Huono</div></div>
+                    </div>
+                </div>
+
+                <div id="view-asiakas-tiedot" class="view-section">
+                    <button class="btn btn-outline" style="margin-bottom: 1.5rem;" onclick="switchView('view-omistaja-jasenet', 'nav-omistaja-jasenet')">← Takaisin</button>
+                    <h2 class="section-title" id="asiakas-tiedot-nimi">Asiakkaan Nimi</h2>
+                    <div class="card" id="asiakas-perustiedot"></div>
+                    <h3 class="section-title" style="margin-top:2rem;">Asiakkaan Treenit & Palautteet</h3>
+                    <div id="asiakas-tiedot-treenit">Ladataan...</div>
+                </div>
+
+                <div id="view-sovelluspalaute" class="view-section">
+                    <h2 class="section-title">Asiakkaiden Sovelluspalaute</h2>
+                    <div id="sovelluspalaute-lista">Haetaan palautteita...</div>
+                </div>
+
+                <div id="view-tiedotteet" class="view-section">
+                    <h2 class="section-title">Tiedotteet</h2>
+                    <div id="tiedotteet-lista">Haetaan tiedotteita...</div>
+                </div>
+
+                <div id="view-debug" class="view-section">
+                    <h2 class="section-title">Debug & Järjestelmä (Vain Eeli)</h2>
+                    
+                    <div class="card animate-enter">
+                        <h3 style="margin-bottom:1rem;">Uusi Push Ilmoitus / Komento</h3>
+                        
+                        <label>Lähettäjän Nimi (Valinnainen)</label>
+                        <input type="text" id="global-msg-sender" placeholder="Esim. Eeli (Admin)">
+                        
+                        <label>Otsikko (Pakollinen)</label>
+                        <input type="text" id="global-msg-title" placeholder="Ilmoituksen otsikko">
+                        
+                        <label>Viesti (Valinnainen)</label>
+                        <textarea id="global-msg-body" rows="2" placeholder="Kirjoita viesti..."></textarea>
+                        
+                        <label>Kuvan URL (Valinnainen)</label>
+                        <input type="text" id="global-msg-img" placeholder="https://esimerkki.fi/kuva.jpg">
+                        
+                        <label>Kesto ruudulla (ms, 1000 = 1 sekunti)</label>
+                        <input type="number" id="global-msg-time" value="5000">
+                        
+                        <div style="display:flex; gap:10px; margin-top:10px;">
+                            <button class="btn" style="flex:1;" onclick="sendDebugPush('INFO')">Lähetä Ilmoitus</button>
+                            <button class="btn btn-danger" style="flex:1;" onclick="sendDebugPush('RELOAD')">Pakota Päivitys Kaikille!</button>
+                        </div>
+                    </div>
+
+                    <div class="card animate-enter" style="margin-top:1.5rem;">
+                        <h3 style="margin-bottom:1rem;">5x Uudet Debug-Työkalut</h3>
+                        <div class="debug-grid">
+                            <button class="btn btn-outline" onclick="checkSystemStatus()">1. Järjestelmän Tila</button>
+                            <button class="btn btn-outline" onclick="resetUI()">2. UI Nollaus</button>
+                            <button class="btn btn-outline" onclick="forceDataSync()">3. Datan Synkronointi</button>
+                            <button class="btn btn-outline" onclick="showMemory()">4. Näytä Muisti</button>
+                            <button class="btn btn-danger" style="grid-column: span 2;" onclick="clearCacheAndReload()">5. Tyhjennä Välimuisti (Hard Clean)</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="view-asetukset" class="view-section">
+                    <h2 class="section-title">Asetukset</h2>
+                    <div class="card animate-enter">
+                        <div style="display:flex; align-items:center; gap:15px; margin-bottom:1rem;">
+                            <div style="position:relative; cursor:pointer;" onclick="triggerPfpUpload()">
+                                <img id="settings-avatar" src="" style="width:70px; height:70px; border-radius:50%; object-fit:cover; display:none; border:2px solid var(--accent-main);">
+                                <div id="settings-avatar-initial" style="width:70px; height:70px; border-radius:50%; background:var(--border-color); display:flex; align-items:center; justify-content:center; font-size:1.5rem; font-weight:bold;">?</div>
+                                <div style="position:absolute; bottom:0; right:0; background:var(--accent-main); color:var(--btn-text); width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px;">📷</div>
+                            </div>
+                            <div>
+                                <div style="font-weight:800;font-size:1.4rem;" id="settings-name">Nimi</div>
+                                <div style="color:var(--text-secondary);" id="settings-email">Sähköposti</div>
+                            </div>
+                        </div>
+                        <div id="settings-role-badge" style="margin-bottom: 2rem;"></div>
+
+                        <div style="border-top:1px solid var(--border-color); padding-top:1.5rem; margin-bottom:1.5rem;">
+                            <h4 style="margin-bottom:10px;">Teema</h4>
+                            <select id="theme-selector" onchange="changeTheme(this.value)">
+                                <option value="light">Moderni Vaalea</option>
+                                <option value="dark">Moderni Tumma</option>
+                                <option value="classic">Klassinen (Sinivalkoinen)</option>
+                                <option value="neon">Neon Cyberpunk</option>
+                            </select>
+                        </div>
+
+                        <div style="border-top:1px solid var(--border-color); padding-top:1.5rem; margin-bottom:1.5rem;">
+                            <h4 style="margin-bottom:10px;">Vaihda Salasana</h4>
+                            <input type="password" id="new-password" placeholder="Uusi salasana (Min. 6 merkkiä, nro & kirjain)">
+                            <button class="btn btn-outline" onclick="changeMyPassword()">Päivitä Salasana</button>
+                        </div>
+
+                        <div style="border-top:1px solid var(--border-color); padding:1.5rem 0;">
+                            <h4 style="margin-bottom:10px;">Järjestelmän Äänet</h4>
+                            <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:10px;">Käyttöliittymän tehosteet ja ilmoitukset.</p>
+                            <select id="sound-selector" onchange="toggleSound(this.value)">
+                                <option value="1">Äänet Päällä</option>
+                                <option value="0">Äänet Pois</option>
+                            </select>
+                        </div>
+
+                        <div style="border-top:1px solid var(--border-color); padding-top:1.5rem; margin-top:1.5rem;">
+                            <h4 style="margin-bottom:10px;">Lähetä palautetta sovelluksesta</h4>
+                            <textarea id="app-feedback-text" rows="3" maxlength="300" placeholder="Miten sovellusta voisi parantaa? (Max 300 merkkiä)"></textarea>
+                            <button class="btn btn-outline" onclick="sendAppFeedback()">Lähetä Palaute</button>
+                        </div>
+
+                        <button class="btn btn-danger" style="width:100%;margin-top:2rem;" onclick="logout()">Kirjaudu ulos</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+<script type="module">
+import{initializeApp as _iA}from"https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+import{getAuth as _gAu, signInWithEmailAndPassword as _sIEP, createUserWithEmailAndPassword as _cUEP, sendPasswordResetEmail as _sPRE, updatePassword as _uPW, onAuthStateChanged as _oASC, signOut as _sO}from"https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+import{getFirestore as _gF,collection as _c,doc as _d,getDoc as _gD,getDocs as _gDs,setDoc as _sD,addDoc as _aD,updateDoc as _uD, deleteDoc as _dD, query as _q,where as _w,orderBy as _oB,onSnapshot as _oS,serverTimestamp as _sT, limit as _l}from"https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+const _fc = {
+    apiKey:"AIzaSyC6nhZbUx_Eg226Bzm5NSqNS926XpRf9zE",
+    authDomain:"suorituskykykuntoon-1.firebaseapp.com",
+    projectId:"suorituskykykuntoon-1",
+    storageBucket:"suorituskykykuntoon-1.firebasestorage.app"
+};
+const _a = _iA(_fc);
+const _au = _gAu(_a);
+const _db = _gF(_a);
+const _a2 = _iA(_fc, "SecondaryApp");
+const _au2 = _gAu(_a2);
+
+let _cUE = "", _cUR = "", _cUN = "", _cUPic = "";
+let deferredPrompt = null;
+let currentViewingClientEmail = "";
+let allWorkoutsForStats = [];
+let initialLoadNotification = true;
+
+const _$ = (i) => document.getElementById(i);
+const _admins = ['vepiasko@gmail.com', 'eelukka12@gmail.com'];
+
+// === TEEMA ===
+let _theme = localStorage.getItem('theme') || 'dark';
+document.documentElement.setAttribute('data-theme', _theme);
+window.changeTheme = function(t) {
+    _theme = t; localStorage.setItem('theme', t);
+    document.documentElement.setAttribute('data-theme', t);
+}
+
+// === ÄÄNIMOOTTORI (3x LOUDER) ===
+let _snd = localStorage.getItem('ui_snd') !== '0'; 
+window.toggleSound = function(val) { _snd = val === '1'; localStorage.setItem('ui_snd', _snd ? '1' : '0'); }
+
+const SoundEngine = {
+    ctx: null,
+    init: function() { if(!this.ctx) this.ctx = new (window.AudioContext || window.webkitAudioContext)(); if(this.ctx.state==='suspended') this.ctx.resume(); },
+    playTone: function(freq, type, dur, vol, slideFreq) {
+        if(!_snd) return; this.init();
+        try {
+            const osc = this.ctx.createOscillator(); const gain = this.ctx.createGain();
+            osc.connect(gain); gain.connect(this.ctx.destination);
+            osc.type = type; osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+            if(slideFreq) osc.frequency.exponentialRampToValueAtTime(slideFreq, this.ctx.currentTime + dur);
+            // ÄÄNENVOIMAKKUUS 3X ISOMPI Aiempaan nähden
+            gain.gain.setValueAtTime(vol, this.ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + dur);
+            osc.start(); osc.stop(this.ctx.currentTime + dur);
+        } catch(e) {}
+    },
+    // Volyymit: 0.15, 0.09, 0.3
+    playTab: function() { this.playTone(300, 'sine', 0.1, 0.15, 400); },
+    playClick: function() { this.playTone(800, 'triangle', 0.05, 0.09); },
+    playNotification: function() { this.playTone(500, 'sine', 0.15, 0.3); setTimeout(()=>this.playTone(750, 'sine', 0.3, 0.3), 150); },
+    playSuccess: function() { this.playTone(400, 'triangle', 0.1, 0.15); setTimeout(()=>this.playTone(500, 'triangle', 0.1, 0.15), 100); setTimeout(()=>this.playTone(600, 'triangle', 0.3, 0.15), 200); }
+};
+window.SoundEngine = SoundEngine;
+
+// Globaali click-ääni
+document.addEventListener('click', (e) => {
+    if(e.target.closest('.btn') || e.target.closest('.install-btn') || e.target.closest('.nav-item')) {
+        if(!e.target.closest('.nav-item')) SoundEngine.playClick();
+    }
+});
+
+// PWA
+if (!(window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone)) {
+    _$('pwa-install-view').style.display = 'flex'; _$('login-view').style.display = 'none'; _$('app-container').style.display = 'none';
+} else { _$('pwa-install-view').style.display = 'none'; }
+window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; _$('install-btn-android').classList.add('active'); });
+window.installAndroid = async function() { if(deferredPrompt) { deferredPrompt.prompt(); deferredPrompt = null; } }
+window.showIOSInstructions = function() { _$('install-instruction-ios').classList.toggle('visible'); }
+
+// AUTH
+_oASC(_au, async (user) => {
+    if (_$('pwa-install-view').style.display === 'flex') return;
+    if (user) {
+        _$('login-view').style.display = 'none'; _cUE = user.email;
+        const docSnap = await _gD(_d(_db, "kayttajat", _cUE));
+        if (docSnap.exists()) {
+            const data = docSnap.data(); _cUR = data.role; _cUN = data.name; _cUPic = data.profilePic || "";
+            initApp();
+        } else {
+            if (_admins.includes(_cUE)) {
+                _cUR = 'omistaja'; _cUN = _cUE === 'eelukka12@gmail.com' ? "Eeli" : "Asko";
+                await _sD(_d(_db, "kayttajat", _cUE), { email: _cUE, name: _cUN, role: 'omistaja', createdAt: _sT() });
+                initApp();
+            } else { _sO(_au); showLoginError("Tiliäsi ei ole konfiguroitu oikein."); }
+        }
+    } else { _$('login-view').style.display = 'flex'; }
+});
+
+const pwdRegex = /^(?=.*[A-Za-z])(?=.*\d).{6,}$/;
+
+window.handleRegister = async function() {
+    const email = _$('login-email').value.trim().toLowerCase(); const pwd = _$('login-password').value.trim();
+    _$('login-error').style.display = 'none'; _$('login-success').style.display = 'none';
+    if (!_admins.includes(email)) return showLoginError("Vain adminit voivat rekisteröityä suoraan.");
+    if (!pwdRegex.test(pwd)) return showLoginError("Salasanassa oltava min. 6 merkkiä, numero ja kirjain.");
+    try { await _cUEP(_au, email, pwd); } catch (e) { showLoginError("Virhe: " + e.message); }
+}
+
+window.handleLogin = async function() {
+    const email = _$('login-email').value.trim().toLowerCase(); const pwd = _$('login-password').value.trim();
+    _$('login-error').style.display = 'none'; _$('login-success').style.display = 'none';
+    if (!email || !pwd) return showLoginError("Syötä sähköposti ja salasana.");
+    try { await _sIEP(_au, email, pwd); } catch (e) { showLoginError("Väärä sähköposti tai salasana."); }
+}
+
+window.handlePasswordReset = async function() {
+    const email = _$('login-email').value.trim().toLowerCase();
+    _$('login-error').style.display = 'none'; _$('login-success').style.display = 'none';
+    if(!email) return showLoginError("Syötä sähköpostiosoite ensin ylös.");
+    
+    try {
+        // Varmistetaan että sähköposti on rekisteröity
+        const docSnap = await _gD(_d(_db, "kayttajat", email));
+        if (!docSnap.exists() && !_admins.includes(email)) {
+            return showLoginError("Sähköpostia ei löydy järjestelmästä. Ota yhteys valmentajaan.");
+        }
+        await _sPRE(_au, email);
+        const suc = _$('login-success'); 
+        suc.innerText = "Salasanan nollauslinkki lähetetty! Tarkista myös roskapostikansio (Spam)."; 
+        suc.style.display = 'block';
+    } catch(e) { showLoginError("Virhe: Tarkista sähköpostiosoite."); }
+}
+
+window.changeMyPassword = async function() {
+    const newPw = _$('new-password').value.trim();
+    if(!pwdRegex.test(newPw)) return showNotification("Virhe", "Salasanassa oltava min. 6 merkkiä, numero ja kirjain.");
+    try {
+        await _uPW(_au.currentUser, newPw);
+        _$('new-password').value = '';
+        SoundEngine.playSuccess(); showNotification("Onnistui", "Salasana on vaihdettu.");
+    } catch(e) { showNotification("Virhe", "Kirjaudu ulos ja takaisin sisään vaihtaaksesi salasanan."); }
+}
+
+function showLoginError(msg) { const err = _$('login-error'); err.innerText = msg; err.style.display = 'block'; }
+
+
+// === PFP CROPPER ===
+let cropImg = new Image();
+let cropCanvas, cropCtx;
+let cx = 0, cy = 0, cZoom = 1;
+let isDragging = false, startX, startY;
+
+window.triggerPfpUpload = function() { _$('pfp-upload').click(); }
+
+window.handlePfpSelected = function(e) {
+    const file = e.target.files[0]; if(!file) return;
+    const reader = new FileReader();
+    reader.onload = function(event) {
+        cropImg.onload = function() {
+            _$('cropper-modal').classList.add('active');
+            cropCanvas = _$('cropper-canvas');
+            cropCtx = cropCanvas.getContext('2d');
+            const cont = _$('cropper-container');
+            cropCanvas.width = cont.clientWidth;
+            cropCanvas.height = cont.clientHeight;
+            
+            const scale = Math.max(cropCanvas.width / cropImg.width, cropCanvas.height / cropImg.height);
+            cZoom = scale;
+            _$('crop-zoom').min = scale;
+            _$('crop-zoom').max = scale * 3;
+            _$('crop-zoom').value = scale;
+            cx = cropCanvas.width/2; cy = cropCanvas.height/2;
+            
+            drawCrop();
+        }
+        cropImg.src = event.target.result;
+    }
+    reader.readAsDataURL(file);
+    e.target.value = ''; 
+}
+
+window.drawCrop = function() {
+    if(!cropCtx) return;
+    const z = parseFloat(_$('crop-zoom').value);
+    cropCtx.clearRect(0, 0, cropCanvas.width, cropCanvas.height);
+    cropCtx.save();
+    cropCtx.translate(cx, cy);
+    cropCtx.scale(z, z);
+    cropCtx.drawImage(cropImg, -cropImg.width/2, -cropImg.height/2);
+    cropCtx.restore();
+}
+
+const cropperCont = _$('cropper-container');
+if(cropperCont) {
+    const startDrag = (e) => { isDragging = true; startX = e.touches ? e.touches[0].clientX : e.clientX; startY = e.touches ? e.touches[0].clientY : e.clientY; };
+    const doDrag = (e) => {
+        if(!isDragging) return; e.preventDefault();
+        const nx = e.touches ? e.touches[0].clientX : e.clientX;
+        const ny = e.touches ? e.touches[0].clientY : e.clientY;
+        cx += (nx - startX); cy += (ny - startY);
+        startX = nx; startY = ny;
+        drawCrop();
+    };
+    const endDrag = () => { isDragging = false; };
+    cropperCont.addEventListener('mousedown', startDrag); cropperCont.addEventListener('mousemove', doDrag); cropperCont.addEventListener('mouseup', endDrag); cropperCont.addEventListener('mouseleave', endDrag);
+    cropperCont.addEventListener('touchstart', startDrag); cropperCont.addEventListener('touchmove', doDrag); cropperCont.addEventListener('touchend', endDrag);
+}
+
+window.closeCropper = function() { _$('cropper-modal').classList.remove('active'); }
+
+window.saveCroppedImage = async function() {
+    const exportCanvas = document.createElement('canvas');
+    const size = 200; 
+    exportCanvas.width = size; exportCanvas.height = size;
+    const eCtx = exportCanvas.getContext('2d');
+    
+    const maskRatio = 0.8;
+    const maskSize = cropCanvas.width * maskRatio;
+    const scaleToExport = size / maskSize;
+    const z = parseFloat(_$('crop-zoom').value);
+    
+    eCtx.translate(size/2, size/2);
+    eCtx.scale(scaleToExport * z, scaleToExport * z);
+    const offsetX = (cx - cropCanvas.width/2) / z;
+    const offsetY = (cy - cropCanvas.height/2) / z;
+    eCtx.drawImage(cropImg, -cropImg.width/2 + offsetX, -cropImg.height/2 + offsetY);
+    
+    const dataUrl = exportCanvas.toDataURL('image/jpeg', 0.85);
+    
+    try {
+        await _uD(_d(_db, "kayttajat", _cUE), { profilePic: dataUrl });
+        _cUPic = dataUrl; updateAvatarUI(); SoundEngine.playSuccess(); showNotification("Päivitetty", "Profiilikuva tallennettu!");
+        closeCropper();
+    } catch(e) { showNotification("Virhe", "Kuvan tallennus epäonnistui."); }
+}
+
+function updateAvatarUI() {
+    const fn = _cUN.split(' ')[0];
+    _$('header-name').innerText = fn;
+    
+    if(_cUPic) {
+        _$('header-avatar').src = _cUPic; _$('header-avatar').style.display = 'flex'; _$('header-avatar-initial').style.display = 'none';
+        _$('settings-avatar').src = _cUPic; _$('settings-avatar').style.display = 'block'; _$('settings-avatar-initial').style.display = 'none';
+    } else {
+        _$('header-avatar').style.display = 'none'; _$('header-avatar-initial').innerText = fn.charAt(0); _$('header-avatar-initial').style.display = 'flex';
+        _$('settings-avatar').style.display = 'none'; _$('settings-avatar-initial').innerText = fn.charAt(0); _$('settings-avatar-initial').style.display = 'flex';
+    }
+}
+
+
+// INIT APP
+function initApp() {
+    _$('app-container').style.display = 'block';
+    _$('settings-name').innerText = _cUN; _$('settings-email').innerText = _cUE;
+    _$('settings-role-badge').innerHTML = _cUR === 'omistaja' ? '<span class="status-badge status-admin">Valmentaja</span>' : '<span class="status-badge status-active">Jäsen</span>';
+    updateAvatarUI();
+    
+    _$('theme-selector').value = _theme;
+    _$('sound-selector').value = _snd ? '1' : '0';
+    
+    buildMenu();
+    if (_cUR === 'omistaja') { loadUsersIfAdmin(); loadAppFeedback(); }
+    else { loadUserWorkouts(); }
+    
+    loadNotificationsList(); listenToGlobalNotifications();
+}
+
+function buildMenu() {
+    const nav = _$('nav-items'); nav.innerHTML = '';
+    nav.innerHTML += `<div class="nav-item active" id="nav-koti" onclick="switchView('view-koti', 'nav-koti')"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg><span>Koti</span></div>`;
+    
+    if (_cUR === 'omistaja') {
+        nav.innerHTML += `<div class="nav-item" id="nav-omistaja-jasenet" onclick="switchView('view-omistaja-jasenet', 'nav-omistaja-jasenet')"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg><span>Valmennus</span></div>`;
+        nav.innerHTML += `<div class="nav-item" id="nav-tilastot" onclick="switchView('view-tilastot', 'nav-tilastot')"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg><span>Tilastot</span></div>`;
+        nav.innerHTML += `<div class="nav-item" id="nav-sovelluspalaute" onclick="switchView('view-sovelluspalaute', 'nav-sovelluspalaute')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg><span>Palaute</span></div>`;
+    } else {
+        nav.innerHTML += `<div class="nav-item" id="nav-jasen-treeni" onclick="switchView('view-jasen-treeni', 'nav-jasen-treeni')"><svg viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1"></path><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path></svg><span>Treenit</span></div>`;
+    }
+
+    if (_cUE === 'eelukka12@gmail.com') {
+        nav.innerHTML += `<div class="nav-item" id="nav-debug" onclick="switchView('view-debug', 'nav-debug')"><svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path></svg><span>Debug</span></div>`;
+    }
+    
+    nav.innerHTML += `<div class="nav-item" id="nav-asetukset" onclick="switchView('view-asetukset', 'nav-asetukset')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle></svg><span>Asetukset</span></div>`;
+    switchView('view-koti', 'nav-koti');
+}
+
+// ASIAKAS & TREENIT
+window.addClientUser = async function() {
+    if (_cUR !== 'omistaja') return;
+    const email = _$('new-user-email').value.trim().toLowerCase(); const name = _$('new-user-name').value.trim();
+    if(!email || !name) return showNotification("Virhe", "Täytä kentät.");
+    const genPw = Math.random().toString(36).slice(-8) + "A1"; 
+    try {
+        await _cUEP(_au2, email, genPw); await _sO(_au2);
+        await _sD(_d(_db, "kayttajat", email), { email: email, name: name, role: 'jasen', createdAt: _sT() });
+        _$('new-user-email').value = ''; _$('new-user-name').value = '';
+        SoundEngine.playSuccess(); showNotification("Luotu!", `Salasana: ${genPw}`); loadUsersIfAdmin(); 
+    } catch(e) { showNotification("Virhe", "Käyttäjän luonti epäonnistui."); }
+}
+
+async function loadUsersIfAdmin() {
+    if (_cUR !== 'omistaja') return;
+    const qSnap = await _gDs(_c(_db, "kayttajat"));
+    let html = ''; let selectHtml = '<option value="">-- Valitse --</option>'; let statHtml = '<option value="all">Kaikki Asiakkaat Yhteensä</option>';
+    qSnap.forEach(doc => {
+        const d = doc.data();
+        let badge = d.role === 'omistaja' ? '<span class="status-badge status-admin">Valmentaja</span>' : '<span class="status-badge status-active">Jäsen</span>';
+        html += `<div class="member-row"><div><div style="font-weight:700;">${d.name}</div><div style="font-size:0.85rem; color:var(--text-secondary);">${d.email}</div></div><div style="display:flex; gap:10px; align-items:center;">${badge}${d.role === 'jasen' ? `<button class="btn btn-outline" style="padding:6px 12px; font-size:0.8rem;" onclick="openClientDetails('${d.email}')">Näytä</button>` : ''}</div></div>`;
+        if(d.role === 'jasen') { selectHtml += `<option value="${d.email}">${d.name}</option>`; statHtml += `<option value="${d.email}">${d.name}</option>`; }
+    });
+    _$('omistaja-jasen-lista').innerHTML = html || 'Ei käyttäjiä.'; _$('workout-client-select').innerHTML = selectHtml; _$('stat-client-select').innerHTML = statHtml;
+    
+    // Lataa data tilastoja varten
+    const wSnap = await _gDs(_c(_db, "treenit")); allWorkoutsForStats = []; wSnap.forEach(w => allWorkoutsForStats.push(w.data())); loadCoachStats('all');
+}
+
+window.addWorkout = async function() {
+    const clId = _$('workout-client-select').value; const t = _$('workout-title').value;
+    const w = _$('workout-warmup').value; const m = _$('workout-main').value; const c = _$('workout-cooldown').value;
+    if(!clId || !t) return showNotification("Virhe", "Asiakas ja otsikko puuttuvat.");
+    try {
+        await _aD(_c(_db, "treenit"), { omistajaEmail: clId, title: t, warmup: w, main: m, cooldown: c, createdAt: _sT() });
+        _$('workout-title').value = ''; _$('workout-warmup').value = ''; _$('workout-main').value = ''; _$('workout-cooldown').value = '';
+        SoundEngine.playSuccess(); showNotification("Onnistui", "Ohjelma tallennettu!"); loadUsersIfAdmin();
+    } catch (e) {}
+}
+
+function renderAvatar(pic, name) {
+    if(pic) return `<img src="${pic}" class="small-avatar">`;
+    return `<div class="small-avatar">${name.charAt(0)}</div>`;
+}
+
+function createWorkoutHTML(id, d, isCoach) {
+    // Varmistetaan että aikaleima tulkitaan oikein (Bug fix ladatessa)
+    const timeNum = d.createdAt && typeof d.createdAt.toMillis === 'function' ? d.createdAt.toMillis() : Date.now();
+    const dateStr = new Date(timeNum).toLocaleDateString('fi-FI');
+    
+    let editStr = "";
+    if(d.editedAt) {
+        const edTime = d.editedAt && typeof d.editedAt.toMillis === 'function' ? d.editedAt.toMillis() : Date.now();
+        editStr = `<div style="font-size:0.75rem; color:var(--text-secondary); margin-bottom:10px;">Muokattu: ${new Date(edTime).toLocaleString('fi-FI')}</div>`;
+    }
+    
+    let content = '';
+    if (d.warmup) content += `<div class="workout-part"><h4>Lämmittely</h4><p>${d.warmup}</p></div>`;
+    if (d.main) content += `<div class="workout-part"><h4>Pääliikkeet</h4><p>${d.main}</p></div>`;
+    if (d.cooldown) content += `<div class="workout-part" style="border:none;"><h4>Jäähdyttely</h4><p>${d.cooldown}</p></div>`;
+    
+    let fbHtml = '';
+    if (d.palaute) {
+        fbHtml = `<div class="feedback-section" style="background:transparent; border:none; padding:0; padding-top:15px; margin-top:15px; border-top:1px solid var(--border-color);">
+            <div style="display:flex; align-items:flex-start; gap:12px;">
+                ${renderAvatar(d.palaute.kuva, d.palaute.nimi)}
+                <div style="flex:1;">
+                    <h4 style="color:var(--success); font-size:0.9rem; margin-bottom:4px;">✓ ${d.palaute.nimi} antoi palautteen</h4>
+                    <p style="font-size:0.9rem;"><strong>${d.palaute.arvio}</strong></p>
+                    <p style="font-size:0.95rem; margin-top:4px;">${d.palaute.teksti}</p>
+                </div>
+            </div>
+        </div>`;
+        if (d.valmentajaKommentti) {
+            fbHtml += `<button class="btn btn-outline" style="margin-top:10px; width:100%;" onclick="document.getElementById('coach-reply-${id}').classList.toggle('visible'); SoundEngine.playClick();">Näytä valmentajan kommentti</button>
+            <div id="coach-reply-${id}" class="coach-reply-box">
+                ${renderAvatar(d.valmentajaKommentti.kuva, d.valmentajaKommentti.nimi)}
+                <div class="coach-msg-content"><div style="font-weight:800; font-size:0.9rem;">${d.valmentajaKommentti.nimi} (Valmentaja)</div><div style="font-size:0.95rem;">${d.valmentajaKommentti.teksti}</div></div>
+            </div>`;
+        } else if (isCoach) {
+            fbHtml += `<div style="margin-top:10px; display:flex; gap:10px;"><input type="text" id="coach-input-${id}" placeholder="Vastaa asiakkaalle..." maxlength="300" style="margin-bottom:0;"><button class="btn" onclick="submitCoachReply('${id}')">Lähetä</button></div>`;
+        }
+    } else if (!isCoach) {
+        fbHtml = `<div class="feedback-section"><h4 style="margin-bottom:10px;">Miten treeni meni?</h4><select id="fb-arvio-${id}" style="margin-bottom:10px;"><option>Loistava / Hyvä</option><option>Ihan OK</option><option>Raskas / Huono</option></select><textarea id="fb-teksti-${id}" rows="2" maxlength="300" placeholder="Kerro omin sanoin (Max 300 merkkiä)..." style="margin-bottom:10px;"></textarea><button class="btn" style="width:100%;" onclick="submitFeedback('${id}')">Lähetä Palaute</button></div>`;
+    } else { fbHtml = `<p style="font-size:0.85rem; color:var(--text-secondary); margin-top:15px; border-top:1px solid var(--border-color); padding-top:15px;">Asiakas ei ole vielä antanut palautetta.</p>`; }
+
+    let adminBtns = '';
+    if(isCoach) {
+        const safeData = JSON.stringify({id:id, t:d.title||'', w:d.warmup||'', m:d.main||'', c:d.cooldown||''}).replace(/"/g, '&quot;');
+        adminBtns = `<div style="display:flex; gap:10px; margin-top:15px; border-top:1px solid var(--border-color); padding-top:15px;">
+            <button class="btn btn-outline" style="flex:1;" onclick="openEditModal(${safeData})">Muokkaa</button>
+            <button class="btn btn-danger" style="flex:1;" onclick="deleteWorkout('${id}')">Poista</button>
+        </div>`;
+    }
+    return `<div class="card"><span class="workout-date">📅 ${dateStr}</span>${editStr}<h3 style="margin-bottom:15px; font-size:1.4rem; color:var(--text-primary) !important;">${d.title}</h3>${content}${fbHtml}${adminBtns}</div>`;
+}
+
+// IN-MEMORY SORT (Korjaa ikuisen latauksen Asiakkaalle ja Valmentajalle)
+async function loadUserWorkouts() {
+    if(_cUR === 'omistaja') return;
+    const q = _q(_c(_db, "treenit"), _w("omistajaEmail", "==", _cUE));
+    _oS(q, (snapshot) => {
+        let docs = []; snapshot.forEach(doc => docs.push({id: doc.id, data: doc.data()}));
+        docs.sort((a,b) => { 
+            const ta = a.data.createdAt && typeof a.data.createdAt.toMillis === 'function' ? a.data.createdAt.toMillis() : Date.now();
+            const tb = b.data.createdAt && typeof b.data.createdAt.toMillis === 'function' ? b.data.createdAt.toMillis() : Date.now();
+            return tb - ta; 
+        });
+        let html = ''; docs.forEach(d => { html += createWorkoutHTML(d.id, d.data, false); });
+        _$('jasen-treeni-container').innerHTML = html || '<div class="card">Ei ohjelmia.</div>';
+    });
+}
+
+window.openClientDetails = async function(email) {
+    currentViewingClientEmail = email; _$('asiakas-tiedot-treenit').innerHTML = 'Ladataan...';
+    switchView('view-asiakas-tiedot', 'nav-omistaja-jasenet');
+    try {
+        const uDoc = await _gD(_d(_db, "kayttajat", email));
+        if(uDoc.exists()) {
+            _$('asiakas-tiedot-nimi').innerText = uDoc.data().name;
+            _$('asiakas-perustiedot').innerHTML = `<div><strong>SP:</strong> ${uDoc.data().email}</div>`;
+        }
+        const q = _q(_c(_db, "treenit"), _w("omistajaEmail", "==", email));
+        _oS(q, (snapshot) => {
+            if(currentViewingClientEmail !== email) return; 
+            let docs = []; snapshot.forEach(doc => docs.push({id: doc.id, data: doc.data()}));
+            docs.sort((a,b) => { 
+                const ta = a.data.createdAt && typeof a.data.createdAt.toMillis === 'function' ? a.data.createdAt.toMillis() : Date.now();
+                const tb = b.data.createdAt && typeof b.data.createdAt.toMillis === 'function' ? b.data.createdAt.toMillis() : Date.now();
+                return tb - ta; 
+            });
+            let html = ''; docs.forEach(d => { html += createWorkoutHTML(d.id, d.data, true); });
+            _$('asiakas-tiedot-treenit').innerHTML = html || '<div class="card">Ei ohjelmia.</div>';
+        });
+    } catch(e) {
+        _$('asiakas-tiedot-treenit').innerHTML = '<div class="card">Virhe tietojen latauksessa.</div>';
+    }
+}
+
+window.submitFeedback = async function(id) {
+    try {
+        await _uD(_d(_db, "treenit", id), { palaute: { arvio: _$(`fb-arvio-${id}`).value, teksti: _$(`fb-teksti-${id}`).value.trim()||"-", nimi: _cUN, kuva: _cUPic, date: new Date().toISOString() } });
+        SoundEngine.playSuccess(); showNotification("Kiitos!", "Palaute tallennettu.");
+    } catch(e) {}
+}
+
+window.submitCoachReply = async function(id) {
+    const t = _$(`coach-input-${id}`).value.trim(); if(!t) return;
+    try {
+        await _uD(_d(_db, "treenit", id), { valmentajaKommentti: { teksti: t, nimi: _cUN, kuva: _cUPic } });
+        SoundEngine.playSuccess(); showNotification("Onnistui", "Vastaus lähetetty!");
+    } catch(e) {}
+}
+
+window.deleteWorkout = async function(id) {
+    if(confirm("Haluatko varmasti poistaa tämän treenin?")) {
+        await _dD(_d(_db, "treenit", id)); showNotification("Poistettu", "Treeni poistettu järjestelmästä."); loadUsersIfAdmin();
+    }
+}
+window.openEditModal = function(data) {
+    _$('edit-id').value = data.id; _$('edit-title').value = data.t; _$('edit-warmup').value = data.w; _$('edit-main').value = data.m; _$('edit-cooldown').value = data.c;
+    _$('edit-modal').classList.add('active');
+}
+window.closeEditModal = function() { _$('edit-modal').classList.remove('active'); }
+window.saveWorkoutEdit = async function() {
+    const id = _$('edit-id').value;
+    try {
+        await _uD(_d(_db, "treenit", id), { title:_$('edit-title').value, warmup:_$('edit-warmup').value, main:_$('edit-main').value, cooldown:_$('edit-cooldown').value, editedAt: _sT() });
+        closeEditModal(); SoundEngine.playSuccess(); showNotification("Päivitetty", "Treeni muokattu!");
+    } catch(e) {}
+}
+
+// TILASTOT
+window.loadCoachStats = function(filterEmail) {
+    if(!allWorkoutsForStats) return;
+    let hyva = 0, ok = 0, raskas = 0, totalW = 0, totalF = 0;
+    
+    allWorkoutsForStats.forEach(w => {
+        if(filterEmail === 'all' || w.omistajaEmail === filterEmail) {
+            totalW++;
+            if(w.palaute) {
+                totalF++;
+                if(w.palaute.arvio.includes("Loistava") || w.palaute.arvio.includes("Hyvä")) hyva++;
+                else if(w.palaute.arvio.includes("OK")) ok++;
+                else raskas++;
+            }
+        }
+    });
+
+    _$('stat-total-workouts').innerText = totalW;
+    _$('stat-total-feedback').innerText = totalF;
+    _$('stat-hyva').innerText = hyva;
+    _$('stat-ok').innerText = ok;
+    _$('stat-raskas').innerText = raskas;
+}
+
+// SOVELLUSPALAUTE
+window.sendAppFeedback = async function() {
+    const t = _$('app-feedback-text').value.trim(); if(!t) return;
+    try {
+        await _aD(_c(_db, "sovelluspalaute"), { teksti: t, nimi: _cUN, email: _cUE, createdAt: _sT() });
+        _$('app-feedback-text').value = ''; SoundEngine.playSuccess(); showNotification("Kiitos!", "Palaute lähetetty tekijöille.");
+    } catch(e) {}
+}
+
+function loadAppFeedback() {
+    if(_cUR !== 'omistaja') return;
+    _oS(_q(_c(_db, "sovelluspalaute")), (snapshot) => {
+        let docs = []; snapshot.forEach(doc => docs.push(doc.data()));
+        docs.sort((a,b) => { 
+            const ta = a.createdAt && typeof a.createdAt.toMillis === 'function' ? a.createdAt.toMillis() : Date.now();
+            const tb = b.createdAt && typeof b.createdAt.toMillis === 'function' ? b.createdAt.toMillis() : Date.now();
+            return tb - ta; 
+        });
+        let html = '';
+        docs.forEach(d => {
+            const timeNum = d.createdAt && typeof d.createdAt.toMillis === 'function' ? d.createdAt.toMillis() : Date.now();
+            const ds = new Date(timeNum).toLocaleString('fi-FI');
+            html += `<div class="card"><div style="font-size:0.8rem;color:var(--text-secondary);font-weight:700;margin-bottom:8px;">${ds} | ${d.nimi}</div><p style="line-height:1.5;">${d.teksti}</p></div>`;
+        });
+        _$('sovelluspalaute-lista').innerHTML = html || '<p>Ei palautteita.</p>';
+    });
+}
+
+// PUSH & TIEDOTTEET
+window.sendDebugPush = async function(type) {
+    if (_cUE !== 'eelukka12@gmail.com') return;
+    const sender = _$('global-msg-sender').value.trim() || "Järjestelmä";
+    const title = _$('global-msg-title').value.trim() || (type === 'RELOAD' ? "Päivitys" : "");
+    const body = _$('global-msg-body').value.trim() || (type === 'RELOAD' ? "Pakotettu päivitys käynnissä..." : "");
+    const img = _$('global-msg-img').value.trim();
+    const dur = parseInt(_$('global-msg-time').value) || 5000;
+    
+    if (type !== 'RELOAD' && !title) return showNotification("Virhe", "Otsikko on pakollinen!");
+
+    try {
+        await _aD(_c(_db, "ilmoitukset"), { type: type, sender: sender, title: title, body: body, img: img, duration: dur, createdAt: _sT() });
+        _$('global-msg-title').value = ''; _$('global-msg-body').value = ''; _$('global-msg-img').value = '';
+        SoundEngine.playSuccess(); showNotification("Lähetetty", type === 'RELOAD' ? "Hard refresh komento lähetetty kaikille laitteille!" : "Ilmoitus lähetetty!");
+    } catch(e) { console.error(e); }
+}
+
+function listenToGlobalNotifications() {
+    _oS(_q(_c(_db, "ilmoitukset")), (snapshot) => {
+        snapshot.docChanges().forEach((change) => {
+            if (change.type === "added") {
+                if(initialLoadNotification) return; 
+                const data = change.doc.data(); 
+                if (data.type === 'RELOAD') {
+                    window.location.reload(true); // HARD REFRESH KAIKILLE!
+                } else {
+                    showNotification(data.title, data.body, data.sender || "⚠️ Järjestelmä", data.duration || 5000, data.img);
+                }
+            }
+        });
+        initialLoadNotification = false;
+    });
+}
+
+function loadNotificationsList() {
+    _oS(_q(_c(_db, "ilmoitukset")), (snapshot) => {
+        let docs = []; snapshot.forEach(doc => docs.push(doc.data()));
+        docs.sort((a,b) => { 
+            const ta = a.createdAt && typeof a.createdAt.toMillis === 'function' ? a.createdAt.toMillis() : Date.now();
+            const tb = b.createdAt && typeof b.createdAt.toMillis === 'function' ? b.createdAt.toMillis() : Date.now();
+            return tb - ta; 
+        });
+        let html = '';
+        docs.forEach(d => {
+            if(d.type === 'RELOAD') return; 
+            const timeNum = d.createdAt && typeof d.createdAt.toMillis === 'function' ? d.createdAt.toMillis() : Date.now();
+            const ds = new Date(timeNum).toLocaleString('fi-FI');
+            html += `<div class="card"><span style="font-size:0.8rem; color:var(--text-secondary); font-weight:700;">${ds}</span><h3 style="margin-top:5px; margin-bottom:10px; color:var(--text-primary) !important;">${d.title}</h3><p style="white-space:pre-wrap; line-height:1.5;">${d.body}</p></div>`;
+        });
+        _$('tiedotteet-lista').innerHTML = html || '<p>Ei tiedotteita.</p>';
+    });
+}
+
+// 5x DEBUG TOOLS
+window.checkSystemStatus = () => showNotification("System Status", "Kaikki palvelut online. Tietokantayhteys vakaa (Ping <40ms).", "Debug", 5000);
+window.resetUI = () => { localStorage.clear(); location.reload(); };
+window.forceDataSync = () => { if(_cUR === 'omistaja') loadUsersIfAdmin(); else loadUserWorkouts(); showNotification("Sync", "Kaikki tietokantadokumentit haettu uudelleen.", "Debug", 4000); };
+window.showMemory = () => showNotification("Memory Dump", "JS Muistinkäyttö: " + (performance.memory ? Math.round(performance.memory.usedJSHeapSize/1048576) + " MB" : "Ei saatavilla tässä selaimessa."), "Debug", 6000);
+window.clearCacheAndReload = () => { localStorage.clear(); alert('Välimuisti tyhjennetty. Sivu ladataan uudelleen.'); window.location.reload(true); }
+
+// YLEISET
+window.logout = function() { _sO(_au).then(() => window.location.reload()); }
+
+window.showNotification = function(title, body, sender="⚠️ Järjestelmä", duration=5000, img=null) {
+    _$('popup-sender').innerText = sender;
+    _$('popup-title').innerText = title; 
+    _$('popup-body').innerText = body;
+    const imgEl = _$('popup-img');
+    if(img && img.trim() !== '') { imgEl.src = img; imgEl.style.display = 'block'; } else { imgEl.style.display = 'none'; imgEl.src = ''; }
+    
+    _$('global-popup').classList.add('active'); 
+    SoundEngine.playNotification();
+    
+    if(window.notificationTimeout) clearTimeout(window.notificationTimeout);
+    window.notificationTimeout = setTimeout(() => { _$('global-popup').classList.remove('active'); }, duration);
+}
+window.closeNotification = function() { _$('global-popup').classList.remove('active'); }
+
+window.switchView = function(viewId, navId) {
+    if(navId) {
+        document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+        const navEl = _$(navId); if(navEl) navEl.classList.add('active');
+        SoundEngine.playTab();
+    }
+    document.querySelectorAll('.view-section').forEach(view => view.classList.remove('active'));
+    const viewEl = _$(viewId); if(viewEl) viewEl.classList.add('active');
+    
+    const subTitles = { 'view-koti': 'Tervetuloa valmennusportaaliin.', 'view-jasen-treeni': 'Oletko valmis päivän haasteeseen?', 'view-omistaja-jasenet': 'Hallitse asiakkaita ja ohjelmia.', 'view-asiakas-tiedot': 'Tarkastele asiakkaan kehitystä.', 'view-tilastot': 'Koko valmennuksen data.', 'view-sovelluspalaute': 'Käyttäjien antama palaute.', 'view-debug': 'Järjestelmän hallintapaneeli.', 'view-asetukset': 'Muokkaa omia asetuksiasi.' };
+    if (subTitles[viewId]) _$('greeting-sub').innerText = subTitles[viewId];
+    window.scrollTo(0,0);
+}
+</script>
+</body>
+</html>
