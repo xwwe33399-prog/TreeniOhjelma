@@ -4,8 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
     <title>Suorituskyky Kuntoon</title>
-    <link rel="manifest" href="manifest.json">
+    
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#020617">
+    
+    <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="icon.png">
     <link rel="icon" href="icon.png" type="image/png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -52,7 +57,7 @@
         }
 
         *{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif;-webkit-tap-highlight-color:transparent}
-        body{background-color:var(--bg-base);color:var(--text-primary);overflow:hidden;display:flex;flex-direction:column;height:100vh;transition:background-color var(--transition-smooth)}
+        body{background-color:var(--bg-base);color:var(--text-primary);overflow:hidden;display:flex;flex-direction:column;height:100vh;width:100vw;transition:background-color var(--transition-smooth);position:relative;}
 
         @keyframes slideUpFade{0%{opacity:0;transform:translateY(30px)}100%{opacity:1;transform:translateY(0)}}
         @keyframes popIn{0%{opacity:0;transform:scale(0.9)}100%{opacity:1;transform:scale(1)}}
@@ -204,7 +209,6 @@
 </head>
 <body>
 
-    <!-- PWA Install View -->
     <div id="pwa-install-view">
         <div class="install-icon">SK</div>
         <h1>Suorituskyky Kuntoon</h1>
@@ -233,7 +237,6 @@
         </div>
     </div>
 
-    <!-- Global Notification -->
     <div class="android-notification" id="global-popup">
         <div style="font-size:.75rem;color:#b3b3b3;font-weight:700;text-transform:uppercase;" id="popup-category">⚠️ Globaali Ilmoitus</div>
         <div id="popup-title" style="font-weight:700;font-size:1.1rem;margin:8px 0;">Otsikko</div>
@@ -241,7 +244,6 @@
         <button class="btn" style="background:#ffffff;color:#000000;align-self:flex-end;width:auto;" onclick="closeNotification()">Selvä</button>
     </div>
 
-    <!-- Login View -->
     <div id="login-view">
         <div class="login-content">
             <div class="login-logo">SK</div>
@@ -263,14 +265,10 @@
         </div>
     </div>
 
-    <!-- Main App -->
     <div id="app-container">
-        
-        <!-- Yläpalkki on poistettu kokonaan puhtaan ulkonäön vuoksi -->
 
         <nav class="sidebar">
             <div class="sidebar-header"><h2>SK Portaali</h2></div>
-            <!-- Nav-items rakentuu dynaamisesti JS:ssä -->
             <div class="nav-items" id="nav-items"></div>
         </nav>
 
@@ -283,13 +281,11 @@
             </div>
 
             <div class="content-container">
-                <!-- Näkymä: Jäsenen Treenit -->
                 <div id="view-jasen-treeni" class="view-section">
                     <h2 class="section-title">Ohjelmasi</h2>
                     <div id="jasen-treeni-container" class="card">Etsitään treeniohjelmia...</div>
                 </div>
 
-                <!-- Näkymä: Omistajan Hallinta -->
                 <div id="view-omistaja-jasenet" class="view-section">
                     <h2 class="section-title">Valmennuksen Hallinta</h2>
                     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;">
@@ -321,7 +317,6 @@
                     <div class="card animate-enter" id="omistaja-jasen-lista" style="padding:1rem 2rem;">Ladataan...</div>
                 </div>
 
-                <!-- Näkymä: Eelin Global Push Systeemi -->
                 <div id="view-eeli-global" class="view-section">
                     <h2 class="section-title">Global Push System</h2>
                     <div class="card animate-enter">
@@ -333,7 +328,6 @@
                     </div>
                 </div>
 
-                <!-- Näkymä: Asetukset -->
                 <div id="view-asetukset" class="view-section">
                     <h2 class="section-title">Asetukset</h2>
                     <div class="card animate-enter">
@@ -341,7 +335,6 @@
                         <div style="color:var(--text-secondary);margin-bottom:1rem;" id="settings-email">Sähköposti</div>
                         <div id="settings-role-badge"></div>
                         
-                        <!-- Tumma Teema Kytkin -->
                         <div style="display:flex;justify-content:space-between;align-items:center;padding:1.5rem 0;border-top:1px solid var(--border-color);margin-top:1.5rem;">
                             <div>
                                 <div style="font-weight:700;">Tumma Teema</div>
@@ -350,7 +343,6 @@
                             <div class="toggle-switch" id="theme-tog" onclick="toggleTheme()"><div class="toggle-circle"></div></div>
                         </div>
 
-                        <!-- Äänet Kytkin -->
                         <div style="display:flex;justify-content:space-between;align-items:center;padding:1.5rem 0;border-top:1px solid var(--border-color);">
                             <div>
                                 <div style="font-weight:700;">Käyttöliittymän Äänet</div>
@@ -368,8 +360,8 @@
 
 <script type="module">
 import{initializeApp as _iA}from"https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-// VAIHDETTU: signInWithPopup korjaa ongelman missä selain ei tee mitään nappia painettaessa
-import{getAuth as _gAu,GoogleAuthProvider as _gP,signInWithPopup as _sIWP,onAuthStateChanged as _oASC,signOut as _sO}from"https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+// PALAUTETTU: signInWithRedirect, koska mobiilisovelluksissa pop-up on estetty.
+import{getAuth as _gAu,GoogleAuthProvider as _gP,signInWithRedirect as _sIWR,onAuthStateChanged as _oASC,signOut as _sO}from"https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 import{getFirestore as _gF,collection as _c,doc as _d,getDoc as _gD,getDocs as _gDs,setDoc as _sD,addDoc as _aD,query as _q,where as _w,orderBy as _oB,onSnapshot as _oS,serverTimestamp as _sT,limit as _l}from"https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 const _fc = {
@@ -401,7 +393,7 @@ if (!_isStandalone) {
     _$('app-container').style.display = 'none';
     if (_isIOS) _$('install-btn-ios').classList.add('active');
 } else {
-    // Jos jo asennettu PWA, ohitetaan asennusnäkymä heti.
+    // Jos jo asennettu PWA, ohitetaan asennusnäkymä.
     _$('pwa-install-view').style.display = 'none';
 }
 
@@ -428,7 +420,7 @@ window.showIOSInstructions = function() {
 
 // === AUTH & TILI LOGIIKKA ===
 _oASC(_au, async (user) => {
-    // Jos emme ole sovelluksessa, pysäytetään tämä, jottei selain mene vahingossa sisään.
+    // Varmistetaan ettei selain vahingossa ohita pakotettua asennusnäkymää.
     if (!_isStandalone) return;
 
     if (user) {
@@ -458,12 +450,14 @@ _oASC(_au, async (user) => {
                 _cUR = docData.role || 'jasen';
                 initApp();
             } else {
+                // Käyttäjällä ei ole oikeuksia, kirjataan ulos
                 _sO(_au);
                 _$('login-view').style.display = 'flex';
                 _$('login-error').style.display = 'block';
             }
         }
     } else {
+        // Ei kirjautunut
         _$('login-view').style.display = 'flex';
     }
 });
@@ -648,17 +642,10 @@ function listenToGlobalNotifications() {
 
 // === KÄYTTÖLIITTYMÄ FUNKTIOT ===
 
-// Päivitetty startLogin popup-metodilla!
-window.startLogin = async function() {
+// PALAUTETTU TÄMÄ METODI: PWA sovelluksissa Redirect on ainoa toimiva keino!
+window.startLogin = function() {
     _$('login-error').style.display = 'none';
-    try {
-        await _sIWP(_au, new _gP());
-    } catch(e) {
-        console.error("Kirjautumisvirhe:", e);
-        if(e.code !== 'auth/popup-closed-by-user') {
-            alert("Kirjautuminen epäonnistui. Yritä uudelleen.");
-        }
-    }
+    _sIWR(_au, new _gP());
 }
 
 window.logout = function() {
