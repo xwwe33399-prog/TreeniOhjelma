@@ -18,47 +18,42 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
-        :root,[data-theme="light"]{
-            --bg-base:#f1f5f9;
-            --bg-surface:#ffffff;
-            --text-primary:#0f172a;
-            --text-secondary:#64748b;
-            --border-color:#e2e8f0;
-            --accent-main:#020617;
-            --accent-hover:#1e293b;
-            --btn-text:#ffffff;
-            --hover-bg:#f8fafc;
-            --banner-bg:#020617;
-            --banner-text:#ffffff;
-            --success:#059669;
-            --success-bg:#ecfdf5;
-            --danger:#dc2626;
-            --danger-bg:#fef2f2;
-            --input-bg:#f8fafc;
-            --comment-bg:#f1f5f9;
-            --comment-coach-bg:#e0f2fe;
-            --header-bg:#ffffff;
+        /* MODERN LIGHT */
+        :root, [data-theme="light"] {
+            --bg-base: #f1f5f9; --bg-surface: #ffffff; --text-primary: #0f172a; --text-secondary: #64748b;
+            --border-color: #e2e8f0; --accent-main: #020617; --accent-hover: #1e293b; --btn-text: #ffffff;
+            --hover-bg: #f8fafc; --banner-bg: #020617; --banner-text: #ffffff; --success: #059669;
+            --success-bg: #ecfdf5; --danger: #dc2626; --danger-bg: #fef2f2; --input-bg: #f8fafc;
+            --comment-bg: #f1f5f9; --comment-coach-bg: #e0f2fe; --header-bg: #ffffff;
+            --radius-main: 16px; --radius-btn: 12px; --font-main: 'Inter', sans-serif;
         }
-        [data-theme="dark"]{
-            --bg-base:#09090b;
-            --bg-surface:#18181b;
-            --text-primary:#f8fafc;
-            --text-secondary:#a1a1aa;
-            --border-color:#27272a;
-            --accent-main:#ffffff;
-            --accent-hover:#e4e4e7;
-            --btn-text:#000000;
-            --hover-bg:#27272a;
-            --banner-bg:#18181b;
-            --banner-text:#ffffff;
-            --input-bg:#09090b;
-            --comment-bg:#27272a;
-            --comment-coach-bg:#1e3a8a;
-            --header-bg:#18181b;
+        /* MODERN DARK */
+        [data-theme="dark"] {
+            --bg-base: #09090b; --bg-surface: #18181b; --text-primary: #f8fafc; --text-secondary: #a1a1aa;
+            --border-color: #27272a; --accent-main: #ffffff; --accent-hover: #e4e4e7; --btn-text: #000000;
+            --hover-bg: #27272a; --banner-bg: #18181b; --banner-text: #ffffff; --success: #10b981;
+            --input-bg: #09090b; --comment-bg: #27272a; --comment-coach-bg: #1e3a8a; --header-bg: #18181b;
+            --radius-main: 16px; --radius-btn: 12px; --font-main: 'Inter', sans-serif;
+        }
+        /* CLASSIC BLUE */
+        [data-theme="classic"] {
+            --bg-base: #e9ecef; --bg-surface: #ffffff; --text-primary: #1e293b; --text-secondary: #475569;
+            --border-color: #cbd5e1; --accent-main: #2563eb; --accent-hover: #1d4ed8; --btn-text: #ffffff;
+            --hover-bg: #f1f5f9; --banner-bg: #1e3a8a; --banner-text: #ffffff; --success: #059669;
+            --input-bg: #ffffff; --comment-bg: #f8fafc; --comment-coach-bg: #eff6ff; --header-bg: #ffffff;
+            --radius-main: 8px; --radius-btn: 6px; --font-main: 'Arial', sans-serif;
+        }
+        /* NEON CYBERPUNK */
+        [data-theme="neon"] {
+            --bg-base: #050510; --bg-surface: #0b0b1a; --text-primary: #e2e8f0; --text-secondary: #94a3b8;
+            --border-color: #1e1e3f; --accent-main: #d946ef; --accent-hover: #c026d3; --btn-text: #ffffff;
+            --hover-bg: #13132b; --banner-bg: #0b0b1a; --banner-text: #2dd4bf; --success: #2dd4bf;
+            --input-bg: #050510; --comment-bg: #13132b; --comment-coach-bg: #31133e; --header-bg: #0b0b1a;
+            --radius-main: 0px; --radius-btn: 0px; --font-main: 'Courier New', monospace;
         }
 
-        *{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif;-webkit-tap-highlight-color:transparent}
-        body{background-color:var(--bg-base);color:var(--text-primary);overflow:hidden;display:flex;flex-direction:column;height:100vh;width:100vw;transition:background-color 0.3s}
+        *{box-sizing:border-box;margin:0;padding:0;font-family:var(--font-main);-webkit-tap-highlight-color:transparent}
+        body{background-color:var(--bg-base);color:var(--text-primary);overflow:hidden;display:flex;flex-direction:column;height:100vh;width:100vw;transition:background-color 0.3s, color 0.3s}
 
         @keyframes slideUpFade{0%{opacity:0;transform:translateY(30px)}100%{opacity:1;transform:translateY(0)}}
         @keyframes popIn{0%{opacity:0;transform:scale(0.9)}100%{opacity:1;transform:scale(1)}}
@@ -69,18 +64,18 @@
 
         /* PWA View */
         #pwa-install-view{position:fixed;inset:0;background:linear-gradient(135deg,var(--banner-bg) 0%,#1e293b 100%);color:var(--banner-text);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;padding:2rem;text-align:center;}
-        .install-icon{width:96px;height:96px;background:#ffffff;color:#020617;border-radius:24px;display:flex;align-items:center;justify-content:center;font-size:2.4rem;font-weight:800;margin-bottom:2rem;animation:popIn .8s forwards;}
-        .install-btn{background:#ffffff;color:#000000;padding:16px 24px;font-size:1.1rem;font-weight:700;border-radius:30px;border:none;cursor:pointer;display:none;align-items:center;justify-content:center;gap:12px;margin-bottom:1rem;}
+        .install-icon{width:96px;height:96px;background:var(--accent-main);color:var(--btn-text);border-radius:var(--radius-main);display:flex;align-items:center;justify-content:center;font-size:2.4rem;font-weight:800;margin-bottom:2rem;animation:popIn .8s forwards;}
+        .install-btn{background:var(--bg-surface);color:var(--text-primary);padding:16px 24px;font-size:1.1rem;font-weight:700;border-radius:30px;border:none;cursor:pointer;display:none;align-items:center;justify-content:center;gap:12px;margin-bottom:1rem;}
         .install-btn.active{display:flex}
 
         /* Login View */
         #login-view{position:fixed;inset:0;background-color:var(--bg-surface);display:none;flex-direction:column;z-index:1000;padding:2rem;align-items:center;justify-content:center;overflow-y:auto;}
-        .login-card {width:100%;max-width:400px;background:var(--bg-base);padding:2.5rem 2rem;border-radius:24px;box-shadow:0 10px 30px rgba(0,0,0,0.05);margin:auto;}
-        .login-logo{width:64px;height:64px;background:var(--accent-main);color:var(--btn-text);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:1.8rem;font-weight:800;margin:0 auto 1.5rem}
-        .error-message{display:none;background:var(--danger-bg);color:var(--danger);padding:12px 16px;border-radius:12px;font-weight:600;margin-bottom:1.5rem;border:1px solid var(--danger);font-size:0.85rem;}
-        .success-message{display:none;background:var(--success-bg);color:var(--success);padding:12px 16px;border-radius:12px;font-weight:600;margin-bottom:1.5rem;border:1px solid var(--success);font-size:0.85rem;}
+        .login-card {width:100%;max-width:400px;background:var(--bg-base);padding:2.5rem 2rem;border-radius:var(--radius-main);box-shadow:0 10px 30px rgba(0,0,0,0.1);margin:auto;}
+        .login-logo{width:64px;height:64px;background:var(--accent-main);color:var(--btn-text);border-radius:var(--radius-main);display:flex;align-items:center;justify-content:center;font-size:1.8rem;font-weight:800;margin:0 auto 1.5rem}
+        .error-message{display:none;background:var(--danger-bg);color:var(--danger);padding:12px 16px;border-radius:var(--radius-btn);font-weight:600;margin-bottom:1.5rem;border:1px solid var(--danger);font-size:0.85rem;}
+        .success-message{display:none;background:var(--success-bg);color:var(--success);padding:12px 16px;border-radius:var(--radius-btn);font-weight:600;margin-bottom:1.5rem;border:1px solid var(--success);font-size:0.85rem;}
 
-        .btn{background-color:var(--accent-main);color:var(--btn-text);border:1px solid var(--accent-main);padding:14px 24px;font-size:1rem;font-weight:600;cursor:pointer;border-radius:12px;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px;}
+        .btn{background-color:var(--accent-main);color:var(--btn-text);border:1px solid var(--accent-main);padding:14px 24px;font-size:1rem;font-weight:600;cursor:pointer;border-radius:var(--radius-btn);transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px;}
         .btn:hover{background-color:var(--accent-hover);transform:translateY(-2px)}
         .btn-outline{background-color:transparent;color:var(--text-primary);border:1px solid var(--border-color)}
         .btn-outline:hover{background-color:var(--hover-bg)}
@@ -90,45 +85,45 @@
         /* Main App & Header */
         #app-container{display:none;height:100vh;width:100%}
         
-        .top-header {position:fixed;top:0;left:0;right:0;height:65px;background:var(--header-bg);border-bottom:1px solid var(--border-color);display:flex;align-items:center;padding:0 1.5rem;z-index:90;justify-content:space-between;}
+        .top-header {position:fixed;top:0;left:0;right:0;height:65px;background:var(--header-bg);border-bottom:1px solid var(--border-color);display:flex;align-items:center;padding:0 1.5rem;z-index:90;justify-content:space-between; transition:background-color 0.3s;}
         .top-user-info {display:flex;align-items:center;gap:12px;}
         .top-avatar {width:38px;height:38px;border-radius:50%;object-fit:cover;background:var(--border-color);display:flex;align-items:center;justify-content:center;font-weight:bold;color:var(--text-secondary);cursor:pointer;border:2px solid var(--accent-main);}
         .top-greeting {font-weight:700;font-size:1.1rem;color:var(--text-primary);}
 
-        .sidebar{position:fixed;top:65px;left:0;bottom:0;width:280px;background-color:var(--bg-surface);border-right:1px solid var(--border-color);display:flex;flex-direction:column;padding:1.5rem 0;z-index:40}
+        .sidebar{position:fixed;top:65px;left:0;bottom:0;width:280px;background-color:var(--bg-surface);border-right:1px solid var(--border-color);display:flex;flex-direction:column;padding:1.5rem 0;z-index:40; transition:background-color 0.3s;}
         .sidebar-header{padding:0 1.5rem;margin-bottom:2rem;}
         .nav-items{display:flex;flex-direction:column;gap:.4rem;padding:0 1rem;overflow-y:auto;}
-        .nav-item{padding:14px 16px;border-radius:12px;cursor:pointer;font-weight:600;color:var(--text-secondary);display:flex;align-items:center;gap:14px;font-size:.95rem;transition:all 0.2s}
+        .nav-item{padding:14px 16px;border-radius:var(--radius-btn);cursor:pointer;font-weight:600;color:var(--text-secondary);display:flex;align-items:center;gap:14px;font-size:.95rem;transition:all 0.2s}
         .nav-item:hover,.nav-item.active{background-color:var(--hover-bg);color:var(--text-primary)}
 
         .main-wrapper{margin-left:280px;margin-top:65px;height:calc(100vh - 65px);overflow-y:auto;background-color:var(--bg-base)}
-        .greeting-banner{background:linear-gradient(135deg,var(--banner-bg) 0%,#1e293b 100%);color:#ffffff;padding:3rem 2rem 5rem;position:relative}
+        .greeting-banner{background:linear-gradient(135deg,var(--banner-bg) 0%, #000000 100%);color:var(--banner-text);padding:3rem 2rem 5rem;position:relative}
         .greeting-content{max-width:900px;margin:0 auto}
         .greeting-banner h1{font-size:2.8rem;font-weight:800;margin:0;letter-spacing:-.04em;line-height:1.1}
-        #greeting-sub { color: #ffffff !important; margin-top: 10px; font-size: 1.1rem; opacity: 0.9; }
+        #greeting-sub { color: var(--banner-text) !important; margin-top: 10px; font-size: 1.1rem; opacity: 0.9; }
         
         .content-container{padding:0 2rem 3rem;max-width:940px;margin:0 auto;position:relative;top:-40px}
 
         .view-section{display:none}
         .view-section.active{display:block; animation: slideUpFade .4s forwards;}
         .section-title{font-size:1.4rem;font-weight:700;margin-bottom:1.5rem}
-        .card{background-color:var(--bg-surface);border:1px solid var(--border-color);border-radius:16px;padding:2rem;margin-bottom:1.5rem;box-shadow:0 4px 6px rgba(0,0,0,0.02)}
+        .card{background-color:var(--bg-surface);border:1px solid var(--border-color);border-radius:var(--radius-main);padding:2rem;margin-bottom:1.5rem;box-shadow:0 4px 6px rgba(0,0,0,0.02)}
 
-        input[type="text"],input[type="email"],input[type="password"],select,textarea{width:100%;padding:14px 16px;border:1px solid var(--border-color);border-radius:12px;font-size:1rem;margin-bottom:1.2rem;background-color:var(--input-bg);color:var(--text-primary)}
+        input[type="text"],input[type="email"],input[type="password"],select,textarea{width:100%;padding:14px 16px;border:1px solid var(--border-color);border-radius:var(--radius-btn);font-size:1rem;margin-bottom:1.2rem;background-color:var(--input-bg);color:var(--text-primary)}
         
         .member-row{display:flex;justify-content:space-between;align-items:center;padding:1.25rem 0;border-bottom:1px solid var(--border-color)}
         .status-badge{display:inline-flex;align-items:center;gap:6px;font-size:.75rem;font-weight:800;padding:6px 12px;border-radius:20px;text-transform:uppercase}
         .status-active{background:var(--success-bg);color:var(--success)}
-        .status-admin{background:#eff6ff;color:#3b82f6}
+        .status-admin{background:rgba(59, 130, 246, 0.1);color:#3b82f6}
 
-        /* Ilmoitus katoaa täysin itsestään */
-        .android-notification{position:fixed;top:-150px;left:50%;transform:translateX(-50%);width:90%;max-width:400px;background:#2f2f2f;color:#ffffff;padding:20px;border-radius:24px;z-index:3000;box-shadow:0 8px 25px rgba(0,0,0,0.4);transition:top .5s cubic-bezier(0.175, 0.885, 0.32, 1.275); text-align:center;}
+        .android-notification{position:fixed;top:-150px;left:50%;transform:translateX(-50%);width:90%;max-width:400px;background:#2f2f2f;color:#ffffff;padding:20px;border-radius:var(--radius-main);z-index:3000;box-shadow:0 8px 25px rgba(0,0,0,0.4);transition:top .5s cubic-bezier(0.175, 0.885, 0.32, 1.275); text-align:center;}
         .android-notification.active{top:20px}
 
-        .toggle-switch{position:relative;width:50px;height:28px;background:var(--border-color);border-radius:30px;cursor:pointer;}
-        .toggle-switch.active{background:var(--success)}
-        .toggle-circle{position:absolute;top:3px;left:3px;width:22px;height:22px;background:#fff;border-radius:50%;transition:transform .3s}
-        .toggle-switch.active .toggle-circle{transform:translateX(22px)}
+        /* Stats Grid */
+        .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem;}
+        .stat-box{background:var(--input-bg);padding:1.5rem;border-radius:var(--radius-main);border:1px solid var(--border-color);text-align:center}
+        .stat-number{font-size:2.5rem;font-weight:800;color:var(--text-primary);margin-bottom:.5rem}
+        .stat-label{font-size:.85rem;color:var(--text-secondary);text-transform:uppercase;font-weight:600}
 
         /* Templates */
         .workout-part { margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px dashed var(--border-color); }
@@ -137,20 +132,24 @@
         .workout-part p { white-space: pre-wrap; line-height: 1.6; color: var(--text-secondary); }
 
         /* Kommentit UI */
-        .feedback-section { margin-top: 1.5rem; padding: 1.5rem; background: var(--input-bg); border-radius: 12px; border: 1px solid var(--border-color); }
-        .coach-reply-box { margin-top: 15px; padding: 15px; background: var(--comment-coach-bg); border-radius: 12px; display: none; align-items:flex-start; gap:12px; }
+        .feedback-section { margin-top: 1.5rem; padding: 1.5rem; background: var(--input-bg); border-radius: var(--radius-btn); border: 1px solid var(--border-color); }
+        .coach-reply-box { margin-top: 15px; padding: 15px; background: var(--comment-coach-bg); border-radius: var(--radius-btn); display: none; align-items:flex-start; gap:12px; }
         .coach-reply-box.visible { display: flex; animation: slideUpFade 0.3s forwards; }
-        .small-avatar { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; background: var(--border-color); display: inline-flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem; flex-shrink: 0; color:var(--text-secondary); }
+        .small-avatar { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; background: var(--border-color); display: inline-flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1rem; flex-shrink: 0; color:var(--text-secondary); }
         .workout-date { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 15px; display: block; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
 
         .log-item { padding: 16px; border-bottom: 1px solid var(--border-color); }
         .log-item:last-child { border-bottom: none; }
-        .log-tag { display: inline-block; padding: 4px 10px; background: #e0e7ff; color: #4338ca; border-radius: 20px; font-size: 0.75rem; font-weight: 800; margin-bottom: 8px; text-transform: uppercase; }
+        .log-tag { display: inline-block; padding: 4px 10px; background: rgba(59, 130, 246, 0.1); color: #3b82f6; border-radius: 20px; font-size: 0.75rem; font-weight: 800; margin-bottom: 8px; text-transform: uppercase; }
 
-        /* Modal */
-        .modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:2000; display:none; align-items:center; justify-content:center; padding:1rem;}
+        /* Modals & Cropper */
+        .modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:2000; display:none; align-items:center; justify-content:center; padding:1rem;}
         .modal-overlay.active { display:flex; }
-        .modal-content { background:var(--bg-surface); padding:2rem; border-radius:24px; width:100%; max-width:500px; max-height:90vh; overflow-y:auto; }
+        .modal-content { background:var(--bg-surface); padding:2rem; border-radius:var(--radius-main); width:100%; max-width:500px; max-height:90vh; overflow-y:auto; }
+        
+        .cropper-container { position:relative; width:100%; aspect-ratio:1/1; background:#000; overflow:hidden; border-radius:12px; margin-bottom:1rem; touch-action:none;}
+        #cropper-canvas { position:absolute; top:0; left:0; transform-origin:center; cursor:move; }
+        .cropper-mask { position:absolute; inset:0; pointer-events:none; box-shadow: 0 0 0 9999px rgba(0,0,0,0.6); border-radius:50%; width:80%; height:80%; top:10%; left:10%; border:2px dashed #fff; }
 
         @media(max-width:768px){
             .sidebar{transform:none;display:flex;flex-direction:row;top:auto;bottom:0;left:0;right:0;width:100%;height:75px;padding:0;border-right:none;border-top:1px solid var(--border-color);z-index:100;}
@@ -159,7 +158,7 @@
             .nav-item{flex-direction:column;gap:6px;padding:10px 0;font-size:.7rem;border-radius:8px;width:100%;justify-content:center}
             .nav-item span { display:block; text-align:center; }
             .main-wrapper{margin-left:0;margin-top:65px;height:calc(100vh - 140px);padding-bottom:1rem}
-            .greeting-banner{padding:3rem 1.5rem 4rem}
+            .greeting-banner{padding:2rem 1.5rem 3rem}
             .content-container{padding:0 1rem 1rem}
             .card {padding:1.5rem}
         }
@@ -186,6 +185,22 @@
         <div style="font-size:.75rem;color:#b3b3b3;font-weight:700;" id="popup-category">⚠️ Ilmoitus</div>
         <div id="popup-title" style="font-weight:700;font-size:1.1rem;margin:8px 0;"></div>
         <div id="popup-body"></div>
+    </div>
+
+    <div class="modal-overlay" id="cropper-modal">
+        <div class="modal-content">
+            <h2 style="margin-bottom:1rem; text-align:center;">Rajaa Profiilikuva</h2>
+            <div class="cropper-container" id="cropper-container">
+                <canvas id="cropper-canvas"></canvas>
+                <div class="cropper-mask"></div>
+            </div>
+            <label>Zoomaa</label>
+            <input type="range" id="crop-zoom" min="1" max="3" step="0.01" value="1" style="width:100%; margin-bottom:1.5rem;" oninput="drawCrop()">
+            <div style="display:flex;gap:10px;">
+                <button class="btn" style="flex:1;" onclick="saveCroppedImage()">Tallenna</button>
+                <button class="btn btn-outline" style="flex:1;" onclick="closeCropper()">Peruuta</button>
+            </div>
+        </div>
     </div>
 
     <div class="modal-overlay" id="edit-modal">
@@ -225,9 +240,9 @@
             <div class="top-user-info" onclick="triggerPfpUpload()">
                 <img id="header-avatar" class="top-avatar" src="" style="display:none;">
                 <div id="header-avatar-initial" class="top-avatar">?</div>
-                <div class="top-greeting">Hei, <span id="header-name"></span>!</div>
+                <div class="top-greeting">Hei, <span id="header-name"></span></div>
             </div>
-            <div style="font-size:0.8rem; color:var(--text-secondary);">SK Portaali</div>
+            <div style="font-size:0.8rem; color:var(--text-secondary); font-weight:700;">SK PORTAALI</div>
         </header>
 
         <nav class="sidebar">
@@ -248,9 +263,9 @@
                     <h2 class="section-title">Koti & Päivitykset</h2>
                     <div class="card" style="padding:0;">
                         <div class="log-item">
-                            <span class="log-tag">BETA 1.3</span>
+                            <span class="log-tag">BETA 2.0</span>
                             <h3 style="margin-bottom: 5px;">Massiivinen Päivitys!</h3>
-                            <p style="color:var(--text-secondary); font-size:0.95rem;">Betasovellus: Tämä on vain testi, mutta toimii hyvin ja kokonaan. Treenit latautuvat nyt heti, profiilikuvan voi ladata kamerasta/galleriasta, salasanan vaihto toimii ja sovelluksen äänet ovat upeat!</p>
+                            <p style="color:var(--text-secondary); font-size:0.95rem;">Betasovellus on nyt uudella tasolla! Lisätty profiilikuvan rajaustyökalu (zoomaus & siirto), hienommat UI äänet, valmentajan laaja tilastopaneeli ja "Push Update" systeemi, joka pakottaa kaikkien laitteiden päivityksen!</p>
                         </div>
                     </div>
                 </div>
@@ -267,7 +282,7 @@
                             <h3 style="margin-bottom:1.5rem;">+ Uusi Asiakas</h3>
                             <label>Sähköpostiosoite</label><input type="email" id="new-user-email">
                             <label>Koko Nimi</label><input type="text" id="new-user-name">
-                            <button class="btn" onclick="addClientUser()" style="width:100%;">Luo Asiakas & Generoi Salasana</button>
+                            <button class="btn" onclick="addClientUser()" style="width:100%;">Luo Asiakas & Salasana</button>
                         </div>
                         <div class="card animate-enter" style="animation-delay:.1s;">
                             <h3 style="margin-bottom:1.5rem;">+ Uusi Treeniohjelma</h3>
@@ -281,6 +296,32 @@
                     </div>
                     <h2 class="section-title" style="margin-top:2rem;">Aktiiviset Asiakkaat</h2>
                     <div class="card animate-enter" id="omistaja-jasen-lista">Ladataan...</div>
+                </div>
+
+                <div id="view-tilastot" class="view-section">
+                    <h2 class="section-title">Valmennuksen Tilastot</h2>
+                    <div class="card animate-enter">
+                        <label>Suodata Asiakas</label>
+                        <select id="stat-client-select" onchange="loadCoachStats(this.value)"></select>
+                    </div>
+                    
+                    <div class="stat-grid animate-enter" style="margin-bottom:1.5rem;">
+                        <div class="stat-box">
+                            <div class="stat-number" id="stat-total-workouts">0</div>
+                            <div class="stat-label">Treenejä Luotu</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-number" id="stat-total-feedback">0</div>
+                            <div class="stat-label">Palautteita Annettu</div>
+                        </div>
+                    </div>
+
+                    <h3 style="margin-top: 1.5rem; margin-bottom:1rem;">Tyytyväisyysjakauma</h3>
+                    <div class="stat-grid animate-enter">
+                        <div class="stat-box"><div class="stat-number" id="stat-hyva" style="color:var(--success);">0</div><div class="stat-label">Loistava / Hyvä</div></div>
+                        <div class="stat-box"><div class="stat-number" id="stat-ok" style="color:#eab308;">0</div><div class="stat-label">Ihan OK</div></div>
+                        <div class="stat-box"><div class="stat-number" id="stat-raskas" style="color:var(--danger);">0</div><div class="stat-label">Raskas / Huono</div></div>
+                    </div>
                 </div>
 
                 <div id="view-asiakas-tiedot" class="view-section">
@@ -304,17 +345,18 @@
                 <div id="view-debug" class="view-section">
                     <h2 class="section-title">Debug & Järjestelmä (Vain Eeli)</h2>
                     <div class="card animate-enter">
-                        <h3 style="margin-bottom:1rem;">Globaali Push Ilmoitus</h3>
+                        <h3 style="margin-bottom:1rem;">Globaali Push Ilmoitus / Komento</h3>
                         <label>Otsikko</label><input type="text" id="global-msg-title">
                         <label>Viesti</label><textarea id="global-msg-body" rows="3"></textarea>
-                        <button class="btn" onclick="sendGlobalMessage()">Lähetä Hälytys Kaikille</button>
+                        <button class="btn" onclick="sendGlobalMessage('INFO')" style="margin-bottom:10px;">Lähetä Teksti-ilmoitus</button>
+                        <button class="btn btn-danger" onclick="sendGlobalMessage('RELOAD')">Pakota Päivitys (Hard Refresh Kaikille!)</button>
                     </div>
                     <div class="card animate-enter" style="margin-top:1.5rem;">
                         <h3 style="margin-bottom:1rem;">Järjestelmätyökalut</h3>
                         <div style="display:flex; flex-direction:column; gap:10px;">
-                            <button class="btn btn-outline" onclick="debugTestPush()">Testaa Ilmoitusta</button>
-                            <button class="btn btn-outline" onclick="debugClearCache()">Puhdista Välimuisti</button>
-                            <button class="btn btn-outline" onclick="debugPingDB()">Pingaa Tietokantaa</button>
+                            <button class="btn btn-outline" onclick="SoundEngine.playNotification()">Testaa Ilmoitusääntä</button>
+                            <button class="btn btn-outline" onclick="SoundEngine.playSuccess()">Testaa Onnistumisääntä</button>
+                            <button class="btn btn-outline" onclick="localStorage.clear(); alert('Välimuisti tyhjennetty. Lataa sivu uudelleen.');">Puhdista Välimuisti (Local)</button>
                         </div>
                     </div>
                 </div>
@@ -336,18 +378,32 @@
                         <div id="settings-role-badge" style="margin-bottom: 2rem;"></div>
 
                         <div style="border-top:1px solid var(--border-color); padding-top:1.5rem; margin-bottom:1.5rem;">
+                            <h4 style="margin-bottom:10px;">Teema</h4>
+                            <select id="theme-selector" onchange="changeTheme(this.value)">
+                                <option value="light">Moderni Vaalea</option>
+                                <option value="dark">Moderni Tumma</option>
+                                <option value="classic">Klassinen (Sinivalkoinen)</option>
+                                <option value="neon">Neon Cyberpunk</option>
+                            </select>
+                        </div>
+
+                        <div style="border-top:1px solid var(--border-color); padding-top:1.5rem; margin-bottom:1.5rem;">
                             <h4 style="margin-bottom:10px;">Vaihda Salasana</h4>
-                            <input type="password" id="new-password" placeholder="Uusi salasana (Min. 6 merkkiä, kirjain ja numero)">
+                            <input type="password" id="new-password" placeholder="Uusi salasana (Min. 6 merkkiä)">
                             <button class="btn btn-outline" onclick="changeMyPassword()">Päivitä Salasana</button>
                         </div>
 
-                        <div style="display:flex;justify-content:space-between;align-items:center;padding:1.5rem 0;border-top:1px solid var(--border-color);">
-                            <div><div style="font-weight:700;">Käyttöliittymän Äänet</div></div>
-                            <div class="toggle-switch" id="snd-tog" onclick="toggleSound()"><div class="toggle-circle"></div></div>
+                        <div style="border-top:1px solid var(--border-color); padding:1.5rem 0;">
+                            <h4 style="margin-bottom:10px;">Järjestelmän Äänet</h4>
+                            <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:10px;">Käyttöliittymän tehosteet ja ilmoitukset.</p>
+                            <select id="sound-selector" onchange="toggleSound(this.value)">
+                                <option value="1">Äänet Päällä</option>
+                                <option value="0">Äänet Pois</option>
+                            </select>
                         </div>
 
                         <div style="border-top:1px solid var(--border-color); padding-top:1.5rem; margin-top:1.5rem;">
-                            <h4 style="margin-bottom:10px;">Lähetä palautetta tekijälle</h4>
+                            <h4 style="margin-bottom:10px;">Lähetä palautetta sovelluksesta</h4>
                             <textarea id="app-feedback-text" rows="3" maxlength="300" placeholder="Miten sovellusta voisi parantaa? (Max 300 merkkiä)"></textarea>
                             <button class="btn btn-outline" onclick="sendAppFeedback()">Lähetä Palaute</button>
                         </div>
@@ -376,50 +432,52 @@ const _db = _gF(_a);
 const _a2 = _iA(_fc, "SecondaryApp");
 const _au2 = _gAu(_a2);
 
-// Oletuksena aina tumma teema!
-let _dm = localStorage.getItem('theme') !== 'light'; 
-if(_dm) document.documentElement.setAttribute('data-theme', 'dark');
-
-// Äänet oletuksena päällä!
-let storedSnd = localStorage.getItem('ui_snd');
-let _snd = storedSnd === null ? true : (storedSnd === '1');
-
 let _cUE = "", _cUR = "", _cUN = "", _cUPic = "";
 let deferredPrompt = null;
 let currentViewingClientEmail = "";
+let allWorkoutsForStats = [];
 
 const _$ = (i) => document.getElementById(i);
 const _admins = ['vepiasko@gmail.com', 'eelukka12@gmail.com'];
 
-// ÄÄNET
-function playTabSound() {
-    if(!_snd) return;
-    try {
-        const ctx = new (window.AudioContext || window.webkitAudioContext)();
-        const osc = ctx.createOscillator(); const gain = ctx.createGain();
-        osc.connect(gain); gain.connect(ctx.destination);
-        osc.type = 'sine'; osc.frequency.setValueAtTime(400, ctx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(600, ctx.currentTime + 0.05);
-        gain.gain.setValueAtTime(0.05, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.05);
-        osc.start(); osc.stop(ctx.currentTime + 0.05);
-    } catch(e) {}
+// === TEEMA ===
+let _theme = localStorage.getItem('theme') || 'dark';
+document.documentElement.setAttribute('data-theme', _theme);
+window.changeTheme = function(t) {
+    _theme = t; localStorage.setItem('theme', t);
+    document.documentElement.setAttribute('data-theme', t);
 }
 
-function playNotificationSound() {
-    if(!_snd) return;
-    try {
-        const ctx = new (window.AudioContext || window.webkitAudioContext)();
-        const playNote = (freq, start, dur) => {
-            const osc = ctx.createOscillator(); const gain = ctx.createGain();
-            osc.connect(gain); gain.connect(ctx.destination);
-            osc.type = 'triangle'; osc.frequency.setValueAtTime(freq, start);
-            gain.gain.setValueAtTime(0.1, start); gain.gain.exponentialRampToValueAtTime(0.001, start + dur);
-            osc.start(start); osc.stop(start + dur);
-        };
-        const now = ctx.currentTime; playNote(600, now, 0.15); playNote(800, now + 0.15, 0.3);
-    } catch(e) {}
-}
+// === ÄÄNIMOOTTORI (Web Audio API) ===
+let _snd = localStorage.getItem('ui_snd') !== '0'; // Oletus: päällä
+window.toggleSound = function(val) { _snd = val === '1'; localStorage.setItem('ui_snd', _snd ? '1' : '0'); }
+
+const SoundEngine = {
+    ctx: null,
+    init: function() { if(!this.ctx) this.ctx = new (window.AudioContext || window.webkitAudioContext)(); if(this.ctx.state==='suspended') this.ctx.resume(); },
+    playTone: function(freq, type, dur, vol, slideFreq) {
+        if(!_snd) return; this.init();
+        try {
+            const osc = this.ctx.createOscillator(); const gain = this.ctx.createGain();
+            osc.connect(gain); gain.connect(this.ctx.destination);
+            osc.type = type; osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+            if(slideFreq) osc.frequency.exponentialRampToValueAtTime(slideFreq, this.ctx.currentTime + dur);
+            gain.gain.setValueAtTime(vol, this.ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + dur);
+            osc.start(); osc.stop(this.ctx.currentTime + dur);
+        } catch(e) {}
+    },
+    playTab: function() { this.playTone(300, 'sine', 0.1, 0.05, 400); },
+    playClick: function() { this.playTone(800, 'triangle', 0.05, 0.03); },
+    playNotification: function() { this.playTone(500, 'sine', 0.15, 0.1); setTimeout(()=>this.playTone(750, 'sine', 0.3, 0.1), 150); },
+    playSuccess: function() { this.playTone(400, 'triangle', 0.1, 0.05); setTimeout(()=>this.playTone(500, 'triangle', 0.1, 0.05), 100); setTimeout(()=>this.playTone(600, 'triangle', 0.3, 0.05), 200); }
+};
+window.SoundEngine = SoundEngine;
+
+// Globaali click-ääni napeille
+document.addEventListener('click', (e) => {
+    if(e.target.closest('.btn') || e.target.closest('.install-btn')) SoundEngine.playClick();
+});
 
 // PWA
 if (!(window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone)) {
@@ -429,9 +487,7 @@ window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); defe
 window.installAndroid = async function() { if(deferredPrompt) { deferredPrompt.prompt(); deferredPrompt = null; } }
 window.showIOSInstructions = function() { _$('install-instruction-ios').classList.toggle('visible'); }
 
-// AUTH & SALASANAT
-const pwdRegex = /^(?=.*[A-Za-z])(?=.*\d).{6,}$/;
-
+// AUTH (Sama logiikka)
 _oASC(_au, async (user) => {
     if (_$('pwa-install-view').style.display === 'flex') return;
     if (user) {
@@ -454,7 +510,6 @@ window.handleRegister = async function() {
     const email = _$('login-email').value.trim().toLowerCase(); const pwd = _$('login-password').value.trim();
     _$('login-error').style.display = 'none'; _$('login-success').style.display = 'none';
     if (!_admins.includes(email)) return showLoginError("Vain adminit voivat rekisteröityä suoraan.");
-    if (!pwdRegex.test(pwd)) return showLoginError("Salasanassa oltava vähintään 6 merkkiä, numero ja kirjain.");
     try { await _cUEP(_au, email, pwd); } catch (e) { showLoginError("Virhe: " + e.message); }
 }
 
@@ -477,39 +532,112 @@ window.handlePasswordReset = async function() {
 
 window.changeMyPassword = async function() {
     const newPw = _$('new-password').value.trim();
-    if(!pwdRegex.test(newPw)) return showNotification("Virhe", "Salasanassa oltava min. 6 merkkiä, kirjain ja numero.");
+    if(newPw.length < 6) return showNotification("Virhe", "Salasanassa oltava min. 6 merkkiä.");
     try {
         await _uPW(_au.currentUser, newPw);
         _$('new-password').value = '';
-        showNotification("Onnistui", "Salasana on vaihdettu turvallisesti.");
+        SoundEngine.playSuccess(); showNotification("Onnistui", "Salasana on vaihdettu.");
     } catch(e) { showNotification("Virhe", "Kirjaudu ulos ja takaisin sisään vaihtaaksesi salasanan."); }
 }
 
 function showLoginError(msg) { const err = _$('login-error'); err.innerText = msg; err.style.display = 'block'; }
 
-// PFP / AVATAR LATAUS KANVAKSELLA
+
+// === PFP CROPPER (Interactive Image Cropper) ===
+let cropImg = new Image();
+let cropCanvas, cropCtx;
+let cx = 0, cy = 0, cZoom = 1;
+let isDragging = false, startX, startY;
+
 window.triggerPfpUpload = function() { _$('pfp-upload').click(); }
+
 window.handlePfpSelected = function(e) {
     const file = e.target.files[0]; if(!file) return;
     const reader = new FileReader();
     reader.onload = function(event) {
-        const img = new Image();
-        img.onload = function() {
-            const canvas = document.createElement('canvas'); const MAX_SIZE = 150;
-            let width = img.width; let height = img.height;
-            if(width > height) { if(width > MAX_SIZE) { height *= MAX_SIZE / width; width = MAX_SIZE; } }
-            else { if(height > MAX_SIZE) { width *= MAX_SIZE / height; height = MAX_SIZE; } }
-            canvas.width = width; canvas.height = height;
-            const ctx = canvas.getContext('2d'); ctx.drawImage(img, 0, 0, width, height);
-            const dataUrl = canvas.toDataURL('image/jpeg', 0.8);
+        cropImg.onload = function() {
+            _$('cropper-modal').classList.add('active');
+            cropCanvas = _$('cropper-canvas');
+            cropCtx = cropCanvas.getContext('2d');
+            const cont = _$('cropper-container');
+            cropCanvas.width = cont.clientWidth;
+            cropCanvas.height = cont.clientHeight;
             
-            _uD(_d(_db, "kayttajat", _cUE), { profilePic: dataUrl }).then(() => {
-                _cUPic = dataUrl; updateAvatarUI(); showNotification("Päivitetty", "Profiilikuva tallennettu!");
-            }).catch(err => showNotification("Virhe", "Tallennus epäonnistui."));
+            // Laske oletuszoom siten että kuva peittää canvasin
+            const scale = Math.max(cropCanvas.width / cropImg.width, cropCanvas.height / cropImg.height);
+            cZoom = scale;
+            _$('crop-zoom').min = scale;
+            _$('crop-zoom').max = scale * 3;
+            _$('crop-zoom').value = scale;
+            cx = cropCanvas.width/2; cy = cropCanvas.height/2;
+            
+            drawCrop();
         }
-        img.src = event.target.result;
+        cropImg.src = event.target.result;
     }
     reader.readAsDataURL(file);
+    e.target.value = ''; // Nollaa input
+}
+
+window.drawCrop = function() {
+    if(!cropCtx) return;
+    const z = parseFloat(_$('crop-zoom').value);
+    cropCtx.clearRect(0, 0, cropCanvas.width, cropCanvas.height);
+    cropCtx.save();
+    cropCtx.translate(cx, cy);
+    cropCtx.scale(z, z);
+    cropCtx.drawImage(cropImg, -cropImg.width/2, -cropImg.height/2);
+    cropCtx.restore();
+}
+
+// Drag events for Cropper
+const cropperCont = _$('cropper-container');
+if(cropperCont) {
+    const startDrag = (e) => { isDragging = true; startX = e.touches ? e.touches[0].clientX : e.clientX; startY = e.touches ? e.touches[0].clientY : e.clientY; };
+    const doDrag = (e) => {
+        if(!isDragging) return;
+        e.preventDefault();
+        const nx = e.touches ? e.touches[0].clientX : e.clientX;
+        const ny = e.touches ? e.touches[0].clientY : e.clientY;
+        cx += (nx - startX); cy += (ny - startY);
+        startX = nx; startY = ny;
+        drawCrop();
+    };
+    const endDrag = () => { isDragging = false; };
+    cropperCont.addEventListener('mousedown', startDrag); cropperCont.addEventListener('mousemove', doDrag); cropperCont.addEventListener('mouseup', endDrag); cropperCont.addEventListener('mouseleave', endDrag);
+    cropperCont.addEventListener('touchstart', startDrag); cropperCont.addEventListener('touchmove', doDrag); cropperCont.addEventListener('touchend', endDrag);
+}
+
+window.closeCropper = function() { _$('cropper-modal').classList.remove('active'); }
+
+window.saveCroppedImage = async function() {
+    // Luo lopullinen pieni canvas vain rajausaluetta varten (Maski on 80% koosta, keskellä)
+    const exportCanvas = document.createElement('canvas');
+    const size = 200; // PFP export koko
+    exportCanvas.width = size; exportCanvas.height = size;
+    const eCtx = exportCanvas.getContext('2d');
+    
+    // Suhteuta siirrot maskin alueelle
+    const maskRatio = 0.8;
+    const maskSize = cropCanvas.width * maskRatio;
+    const scaleToExport = size / maskSize;
+    
+    const z = parseFloat(_$('crop-zoom').value);
+    
+    eCtx.translate(size/2, size/2);
+    eCtx.scale(scaleToExport * z, scaleToExport * z);
+    // Laske offset suhteessa keskipisteeseen
+    const offsetX = (cx - cropCanvas.width/2) / z;
+    const offsetY = (cy - cropCanvas.height/2) / z;
+    eCtx.drawImage(cropImg, -cropImg.width/2 + offsetX, -cropImg.height/2 + offsetY);
+    
+    const dataUrl = exportCanvas.toDataURL('image/jpeg', 0.85);
+    
+    try {
+        await _uD(_d(_db, "kayttajat", _cUE), { profilePic: dataUrl });
+        _cUPic = dataUrl; updateAvatarUI(); SoundEngine.playSuccess(); showNotification("Päivitetty", "Profiilikuva tallennettu!");
+        closeCropper();
+    } catch(e) { showNotification("Virhe", "Kuvan tallennus epäonnistui."); }
 }
 
 function updateAvatarUI() {
@@ -525,6 +653,7 @@ function updateAvatarUI() {
     }
 }
 
+
 // INIT APP
 function initApp() {
     _$('app-container').style.display = 'block';
@@ -532,7 +661,8 @@ function initApp() {
     _$('settings-role-badge').innerHTML = _cUR === 'omistaja' ? '<span class="status-badge status-admin">Valmentaja</span>' : '<span class="status-badge status-active">Jäsen</span>';
     updateAvatarUI();
     
-    if(_snd) _$('snd-tog').classList.add('active');
+    _$('theme-selector').value = _theme;
+    _$('sound-selector').value = _snd ? '1' : '0';
     
     buildMenu();
     if (_cUR === 'omistaja') { loadUsersIfAdmin(); loadAppFeedback(); }
@@ -543,11 +673,11 @@ function initApp() {
 
 function buildMenu() {
     const nav = _$('nav-items'); nav.innerHTML = '';
-    
     nav.innerHTML += `<div class="nav-item active" id="nav-koti" onclick="switchView('view-koti', 'nav-koti')"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg><span>Koti</span></div>`;
     
     if (_cUR === 'omistaja') {
         nav.innerHTML += `<div class="nav-item" id="nav-omistaja-jasenet" onclick="switchView('view-omistaja-jasenet', 'nav-omistaja-jasenet')"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg><span>Valmennus</span></div>`;
+        nav.innerHTML += `<div class="nav-item" id="nav-tilastot" onclick="switchView('view-tilastot', 'nav-tilastot')"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg><span>Tilastot</span></div>`;
         nav.innerHTML += `<div class="nav-item" id="nav-sovelluspalaute" onclick="switchView('view-sovelluspalaute', 'nav-sovelluspalaute')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg><span>Palaute</span></div>`;
     } else {
         nav.innerHTML += `<div class="nav-item" id="nav-jasen-treeni" onclick="switchView('view-jasen-treeni', 'nav-jasen-treeni')"><svg viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1"></path><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path></svg><span>Treenit</span></div>`;
@@ -557,7 +687,7 @@ function buildMenu() {
         nav.innerHTML += `<div class="nav-item" id="nav-debug" onclick="switchView('view-debug', 'nav-debug')"><svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path></svg><span>Debug</span></div>`;
     }
     
-    nav.innerHTML += `<div class="nav-item" id="nav-asetukset" onclick="switchView('view-asetukset', 'nav-asetukset')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg><span>Asetukset</span></div>`;
+    nav.innerHTML += `<div class="nav-item" id="nav-asetukset" onclick="switchView('view-asetukset', 'nav-asetukset')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg><span>Asetukset</span></div>`;
     switchView('view-koti', 'nav-koti');
 }
 
@@ -571,21 +701,24 @@ window.addClientUser = async function() {
         await _cUEP(_au2, email, genPw); await _sO(_au2);
         await _sD(_d(_db, "kayttajat", email), { email: email, name: name, role: 'jasen', createdAt: _sT() });
         _$('new-user-email').value = ''; _$('new-user-name').value = '';
-        showNotification("Luotu!", `Salasana: ${genPw}`); loadUsersIfAdmin(); 
+        SoundEngine.playSuccess(); showNotification("Luotu!", `Salasana: ${genPw}`); loadUsersIfAdmin(); 
     } catch(e) { showNotification("Virhe", "Käyttäjän luonti epäonnistui."); }
 }
 
 async function loadUsersIfAdmin() {
     if (_cUR !== 'omistaja') return;
     const qSnap = await _gDs(_c(_db, "kayttajat"));
-    let html = ''; let selectHtml = '<option value="">-- Valitse --</option>';
+    let html = ''; let selectHtml = '<option value="">-- Valitse --</option>'; let statHtml = '<option value="all">Kaikki Asiakkaat Yhteensä</option>';
     qSnap.forEach(doc => {
         const d = doc.data();
         let badge = d.role === 'omistaja' ? '<span class="status-badge status-admin">Valmentaja</span>' : '<span class="status-badge status-active">Jäsen</span>';
         html += `<div class="member-row"><div><div style="font-weight:700;">${d.name}</div><div style="font-size:0.85rem; color:var(--text-secondary);">${d.email}</div></div><div style="display:flex; gap:10px; align-items:center;">${badge}${d.role === 'jasen' ? `<button class="btn btn-outline" style="padding:6px 12px; font-size:0.8rem;" onclick="openClientDetails('${d.email}')">Näytä</button>` : ''}</div></div>`;
-        if(d.role === 'jasen') selectHtml += `<option value="${d.email}">${d.name}</option>`;
+        if(d.role === 'jasen') { selectHtml += `<option value="${d.email}">${d.name}</option>`; statHtml += `<option value="${d.email}">${d.name}</option>`; }
     });
-    _$('omistaja-jasen-lista').innerHTML = html || 'Ei käyttäjiä.'; _$('workout-client-select').innerHTML = selectHtml;
+    _$('omistaja-jasen-lista').innerHTML = html || 'Ei käyttäjiä.'; _$('workout-client-select').innerHTML = selectHtml; _$('stat-client-select').innerHTML = statHtml;
+    
+    // Lataa data tilastoja varten
+    const wSnap = await _gDs(_c(_db, "treenit")); allWorkoutsForStats = []; wSnap.forEach(w => allWorkoutsForStats.push(w.data())); loadCoachStats('all');
 }
 
 window.addWorkout = async function() {
@@ -595,7 +728,7 @@ window.addWorkout = async function() {
     try {
         await _aD(_c(_db, "treenit"), { omistajaEmail: clId, title: t, warmup: w, main: m, cooldown: c, createdAt: _sT() });
         _$('workout-title').value = ''; _$('workout-warmup').value = ''; _$('workout-main').value = ''; _$('workout-cooldown').value = '';
-        showNotification("Onnistui", "Ohjelma tallennettu!");
+        SoundEngine.playSuccess(); showNotification("Onnistui", "Ohjelma tallennettu!"); loadUsersIfAdmin();
     } catch (e) {}
 }
 
@@ -605,7 +738,6 @@ function renderAvatar(pic, name) {
 }
 
 function createWorkoutHTML(id, d, isCoach) {
-    // Luonti ja Muokkaus pvm
     const timeNum = d.createdAt ? (d.createdAt.toMillis ? d.createdAt.toMillis() : 0) : 0;
     const dateStr = timeNum ? new Date(timeNum).toLocaleDateString('fi-FI') : "Tänään";
     let editStr = "";
@@ -621,10 +753,19 @@ function createWorkoutHTML(id, d, isCoach) {
     
     let fbHtml = '';
     if (d.palaute) {
-        fbHtml = `<div class="feedback-section" style="background:#f8fafc; color:#000; border:none;"><h4 style="color:var(--success);">✓ Palaute Annettu</h4><p><strong>Arvio:</strong> ${d.palaute.arvio}</p><p><strong>Kommentti:</strong> ${d.palaute.teksti}</p></div>`;
+        fbHtml = `<div class="feedback-section" style="background:transparent; border:none; padding:0; padding-top:15px; margin-top:15px; border-top:1px solid var(--border-color);">
+            <div style="display:flex; align-items:flex-start; gap:12px;">
+                ${renderAvatar(d.palaute.kuva, d.palaute.nimi)}
+                <div style="flex:1;">
+                    <h4 style="color:var(--success); font-size:0.9rem; margin-bottom:4px;">✓ ${d.palaute.nimi} antoi palautteen</h4>
+                    <p style="font-size:0.9rem;"><strong>${d.palaute.arvio}</strong></p>
+                    <p style="font-size:0.95rem; margin-top:4px;">${d.palaute.teksti}</p>
+                </div>
+            </div>
+        </div>`;
         if (d.valmentajaKommentti) {
-            fbHtml += `<button class="btn btn-outline" style="margin-top:10px; width:100%;" onclick="document.getElementById('coach-reply-${id}').classList.toggle('visible')">Näytä valmentajan kommentti</button>
-            <div id="coach-reply-${id}" class="coach-reply-box" style="color:#000;">
+            fbHtml += `<button class="btn btn-outline" style="margin-top:10px; width:100%;" onclick="document.getElementById('coach-reply-${id}').classList.toggle('visible'); SoundEngine.playClick();">Näytä valmentajan kommentti</button>
+            <div id="coach-reply-${id}" class="coach-reply-box">
                 ${renderAvatar(d.valmentajaKommentti.kuva, d.valmentajaKommentti.nimi)}
                 <div class="coach-msg-content"><div style="font-weight:800; font-size:0.9rem;">${d.valmentajaKommentti.nimi} (Valmentaja)</div><div style="font-size:0.95rem;">${d.valmentajaKommentti.teksti}</div></div>
             </div>`;
@@ -633,9 +774,8 @@ function createWorkoutHTML(id, d, isCoach) {
         }
     } else if (!isCoach) {
         fbHtml = `<div class="feedback-section"><h4 style="margin-bottom:10px;">Miten treeni meni?</h4><select id="fb-arvio-${id}" style="margin-bottom:10px;"><option>Loistava / Hyvä</option><option>Ihan OK</option><option>Raskas / Huono</option></select><textarea id="fb-teksti-${id}" rows="2" maxlength="300" placeholder="Kerro omin sanoin (Max 300 merkkiä)..." style="margin-bottom:10px;"></textarea><button class="btn" style="width:100%;" onclick="submitFeedback('${id}')">Lähetä Palaute</button></div>`;
-    } else { fbHtml = `<p style="font-size:0.85rem; color:var(--text-secondary); margin-top:15px;">Ei palautetta.</p>`; }
+    } else { fbHtml = `<p style="font-size:0.85rem; color:var(--text-secondary); margin-top:15px; border-top:1px solid var(--border-color); padding-top:15px;">Asiakas ei ole vielä antanut palautetta.</p>`; }
 
-    // Valmentajan Muokkaus/Poisto napit
     let adminBtns = '';
     if(isCoach) {
         const safeData = JSON.stringify({id:id, t:d.title||'', w:d.warmup||'', m:d.main||'', c:d.cooldown||''}).replace(/"/g, '&quot;');
@@ -644,17 +784,15 @@ function createWorkoutHTML(id, d, isCoach) {
             <button class="btn btn-danger" style="flex:1;" onclick="deleteWorkout('${id}')">Poista</button>
         </div>`;
     }
-
-    return `<div class="card"><span class="workout-date">📅 Treeni Annettu: ${dateStr}</span>${editStr}<h3 style="margin-bottom:15px; font-size:1.4rem;">${d.title}</h3>${content}${fbHtml}${adminBtns}</div>`;
+    return `<div class="card"><span class="workout-date">📅 ${dateStr}</span>${editStr}<h3 style="margin-bottom:15px; font-size:1.4rem;">${d.title}</h3>${content}${fbHtml}${adminBtns}</div>`;
 }
 
-// IN-MEMORY SORT KORJAA IKAISEN LATAUKSEN (Bypasses missing Composite Index constraint)
+// IN-MEMORY SORT 
 async function loadUserWorkouts() {
     if(_cUR === 'omistaja') return;
     const q = _q(_c(_db, "treenit"), _w("omistajaEmail", "==", _cUE));
     _oS(q, (snapshot) => {
-        let docs = [];
-        snapshot.forEach(doc => docs.push({id: doc.id, data: doc.data()}));
+        let docs = []; snapshot.forEach(doc => docs.push({id: doc.id, data: doc.data()}));
         docs.sort((a,b) => { const ta = a.data.createdAt?.toMillis()||0; const tb = b.data.createdAt?.toMillis()||0; return tb - ta; });
         let html = ''; docs.forEach(d => { html += createWorkoutHTML(d.id, d.data, false); });
         _$('jasen-treeni-container').innerHTML = html || '<div class="card">Ei ohjelmia.</div>';
@@ -673,8 +811,7 @@ window.openClientDetails = async function(email) {
         const q = _q(_c(_db, "treenit"), _w("omistajaEmail", "==", email));
         _oS(q, (snapshot) => {
             if(currentViewingClientEmail !== email) return; 
-            let docs = [];
-            snapshot.forEach(doc => docs.push({id: doc.id, data: doc.data()}));
+            let docs = []; snapshot.forEach(doc => docs.push({id: doc.id, data: doc.data()}));
             docs.sort((a,b) => { const ta = a.data.createdAt?.toMillis()||0; const tb = b.data.createdAt?.toMillis()||0; return tb - ta; });
             let html = ''; docs.forEach(d => { html += createWorkoutHTML(d.id, d.data, true); });
             _$('asiakas-tiedot-treenit').innerHTML = html || '<div class="card">Ei ohjelmia.</div>';
@@ -684,8 +821,8 @@ window.openClientDetails = async function(email) {
 
 window.submitFeedback = async function(id) {
     try {
-        await _uD(_d(_db, "treenit", id), { palaute: { arvio: _$(`fb-arvio-${id}`).value, teksti: _$(`fb-teksti-${id}`).value.trim()||"-", date: new Date().toISOString() } });
-        showNotification("Kiitos!", "Palaute tallennettu.");
+        await _uD(_d(_db, "treenit", id), { palaute: { arvio: _$(`fb-arvio-${id}`).value, teksti: _$(`fb-teksti-${id}`).value.trim()||"-", nimi: _cUN, kuva: _cUPic, date: new Date().toISOString() } });
+        SoundEngine.playSuccess(); showNotification("Kiitos!", "Palaute tallennettu.");
     } catch(e) {}
 }
 
@@ -693,14 +830,13 @@ window.submitCoachReply = async function(id) {
     const t = _$(`coach-input-${id}`).value.trim(); if(!t) return;
     try {
         await _uD(_d(_db, "treenit", id), { valmentajaKommentti: { teksti: t, nimi: _cUN, kuva: _cUPic } });
-        showNotification("Onnistui", "Vastaus lähetetty!");
+        SoundEngine.playSuccess(); showNotification("Onnistui", "Vastaus lähetetty!");
     } catch(e) {}
 }
 
-// TREENIN MUOKKAUS JA POISTO
 window.deleteWorkout = async function(id) {
     if(confirm("Haluatko varmasti poistaa tämän treenin?")) {
-        await _dD(_d(_db, "treenit", id)); showNotification("Poistettu", "Treeni poistettu järjestelmästä.");
+        await _dD(_d(_db, "treenit", id)); showNotification("Poistettu", "Treeni poistettu järjestelmästä."); loadUsersIfAdmin();
     }
 }
 window.openEditModal = function(data) {
@@ -712,8 +848,32 @@ window.saveWorkoutEdit = async function() {
     const id = _$('edit-id').value;
     try {
         await _uD(_d(_db, "treenit", id), { title:_$('edit-title').value, warmup:_$('edit-warmup').value, main:_$('edit-main').value, cooldown:_$('edit-cooldown').value, editedAt: _sT() });
-        closeEditModal(); showNotification("Päivitetty", "Treeni muokattu!");
+        closeEditModal(); SoundEngine.playSuccess(); showNotification("Päivitetty", "Treeni muokattu!");
     } catch(e) {}
+}
+
+// TILASTOT
+window.loadCoachStats = function(filterEmail) {
+    if(!allWorkoutsForStats) return;
+    let hyva = 0, ok = 0, raskas = 0, totalW = 0, totalF = 0;
+    
+    allWorkoutsForStats.forEach(w => {
+        if(filterEmail === 'all' || w.omistajaEmail === filterEmail) {
+            totalW++;
+            if(w.palaute) {
+                totalF++;
+                if(w.palaute.arvio.includes("Loistava") || w.palaute.arvio.includes("Hyvä")) hyva++;
+                else if(w.palaute.arvio.includes("OK")) ok++;
+                else raskas++;
+            }
+        }
+    });
+
+    _$('stat-total-workouts').innerText = totalW;
+    _$('stat-total-feedback').innerText = totalF;
+    _$('stat-hyva').innerText = hyva;
+    _$('stat-ok').innerText = ok;
+    _$('stat-raskas').innerText = raskas;
 }
 
 // SOVELLUSPALAUTE
@@ -721,8 +881,8 @@ window.sendAppFeedback = async function() {
     const t = _$('app-feedback-text').value.trim(); if(!t) return;
     try {
         await _aD(_c(_db, "sovelluspalaute"), { teksti: t, nimi: _cUN, email: _cUE, createdAt: _sT() });
-        _$('app-feedback-text').value = ''; showNotification("Kiitos!", "Palaute lähetetty tekijöille.");
-    } catch(e) { showNotification("Virhe", "Palautetta ei voitu lähettää."); }
+        _$('app-feedback-text').value = ''; SoundEngine.playSuccess(); showNotification("Kiitos!", "Palaute lähetetty tekijöille.");
+    } catch(e) {}
 }
 
 function loadAppFeedback() {
@@ -741,11 +901,11 @@ function loadAppFeedback() {
 }
 
 // PUSH & TIEDOTTEET
-window.sendGlobalMessage = async function() {
+window.sendGlobalMessage = async function(type) {
     if (_cUE !== 'eelukka12@gmail.com') return;
     try {
-        await _aD(_c(_db, "ilmoitukset"), { title: _$('global-msg-title').value, body: _$('global-msg-body').value, createdAt: _sT() });
-        _$('global-msg-title').value = ''; _$('global-msg-body').value = ''; showNotification("Onnistui", "Hälytys lähetetty!");
+        await _aD(_c(_db, "ilmoitukset"), { title: _$('global-msg-title').value || "Järjestelmäkomento", body: _$('global-msg-body').value || "-", type: type, createdAt: _sT() });
+        _$('global-msg-title').value = ''; _$('global-msg-body').value = ''; SoundEngine.playSuccess(); showNotification("Lähetetty", type === 'RELOAD' ? "Päivityskomento lähetetty." : "Hälytys lähetetty!");
     } catch(e) {}
 }
 
@@ -754,7 +914,12 @@ function listenToGlobalNotifications() {
         snapshot.docChanges().forEach((change) => {
             if (change.type === "added") {
                 if(initialLoadNotification) return; 
-                const data = change.doc.data(); showNotification(data.title, data.body);
+                const data = change.doc.data(); 
+                if (data.type === 'RELOAD') {
+                    window.location.reload(true); // HARD REFRESH KAIKILLE!
+                } else {
+                    showNotification(data.title, data.body);
+                }
             }
         });
         initialLoadNotification = false;
@@ -767,6 +932,7 @@ function loadNotificationsList() {
         docs.sort((a,b) => { const ta = a.createdAt?.toMillis()||0; const tb = b.createdAt?.toMillis()||0; return tb - ta; });
         let html = '';
         docs.forEach(d => {
+            if(d.type === 'RELOAD') return; // Ei näytetä piilokomentoja listassa
             const ds = d.createdAt ? new Date(d.createdAt.toMillis()).toLocaleString('fi-FI') : 'Tänään';
             html += `<div class="card"><span style="font-size:0.8rem; color:var(--text-secondary); font-weight:700;">${ds}</span><h3 style="margin-top:5px; margin-bottom:10px;">${d.title}</h3><p style="white-space:pre-wrap; line-height:1.5;">${d.body}</p></div>`;
         });
@@ -784,7 +950,7 @@ window.logout = function() { _sO(_au).then(() => window.location.reload()); }
 
 window.showNotification = function(title, body) {
     _$('popup-title').innerText = title; _$('popup-body').innerText = body;
-    _$('global-popup').classList.add('active'); playNotificationSound();
+    _$('global-popup').classList.add('active'); SoundEngine.playNotification();
     setTimeout(() => { closeNotification(); }, 3000);
 }
 window.closeNotification = function() { _$('global-popup').classList.remove('active'); }
@@ -793,25 +959,14 @@ window.switchView = function(viewId, navId) {
     if(navId) {
         document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
         const navEl = _$(navId); if(navEl) navEl.classList.add('active');
-        playTabSound();
+        SoundEngine.playTab();
     }
     document.querySelectorAll('.view-section').forEach(view => view.classList.remove('active'));
     const viewEl = _$(viewId); if(viewEl) viewEl.classList.add('active');
     
-    const subTitles = { 'view-koti': 'Tervetuloa valmennusportaaliin.', 'view-jasen-treeni': 'Oletko valmis päivän haasteeseen?', 'view-omistaja-jasenet': 'Hallitse asiakkaita ja ohjelmia.', 'view-asiakas-tiedot': 'Tarkastele asiakkaan kehitystä.', 'view-sovelluspalaute': 'Käyttäjien antama palaute.', 'view-debug': 'Järjestelmän hallintapaneeli.', 'view-asetukset': 'Muokkaa omia asetuksiasi.' };
+    const subTitles = { 'view-koti': 'Tervetuloa valmennusportaaliin.', 'view-jasen-treeni': 'Oletko valmis päivän haasteeseen?', 'view-omistaja-jasenet': 'Hallitse asiakkaita ja ohjelmia.', 'view-asiakas-tiedot': 'Tarkastele asiakkaan kehitystä.', 'view-tilastot': 'Koko valmennuksen data.', 'view-sovelluspalaute': 'Käyttäjien antama palaute.', 'view-debug': 'Järjestelmän hallintapaneeli.', 'view-asetukset': 'Muokkaa omia asetuksiasi.' };
     if (subTitles[viewId]) _$('greeting-sub').innerText = subTitles[viewId];
     window.scrollTo(0,0);
-}
-
-window.toggleTheme = function() {
-    _dm = !_dm; localStorage.setItem('theme', _dm ? 'dark' : 'light');
-    document.documentElement.setAttribute('data-theme', _dm ? 'dark' : 'light');
-    _$('theme-tog').classList.toggle('active', _dm);
-}
-
-window.toggleSound = function() {
-    _snd = !_snd; localStorage.setItem('ui_snd', _snd ? '1' : '0');
-    _$('snd-tog').classList.toggle('active');
 }
 </script>
 </body>
